@@ -50,14 +50,14 @@ ul {
 }
  
 .contacts{
-   display: flex;
-   margin-left: 775px; 
-   justify-content: center;
-   align-items: center;
-   width: 320px;
-   padding: 10px;
-   background-color: black;
-   border: 1px solid white;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    padding: 10px;
+    background-color: black;
+    border: 1px solid white;
 } 
 
 form button{
