@@ -1,4 +1,6 @@
 *{
+    align-items: center;
+    justify-content: center;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -67,62 +69,4 @@ form button{
 form button:hover{
     background: #1DB954;
     color: white;
-}
-
-.todo-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.todo-list{
-    min-width: 30%;
-    list-style: none;
-}
-
-.todo{
-    margin: 0.5rem;
-    background: white;
-    color: black;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.5s ease;
-}
-
-.todo li{
-    flex: 1;
-}
-
-
-.todo-item{
-    padding: 0rem 0.5rem;
-}
-
-
-select{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: none;
-    border: none;
-}
-
-.select{
-    margin: 1rem;
-    position: relative;
-    overflow: hidden;
-}
-
-select{
-    color:#1DB954;
-    width: 10rem;
-    cursor: pointer;
-    padding: 1rem;
-}
-
-.select:hover::after{
-    background: white;
-    color:#1DB954;
 }

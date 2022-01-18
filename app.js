@@ -1,14 +1,8 @@
 // Selectors
-const todoInput = document.querySelector('.todo-input');
-const todoButton = document.querySelector('.todo-button');
-const todoList = document.querySelector('.todo-list');
-const filterOption = document.querySelector('.filter-todo');
+const contactInput = document.querySelector('.contact-input');
+const searchButton = document.querySelector('.search-button');
 
 // Event Listeners
-// document.addEventListener('DOMContentLoaded', getTodos);
-// todoButton.addEventListener('click', searchContact);
-// todoList.addEventListener('click', deleteCheck);
-// todoInput.addEventListener('input', searchContact);
 
 // Functions
 
