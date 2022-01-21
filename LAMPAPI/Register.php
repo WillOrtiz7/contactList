@@ -24,9 +24,10 @@ else
 	$statement->bind_param("ssss", $inputData['login'], $inputData['password'], $inputData['firstName'], $inputData['lastName']);
 	$statement->execute();
 
-	$stmt->close();
-	$connection->close();
 	returnWithInfo($inputData['login']);
+
+	$statement->close();
+	$connection->close();
 }
 
 # Input json will be decoded and true means that the decoded string will be turned into an array
