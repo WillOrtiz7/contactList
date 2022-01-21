@@ -1,72 +1,96 @@
-*{
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background-image: linear-gradient(90deg, #25272D, #2E3038);
-    color:rgb(255, 255, 255);
-    font-family: 'Cairo', sans-serif;
-    min-height: 100vh;
+body {
+  background-image: linear-gradient(90deg, #25272d, #2e3038);
+  color: rgb(255, 255, 255);
+  font-family: "Cairo", sans-serif;
+  min-height: 100vh;
 }
 
-header{
-    font-size: 1.5rem;
+.wrapper {
+  max-width: 450px;
+  margin: 150px auto;
 }
 
-header, form{
-    min-height: 20vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+.wrapper .search-input {
+  position: relative;
+  background: #25272d;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 3px black;
 }
 
-form input, form button{
-    padding: 0.5rem;
-    font-size: 2rem;
-    border: none;
-    background: white;
+.search-input input {
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 20px;
+  box-shadow: 0px 1px 5px black;
 }
 
-::placeholder{
-    font-size: 26px;
+.search-input .icon {
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  font-size: 25px;
+  color: #1db954;
+  cursor: pointer;
+  transition: all 0.4s ease;
 }
 
-ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
- 
-#list{
-    font-size:  1.5em;
-    display: none;
-    padding: 20px;
-}
- 
-.contacts{
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 320px;
-    padding: 10px;
-    background-color: black;
-    border: 1px solid white;
-} 
-
-form button{
-    color: #1DB954;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.wrapper header {
+  margin: 60px auto;
+  text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 0px black;
 }
 
-form button:hover{
-    background: #1DB954;
-    color: white;
+.icon:hover {
+  background: #1db954;
+  color: white;
+}
+
+.search-input .autocom-box {
+  padding: 0px;
+  max-height: 280px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.search-input.active .autocom-box{
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.autocom-box li {
+  list-style: none;
+  padding: 8px 12px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 3px;
+  display: none;
+}
+
+.search-input.active .autocom-box li{
+  display: block;
+}
+
+.autocom-box li:hover {
+  background: #1db954;
+  transition: all 0.4s ease;
 }
