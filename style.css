@@ -10,7 +10,6 @@ body {
   background-image: linear-gradient(90deg, #25272d, #2e3038);
   color: rgb(255, 255, 255);
   font-family: "Cairo", sans-serif;
-  min-height: 100vh;
 }
 
 .wrapper {
@@ -94,3 +93,67 @@ body {
   background: #1db954;
   transition: all 0.4s ease;
 }
+
+.login-wrapper{
+  position:absolute;
+  top:0;
+  right:0;
+  width:fit-content;
+  height:fit-content;
+  align-items:baseline;
+}
+
+.login-wrapper .login{
+  color:white;
+  width:fit-content;
+  height:fit-content;
+  border:none;
+  font-family: inherit;
+  font-size:20pt;
+  padding-right: 10px;
+  background:inherit;
+  align-content:center;
+  padding-left:15px;
+  position:relative;
+}
+
+.login-dropdown.active > .login, 
+.login:hover{
+  background:#1db954;
+  transition:all 0.4s ease;
+}
+
+.login-dropdown{
+  position: relative;
+  float:right;
+  text-align: center;
+}
+
+.login-menu{
+  position:fixed;
+  right: 5px;
+  top:60px;
+  background-color:inherit;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px  rgba(0,0,0, .3);
+  opacity: 0;
+  pointer-events:none ;
+  transition: opacity 150ms ease-in-out;
+  font-size:16pt;
+}
+
+.login-dropdown.active > .login + .login-menu {
+  opacity:1;
+  pointer-events:auto;
+
+}
+
+.login-wrapper .login-form{
+  border-radius:5px;
+  background-color:white;
+  font-size:16pt;
+
+}
+
+
