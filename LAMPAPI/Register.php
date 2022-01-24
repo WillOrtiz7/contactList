@@ -3,10 +3,6 @@
 # Retrieves json input from user login request
 $inputData = getInputData();
 
-$id = 0;
-$firstName = "";
-$lastName = "";
-
 # MySql Connection Parameters
 $host = "167.99.228.82";
 $dbUser = "TheBeast";
@@ -45,7 +41,7 @@ function sendResultInfoAsJson( $obj )
 # Creates and returns formatted string with empty user data and an error passed to this function
 function returnWithError( $error )
 {
-	$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $error . '"}';
+	$retValue = '{"Error":"' . $error . '"}';
 	sendResultInfoAsJson( $retValue );
 }
 
