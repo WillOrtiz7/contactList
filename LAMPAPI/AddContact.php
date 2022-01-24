@@ -20,7 +20,7 @@ else
 	$statement->bind_param("sssss", $inputData['firstName'], $inputData['lastName'], $inputData['phoneNumber'], $inputData['emailAddress'], $inputData['userId']);
 	$statement->execute();
 
-	returnWithInfo($inputData['firstName'], $inputData['lastName']);
+    returnWithInfo($inputData['firstName'], $inputData['lastName']);
 
 	$statement->close();
 	$connection->close();
