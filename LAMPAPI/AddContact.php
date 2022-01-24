@@ -17,7 +17,7 @@ if( $connection->connect_error )
 else
 {
 	$statement = $connection->prepare("INSERT into Contacts (FirstName,LastName,PhoneNumber,EmailAddress,UserID) VALUES(?,?,?,?,?)");
-	$statement->bind_param("sssss", $inputData['firstName'], $inputData['lastName'], $inputData['phoneNumber'], $inputData['emailAddress'], $inputData['userID']);
+	$statement->bind_param("sssss", $inputData['firstName'], $inputData['lastName'], $inputData['phoneNumber'], $inputData['emailAddress'], $inputData['userId']);
 	$statement->execute();
 
 	returnWithInfo($inputData['firstName'], $inputData['lastName']);
@@ -48,7 +48,7 @@ function returnWithError( $error )
 # Creates and returns formatted string with specified user data from the database and an empty error field
 function returnWithInfo( $firstName, $lastName )
 {
-	$retValue = '{"Successfully registered contact":"' . $firstName . '":"' . $lastName . '"}';
+	$retValue = '{"Successfully registered contact":"' . $firstName . " " . $lastName . '"}';
 	sendResultInfoAsJson( $retValue );
 }
 
