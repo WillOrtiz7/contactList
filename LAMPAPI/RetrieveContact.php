@@ -22,8 +22,8 @@ if( $connection->connect_error )
 }
 else
 {
-	$statement = $connection->prepare("SELECT ID,firstName,lastName,phoneNumber,emailAddress,userId FROM Contacts WHERE FirstName=? AND LastName =?");
-	$statement->bind_param("ss", $inputData["firstName"], $inputData["lastName"]);
+	$statement = $connection->prepare("SELECT firstName,lastName,phoneNumber,emailAddress,userId FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=?");
+	$statement->bind_param("sss", $inputData['userId'], $inputData["firstName"], $inputData["lastName"]);
 
 	$statement->execute();
 	$result = $statement->get_result();
