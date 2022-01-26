@@ -16,11 +16,24 @@ if( $connection->connect_error )
 }
 else
 {
-	$statement = $connection->prepare("INSERT into Users (Login,Password,FirstName,LastName) VALUES(?,?,?,?)");
-	$statement->bind_param("ssss", $inputData['login'], $inputData['password'], $inputData['firstName'], $inputData['lastName']);
+	$statement = $connection->prepare("SELECT ID FROM Users WHERE Login=? AND Password =?");
+	$statement->bind_param("ss", $inputData['login'], $inputData['password']);
 	$statement->execute();
 
-	returnWithError("");
+	$result = $statement->get_result();
+
+	# This will only return user info if $result already found a user with the same login and password
+	if( $row = $result->fetch_assoc()  )
+	{
+		returnWithError("Login and Password already in use by another user");
+	}
+	else {
+		$statement = $connection->prepare("INSERT into Users (Login,Password,FirstName,LastName) VALUES(?,?,?,?)");
+		$statement->bind_param("ssss", $inputData['login'], $inputData['password'], $inputData['firstName'], $inputData['lastName']);
+		$statement->execute();
+
+		returnWithError("");
+	}
 
 	$statement->close();
 	$connection->close();
