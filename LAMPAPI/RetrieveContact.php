@@ -22,7 +22,7 @@ if( $connection->connect_error )
 }
 else
 {
-	$statement = $connection->prepare("SELECT firstName,lastName,phoneNumber,emailAddress,userId FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=?");
+	$statement = $connection->prepare("SELECT id,firstName,lastName,phoneNumber,emailAddress,userId FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=?");
 	$statement->bind_param("sss", $inputData['userId'], $inputData["firstName"], $inputData["lastName"]);
 
 	$statement->execute();
@@ -31,7 +31,7 @@ else
 	# This will only return user info if $result found corresponding user data in the database
 	if( $row = $result->fetch_assoc()  )
 	{
-		returnWithInfo( $row['firstName'], $row['lastName'], $row['phoneNumber'], $row['emailAddress'], $row['userId'], $row['ID'] );
+		returnWithInfo( $row['firstName'], $row['lastName'], $row['phoneNumber'], $row['emailAddress'], $row['userId'], $row['id'] );
 	}
 	else
 	{
@@ -62,22 +62,23 @@ function returnWithError( $error )
         "lastName":"",
         "phoneNumber":"",
         "emailAddress":"",
-        "userId":"",
         "ID":"",
-        "error":"' . $error . '"}';
+        "error":"' . $error . '"
+	}';
 	sendResultInfoAsJson( $retValue );
 }
 
 # Creates and returns formatted string with specified user data from the database and an empty error field
+# Front-End will display firstName, lastName, phoneNumber, and emailAddress to User but keep ID for use in EditContact or RemoveContact
 function returnWithInfo( $firstName, $lastName, $phoneNumber, $emailAddress, $userId, $id )
 {
 	$retValue = '{"firstName":"' . $firstName . '",
         "lastName":"' . $lastName . '",
         "phoneNumber":"' . $phoneNumber . '",
         "emailAddress":"' . $emailAddress . '",
-        "userId":"' . $userId . '",
         "ID":"' . $id . '",
-		"error":""}';
+		"error":""
+	}';
 	sendResultInfoAsJson( $retValue );
 }
 
