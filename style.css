@@ -1,23 +1,21 @@
-* {
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   background-image: linear-gradient(90deg, #25272d, #2e3038);
   color: rgb(255, 255, 255);
   font-family: "Cairo", sans-serif;
 }
 
-.wrapper {
-  max-width: 450px;
-  margin: 150px auto;
+.login{
+  color:white;
+  width:100%;
+  height:max-content;
+  border:none;
+  font-family: inherit;
+  font-size:20pt;
+  background:inherit;
+  align-content:center;
 }
 
-.wrapper .search-input {
+.search-input {
   position: relative;
   background: #25272d;
   width: 100%;
@@ -50,71 +48,9 @@ body {
   transition: all 0.4s ease;
 }
 
-.wrapper header {
-  margin: 60px auto;
-  text-align: center;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 0px black;
-}
-
 .icon:hover {
   background: #1db954;
   color: white;
-}
-
-.search-input .autocom-box {
-  padding: 0px;
-  max-height: 280px;
-  overflow-y: auto;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.search-input.active .autocom-box{
-  padding: 10px 8px;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.autocom-box li {
-  list-style: none;
-  padding: 8px 12px;
-  width: 100%;
-  cursor: pointer;
-  border-radius: 3px;
-  display: none;
-}
-
-.search-input.active .autocom-box li{
-  display: block;
-}
-
-.autocom-box li:hover {
-  background: #1db954;
-  transition: all 0.4s ease;
-}
-
-.login-wrapper{
-  position:absolute;
-  top:0;
-  right:0;
-  width:fit-content;
-  height:fit-content;
-  align-items:baseline;
-}
-
-.login-wrapper .login{
-  color:white;
-  width:fit-content;
-  height:fit-content;
-  border:none;
-  font-family: inherit;
-  font-size:20pt;
-  padding-right: 10px;
-  background:inherit;
-  align-content:center;
-  padding-left:15px;
-  position:relative;
 }
 
 .login-dropdown.active > .login, 
@@ -125,12 +61,11 @@ body {
 
 .login-dropdown{
   position: relative;
-  float:right;
   text-align: center;
 }
 
 .login-menu{
-  position:fixed;
+  position:absolute;
   right: 5px;
   top:60px;
   background-color:inherit;
@@ -155,5 +90,3 @@ body {
   font-size:16pt;
 
 }
-
-
