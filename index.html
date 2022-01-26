@@ -26,10 +26,10 @@
   <body>
     <div class="container-end justify-content-end">
       <div class= "row justify-content-end">
-        <div class= "col-2 align-self-end text-center align-items-center">
+        <div class= "col-3 align-self-start text-center align-items-top">
           <div class= "login-dropdown">
             <button class= "login"> Log in </button>
-            <div class= "login-menu text-white">
+            <div class= "login-menu text-white" id= "login">
               Log in: <br>
               <form>
                 <label for= "username">
@@ -44,24 +44,29 @@
             </div>
           </div>
         </div>
-        <div class= "col-2 align-self-end text-center">
+        <div class= "col-3 align-self-start text-center">
           <div class= "login-dropdown">  
             <button class= "login"> Register </button>
-            <div class= "login-menu text-white">
+            <div class= "login-menu text-white" id= "register">
               Register:
               <form>
-                <label for= "name">
-                  <input class= "login-form" type= "text" placeholder= "Name">    
+                <label for= "first-name">
+                  <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
+                </label>
+              </form>
+              <form>
+                <label for= "last-name">
+                  <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
                 </label>
               </form>
               <form>
                 <label for= "desired-user">
-                  <input class= "login-form" type= "text" placeholder= "Desired Username">    
+                  <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
                 </label>
               </form>
               <form>
                 <label for= "desired-password">
-                  <input class= "login-form" type= "text" placeholder= "Password">    
+                  <input action="submit" class= "login-form" type= "text" id= "desired-password" placeholder= "Password">    
                 </label>
               </form>
            </div>
