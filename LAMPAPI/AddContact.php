@@ -20,10 +20,10 @@ else
 	$statement->bind_param("sssss", $inputData['firstName'], $inputData['lastName'], $inputData['phoneNumber'], $inputData['emailAddress'], $inputData['userId']);
 	$statement->execute();
 
-    returnWithInfo($inputData['firstName'], $inputData['lastName']);
-
 	$statement->close();
 	$connection->close();
+
+	returnWithError("");
 }
 
 # Input json will be decoded and true means that the decoded string will be turned into an array
@@ -41,14 +41,7 @@ function sendResultInfoAsJson( $obj )
 # Creates and returns formatted string with empty user data and an error passed to this function
 function returnWithError( $error )
 {
-	$retValue = '{"Error":"' . $error . '"}';
-	sendResultInfoAsJson( $retValue );
-}
-
-# Creates and returns formatted string with specified user data from the database and an empty error field
-function returnWithInfo( $firstName, $lastName )
-{
-	$retValue = '{"Successfully registered contact":"' . $firstName . " " . $lastName . '"}';
+	$retValue = '{"error":"' . $error . '"}';
 	sendResultInfoAsJson( $retValue );
 }
 

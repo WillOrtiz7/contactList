@@ -22,7 +22,7 @@ else
 
     if ($statement->affected_rows > 0)
     {
-        returnWithInfo($inputData['login']);
+        returnWithError("");
     }
     else
     {
@@ -48,14 +48,7 @@ function sendResultInfoAsJson( $obj )
 # Creates and returns formatted string with empty user data and an error passed to this function
 function returnWithError( $error )
 {
-	$retValue = '{"Error":"' . $error . '"}';
-	sendResultInfoAsJson( $retValue );
-}
-
-# Creates and returns formatted string with specified user data from the database and an empty error field
-function returnWithInfo( $login)
-{
-	$retValue = '{"Successfully deleted user":"' . $login . '"}';
+	$retValue = '{"error":"' . $error . '"}';
 	sendResultInfoAsJson( $retValue );
 }
 

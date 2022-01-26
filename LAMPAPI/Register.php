@@ -20,7 +20,7 @@ else
 	$statement->bind_param("ssss", $inputData['login'], $inputData['password'], $inputData['firstName'], $inputData['lastName']);
 	$statement->execute();
 
-	returnWithInfo($inputData['login']);
+	returnWithError("");
 
 	$statement->close();
 	$connection->close();
@@ -41,14 +41,7 @@ function sendResultInfoAsJson( $obj )
 # Creates and returns formatted string with empty user data and an error passed to this function
 function returnWithError( $error )
 {
-	$retValue = '{"Error":"' . $error . '"}';
-	sendResultInfoAsJson( $retValue );
-}
-
-# Creates and returns formatted string with specified user data from the database and an empty error field
-function returnWithInfo( $login )
-{
-	$retValue = '{"Successfully registered user":"' . $login . '"}';
+	$retValue = '{"error":"' . $error . '"}';
 	sendResultInfoAsJson( $retValue );
 }
 

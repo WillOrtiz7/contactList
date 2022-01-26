@@ -29,7 +29,7 @@ else
 	# $result should now hold the ID, firstName, and lastName of a user if the login and password inputted to the api were valid
 	$statement->execute();
 	$result = $statement->get_result();
-	
+
 	# This will only return user info if $result found corresponding user data in the database
 	if( $row = $result->fetch_assoc()  )
 	{
@@ -60,14 +60,20 @@ function sendResultInfoAsJson( $obj )
 # Creates and returns formatted string with empty user data and an error passed to this function
 function returnWithError( $error )
 {
-	$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $error . '"}';
+	$retValue = '{"id":0,
+		"firstName":"",
+		"lastName":"",
+		"error":"' . $error . '"}';
 	sendResultInfoAsJson( $retValue );
 }
 
 # Creates and returns formatted string with specified user data from the database and an empty error field
 function returnWithInfo( $firstName, $lastName, $id )
 {
-	$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+	$retValue = '{"id":' . $id . ',
+		"firstName":"' . $firstName . '",
+		"lastName":"' . $lastName . '",
+		"error":""}';
 	sendResultInfoAsJson( $retValue );
 }
 
