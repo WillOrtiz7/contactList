@@ -82,12 +82,13 @@ function executeRegister(){
   let pass = document.getElementById("desired-password").value;
 
   let obj = {login:user, password:pass, firstName:firstName, lastName:lastName};
+  obj = JSON.stringify(obj);
 
   let link = new XMLHttpRequest();
-  let requestUrl = urlBase + '/Register' + ext;
+  let requestUrl = urlBase + '/Register.php';
   link.open("POST", requestUrl, true);
   link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  
+  link.setRequestHeader("Access-Control-Allow-Origin" , urlBase);
   link.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200) 
 			{
@@ -102,8 +103,7 @@ function executeRegister(){
         }
       }
   }
-
-
+  link.send(obj);
   console.log(firstName, lastName, user, pass);
 }
 
