@@ -33,12 +33,12 @@
               Log in: <br>
               <form>
                 <label for= "username">
-                  <input class= "login-form" type= "text" placeholder= "Username">
+                  <input class= "login-form" id= "user" type= "text" placeholder= "Username">
                 </label>
               </form>
               <form>
                 <label for= "password">
-                  <input class= "login-form" type= "text" placeholder= "Password">
+                  <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
                 </label>
               </form>
             </div>
@@ -76,23 +76,19 @@
     </div>
     <div class="container-fluid justify-content-center">
       <div class= "row justify-content-center align-items-center" style = "height: 500px;">
-        <div class= "col-4 align-items-center">
+        <div class= "col-6 align-items-center">
           <h1 class= "text-white text-center">
             Contact List
-          </h1>
-          <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search for your contact..." />
+          </h1> <br>
+          <div class="search-input">
+            <input type="text" placeholder="Search for your contact..." />
             <div class="autocom-box text-white">
             </div>
-            <div class="search-bar-icons">
-              <ul>
-                <li><i class="fas fa-search"></i></li>
-                <li><i class="fas fa-plus"></i></li>
-              </ul>
+            <div class="icon">
+              <i class="fas fa-search"></i>
             </div>
         </div>
       </div>
-    </div>
     </div>
 
     <script src="./app.js"></script>
