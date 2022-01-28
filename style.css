@@ -1,0 +1,103 @@
+body {
+  background-image: linear-gradient(90deg, #25272d, #2e3038);
+  color: rgb(255, 255, 255);
+  font-family: "Cairo", sans-serif;
+}
+
+.login {
+  color: white;
+  width: 100%;
+  height: max-content;
+  border: none;
+  font-family: inherit;
+  font-size: 20pt;
+  background: inherit;
+  align-content: center;
+}
+
+.search-bar {
+  position: relative;
+  background: #25272d;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 3px black;
+}
+
+.search-bar input {
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 20px;
+  box-shadow: 0px 1px 5px black;
+}
+
+.search-bar .search-bar-icons {
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  font-size: 25px;
+  color: #1db954;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.search-bar-icons:hover {
+  background: #1db954;
+  color: white;
+}
+
+.login-dropdown.active > .login,
+.login:hover {
+  background: #1db954;
+  transition: all 0.4s ease;
+}
+
+.login-dropdown {
+  position: relative;
+  text-align: center;
+}
+
+.login-menu {
+  background-color: inherit;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease-in-out;
+  font-size: 16pt;
+}
+
+.login-dropdown.active > .login + .login-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.login-form {
+  width: 100%;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16pt;
+}
+
+.add-contact {
+  position: fixed;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: black;
+}
+
+.add-contact-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
