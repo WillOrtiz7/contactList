@@ -80,6 +80,7 @@
           <h1 class= "text-white text-center">
             Contact List
           </h1>
+          <!-- ADD CONTACT START -->
           <button>Add Contact</button>
           <div class="add-contact" id="add-contact">
             <div class="add-contact-header">
@@ -87,15 +88,17 @@
               <button class="add-contact-close">&times;</button>
             </div>
             <div class="add-contact-body">
-              <form action="post">
-                <input type="add-contact-first-name" placeholder="John">
-                <input type="add-contact-last-name" placeholder="Smith">
-                <input type="add-contact-phone-number" placeholder="9999999999">
-                <input type="add-contact-email" placeholder="jsmith@gmail.com">
+              <form action="submit">
+                <input type="text" id="add-contact-first-name" placeholder="John">
+                <input type="text" id="add-contact-last-name" placeholder="Smith">
+                <input type="text" id="add-contact-phone-number" placeholder="9999999999">
+                <input type="text" id="add-contact-email" placeholder="jsmith@gmail.com">
+                <button id="add-contact-submit">Submit</button>
               </form>
             </div>
             <div id="overlay"></div>
           </div>
+          <!-- ADD CONTACT END -->
       </div>
       </div>
     </div>
