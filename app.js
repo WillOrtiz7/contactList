@@ -55,11 +55,18 @@ document.addEventListener("click", event =>{
 document.onkeydown = (event) => {
   if (event.key == 'Enter'){
     let currAction = event.target.closest(".login-menu");
+
+    console.log(currAction);
     
-    if(currAction == document.getElementById("register")){
+    if (currAction == document.getElementById("register")){
       executeRegister();
-      event.preventDefault();
     }
+
+    if (currAction == document.getElementById("login")){
+      executeLogin();
+    }
+
+    event.preventDefault();
   }
 }
 
@@ -82,17 +89,18 @@ function executeRegister(){
   let pass = document.getElementById("desired-password").value;
 
   let obj = {login:user, password:pass, firstName:firstName, lastName:lastName};
+  obj = JSON.stringify(obj);
 
   let link = new XMLHttpRequest();
-  let requestUrl = urlBase + '/Register' + ext;
+  let requestUrl = urlBase + '/Register.php';
   link.open("POST", requestUrl, true);
   link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  
+  link.setRequestHeader("Access-Control-Allow-Origin" , urlBase);
   link.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200) 
 			{
 				let response = JSON.parse( link.responseText );
-        if(response.error.length != 0)
+        if (response.error.length != 0)
         {
           console.log(response.error);
         }
@@ -102,9 +110,37 @@ function executeRegister(){
         }
       }
   }
-
-
+  link.send(obj);
   console.log(firstName, lastName, user, pass);
+}
+
+function executeLogin(){
+  let login = document.getElementById("user").value;
+  let password = document.getElementById("pass").value;
+
+  let loginObj = {login:login, password:password};
+  loginObj = JSON.stringify(loginObj);
+  
+  let link = new XMLHttpRequest();
+  let loginUrl = urlBase + '/Login.php';
+  link.open("POST", loginUrl, true);
+  link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  link.setRequestHeader("Access-Control-Allow-Origin" , urlBase);
+  link.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200)
+      {
+        let info = JSON.parse(link.responseText);
+        if (info.error.length != 0)
+        {
+          console.log(info.error);
+        }
+        else
+        {
+          console.log("Successfully logged in as ", info.firstName);
+        }
+      }
+  }
+  link.send(loginObj);
 }
 
 function showSuggestions(list){

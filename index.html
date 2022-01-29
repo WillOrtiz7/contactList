@@ -33,12 +33,12 @@
               Log in: <br>
               <form>
                 <label for= "username">
-                  <input class= "login-form" type= "text" placeholder= "Username">
+                  <input class= "login-form" id= "user" type= "text" placeholder= "Username">
                 </label>
               </form>
               <form>
                 <label for= "password">
-                  <input class= "login-form" type= "text" placeholder= "Password">
+                  <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
                 </label>
               </form>
             </div>
@@ -79,15 +79,24 @@
         <div class= "col-6 align-items-center">
           <h1 class= "text-white text-center">
             Contact List
-          </h1> <br>
-          <div class="search-input">
-            <input type="text" placeholder="Search for your contact..." />
-            <div class="autocom-box text-white">
+          </h1>
+          <button>Add Contact</button>
+          <div class="add-contact" id="add-contact">
+            <div class="add-contact-header">
+              <div class="add-contact-title"></div>
+              <button class="add-contact-close">&times;</button>
             </div>
-            <div class="icon">
-              <i class="fas fa-search"></i>
+            <div class="add-contact-body">
+              <form action="post">
+                <input type="add-contact-first-name" placeholder="John">
+                <input type="add-contact-last-name" placeholder="Smith">
+                <input type="add-contact-phone-number" placeholder="9999999999">
+                <input type="add-contact-email" placeholder="jsmith@gmail.com">
+              </form>
             </div>
-        </div>
+            <div id="overlay"></div>
+          </div>
+      </div>
       </div>
     </div>
 
