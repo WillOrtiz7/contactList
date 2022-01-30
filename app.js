@@ -115,12 +115,14 @@ function executeAddContact() {
     "add-contact-phone-number"
   ).value;
   let addContactEmail = document.getElementById("add-contact-email").value;
+  let userID = 69;
 
   let addContactObj = {
     acFirstName: addContactFirstName,
     acLastName: addContactLastName,
     acPhoneNumber: addContactPhoneNumber,
     acEmail: addContactEmail,
+    acUserID: userID,
   };
   obj = JSON.stringify(addContactObj);
 
