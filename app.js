@@ -124,7 +124,7 @@ function executeAddContact() {
     acEmail: addContactEmail,
     acUserID: userID,
   };
-  obj = JSON.stringify(addContactObj);
+  let addContactJSON = JSON.stringify(addContactObj);
 
   let link = new XMLHttpRequest();
   let requestUrl = urlBase + "/AddContact.php";
@@ -141,6 +141,6 @@ function executeAddContact() {
       }
     }
   };
-  link.send(addContactObj);
-  console.log(addContactObj);
+  link.send(addContactJSON);
+  console.log(addContactJSON);
 }
