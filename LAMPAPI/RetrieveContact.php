@@ -76,7 +76,7 @@ function returnWithInfo( $firstName, $lastName, $phoneNumber, $emailAddress, $id
         "lastName":"' . $lastName . '",
         "phoneNumber":"' . $phoneNumber . '",
         "emailAddress":"' . $emailAddress . '",
-        "ID":"' . $id . '",
+        "id":"' . $id . '",
 		"error":""
 	}';
 	sendResultInfoAsJson( $retValue );
