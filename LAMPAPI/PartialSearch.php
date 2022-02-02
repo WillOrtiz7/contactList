@@ -68,8 +68,8 @@ function returnWithError( $error )
 # Front-End will display firstName, lastName, phoneNumber, and emailAddress to User but keep ID for use in EditContact or RemoveContact
 function returnWithInfo( $firstNames, $lastNames )
 {
-	$retValue = '{"firstNames":"' . json_encode($firstNames) . '",
-	    "lastNames":"' . json_encode($lastNames) . '",
+	$retValue = '{"firstNames":' . json_encode($firstNames) . ',
+	    "lastNames":' . json_encode($lastNames) . ',
 		"error":""
 	}';
 	sendResultInfoAsJson( $retValue );

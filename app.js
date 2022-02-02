@@ -1,5 +1,6 @@
 // Selectors
 addContactSubmitButton = document.getElementById("add-contact-submit");
+searchContactInput = document.getElementById("search-contact");
 const urlBase = "http://cop4331-27.com/LAMPAPI";
 const ext = ".php";
 let user = "Test";
@@ -7,6 +8,7 @@ let isLoggedIn = false;
 let userID = 0;
 // Event Listeners
 addContactSubmitButton.addEventListener("click", executeAddContact);
+searchContactInput.addEventListener("keyup", executeSearchContact);
 
 document.addEventListener("click", (event) => {
   if (event.target.id == "log-out") {
@@ -151,6 +153,7 @@ function executeAddContact() {
       emailAddress: addContactEmail,
       userId: userID,
     };
+
     let addContactJSON = JSON.stringify(addContactObj);
 
     let link = new XMLHttpRequest();
@@ -171,6 +174,47 @@ function executeAddContact() {
     console.log(addContactJSON);
     link.send(addContactJSON);
     console.log(addContactJSON);
+  }
+}
+
+function executeSearchContact() {
+  if (isLoggedIn == false) {
+    console.log("Log in to search for a contact");
+  } else {
+    let userInput = document.getElementById("search-contact").value;
+
+    let searchContactObj = {
+      userId: userID,
+      userInput: userInput,
+    };
+
+    let searchContactJSON = JSON.stringify(searchContactObj);
+
+    let link = new XMLHttpRequest();
+    let requestUrl = urlBase + "/PartialSearch.php";
+    link.open("POST", requestUrl, true);
+    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+    link.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(link.responseText);
+        let response = JSON.parse(link.responseText);
+        if (response.error.length != 0) {
+          console.log(response.error);
+        } else {
+          console.log("Successfully searched for contact");
+          // Checks all contacts for potential matching letters from user input
+          for (let i = 0; i < response.firstNames.length; i++) {
+            if (response.firstNames[i].includes(userInput) && userInput.length > 0) {
+              console.log(response.firstNames[i]);
+            }
+          }
+        }
+      }
+    };
+
+    link.send(searchContactJSON);
+    console.log(searchContactJSON);
   }
 }
 
