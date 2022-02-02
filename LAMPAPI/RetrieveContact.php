@@ -62,7 +62,7 @@ function returnWithError( $error )
         "lastName":"",
         "phoneNumber":"",
         "emailAddress":"",
-        "ID":"",
+        "id":"",
         "error":"' . $error . '"
 	}';
 	sendResultInfoAsJson( $retValue );
