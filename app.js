@@ -2,10 +2,18 @@
 addContactSubmitButton = document.getElementById("add-contact-submit");
 const urlBase = "http://cop4331-27.com/LAMPAPI";
 const ext = ".php";
-
+let user = "Test";
+let isLoggedIn = false;
 // Event Listeners
 addContactSubmitButton.addEventListener("click", executeAddContact);
+
 document.addEventListener("click", (event) => {
+  if (event.target.id == "log-out"){
+    console.log("Testing");
+    logOut();
+    return;
+  }
+
   const isButton = event.target.matches(".login");
 
   if (!isButton && event.target.closest(".login-dropdown") != null) return;
@@ -21,6 +29,7 @@ document.addEventListener("click", (event) => {
     if (button === currButton) return;
     button.classList.remove("active");
   });
+
 });
 
 document.onkeydown = (event) => {
@@ -95,9 +104,25 @@ function executeLogin() {
       let info = JSON.parse(link.responseText);
       if (info.error.length != 0) {
         console.log(info.error);
-      } else {
+      } 
+      else {
         console.log("Successfully logged in as ", info.firstName);
+        user = info.firstName;
+        isLoggedIn = true;
       }
+
+      if (isLoggedIn){
+         document.querySelectorAll(".login-dropdown").forEach((button) => {
+           button.classList.toggle("hidden");
+       });
+
+       let loginText = document.getElementById("logged-in");
+       loginText.innerHTML = "Welcome " + user;
+
+       document.querySelectorAll(".logged-in-ui").forEach((button) => {
+         button.classList.toggle("hidden");
+       });
+     }
     }
   };
   link.send(loginObj);
@@ -124,7 +149,7 @@ function executeAddContact() {
     acEmail: addContactEmail,
     acUserID: userID,
   };
-  let addContactJSON = JSON.stringify(addContactObj);
+  obj = JSON.stringify(addContactObj);
 
   let link = new XMLHttpRequest();
   let requestUrl = urlBase + "/AddContact.php";
@@ -141,6 +166,22 @@ function executeAddContact() {
       }
     }
   };
-  link.send(addContactJSON);
-  console.log(addContactJSON);
+  link.send(addContactObj);
+  console.log(addContactObj);
+}
+
+function logOut(){
+  document.querySelectorAll(".login-dropdown").forEach((button) => {
+    button.classList.toggle("hidden");
+  });
+
+ let loginText = document.getElementById("logged-in");
+ loginText.innerHTML = "";
+
+ document.querySelectorAll(".logged-in-ui").forEach((button) => {
+  button.classList.toggle("hidden");
+});
+
+ isLoggedIn = false;
+
 }
