@@ -24,77 +24,53 @@
           crossorigin="anonymous"/>
 
   <body>
-    <div class="container-end justify-content-end">
+    <div class="container-end text-start justify-content-end">
       <div class= "row justify-content-end">
-        <div class= "col-3 align-self-start text-center align-items-top">
-          <div class= "login-dropdown">
+        <div class= "col-3 align-self-start text-center border align-items-top">
+          <span class= "logged-in-ui hidden text-white border" id= "logged-in">Testing</span>
+          <div class= "login-dropdown border">
             <button class= "login"> Log in </button>
             <div class= "login-menu text-white" id= "login">
               Log in: <br>
-              <form>
-                <label for= "username">
-                  <input class= "login-form" id= "user" type= "text" placeholder= "Username">
-                </label>
-              </form>
-              <form>
-                <label for= "password">
-                  <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
-                </label>
-              </form>
+              <input class= "login-form" id= "user" type= "text" placeholder= "Username">
+              <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
             </div>
           </div>
         </div>
-        <div class= "col-3 align-self-start text-center">
+        <div class= "col-3 align-self-start text-center border">
+          <button class= "logged-in-ui hidden login " id= "log-out"> Log out </button>
           <div class= "login-dropdown">  
             <button class= "login"> Register </button>
             <div class= "login-menu text-white" id= "register">
-              Register:
-              <form>
-                <label for= "first-name">
-                  <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
-                </label>
-              </form>
-              <form>
-                <label for= "last-name">
-                  <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
-                </label>
-              </form>
-              <form>
-                <label for= "desired-user">
-                  <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
-                </label>
-              </form>
-              <form>
-                <label for= "desired-password">
-                  <input action="submit" class= "login-form" type= "text" id= "desired-password" placeholder= "Password">    
-                </label>
-              </form>
-           </div>
+              Register: <br>
+              <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
+              <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
+              <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
+              <input action="submit" class= "login-form" type= "text" id= "desired-password" placeholder= "Password">    
+            </div>
           </div>  
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center">
-      <div class= "row justify-content-center align-items-center" style = "height: 500px;">
-        <div class= "col-6 align-items-center">
+    <div class="container-fluid justify-content-center border">
+      <div class= "row justify-content-center align-items-center border" style = "height: 500px;">
+        <div class= "col-6 align-items-center border">
           <h1 class= "text-white text-center">
             Contact List
           </h1>
           <!-- ADD CONTACT START -->
           <button>Add Contact</button>
-          <div class="add-contact" id="add-contact">
+          <div class="add-contact border" id="add-contact">
             <div class="add-contact-header">
               <div class="add-contact-title"></div>
               <button class="add-contact-close">&times;</button>
             </div>
             <div class="add-contact-body">
-              <form>
-                <input type="text" id="add-contact-first-name" placeholder="J">
-                <input type="text" id="add-contact-last-name" placeholder="Smith">
-                <input type="text" id="add-contact-phone-number" placeholder="9999999999">
-                <input type="text" id="add-contact-email" placeholder="jsmith@gmail.com">
+                <input type="text" action="submit" id="add-contact-first-name" placeholder="John">
+                <input type="text" action="submit" id="add-contact-last-name" placeholder="Smith">
+                <input type="text" action="submit" id="add-contact-phone-number" placeholder="9999999999">
+                <input type="text" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com">
                 <button type="button" id="add-contact-submit">Submit</button>
-              </form>
             </div>
             <div id="overlay"></div>
           </div>

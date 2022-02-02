@@ -13,6 +13,7 @@ body {
   font-size: 20pt;
   background: inherit;
   align-content: center;
+  z-index: 10;
 }
 
 .search-bar {
@@ -87,7 +88,7 @@ body {
 }
 
 .add-contact {
-  position: fixed;
+  position: relative;
   border: 1px solid black;
   border-radius: 10px;
   z-index: 10;
@@ -100,4 +101,23 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid black;
+}
+
+.login-dropdown.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logged-in-ui {
+  float: right;
+  background-color: inherit;
+  font-size: 20pt;
+  z-index: 20;
+}
+
+.logged-in-ui.hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -12;
 }
