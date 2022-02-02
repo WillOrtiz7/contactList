@@ -93,7 +93,7 @@ function executeLogin() {
 
   let loginObj = { login: login, password: password };
   loginObj = JSON.stringify(loginObj);
-
+  
   let link = new XMLHttpRequest();
   let loginUrl = urlBase + "/Login.php";
   link.open("POST", loginUrl, true);
@@ -149,7 +149,7 @@ function executeAddContact() {
     acEmail: addContactEmail,
     acUserID: userID,
   };
-  obj = JSON.stringify(addContactObj);
+  let addContactJSON = JSON.stringify(addContactObj);
 
   let link = new XMLHttpRequest();
   let requestUrl = urlBase + "/AddContact.php";
@@ -166,8 +166,8 @@ function executeAddContact() {
       }
     }
   };
-  link.send(addContactObj);
-  console.log(addContactObj);
+  link.send(addContactJSON);
+  console.log(addContactJSON);
 }
 
 function logOut(){

@@ -32,16 +32,8 @@
             <button class= "login"> Log in </button>
             <div class= "login-menu text-white" id= "login">
               Log in: <br>
-              <form>
-                <label for= "username">
-                  <input class= "login-form" id= "user" type= "text" placeholder= "Username">
-                </label>
-              </form>
-              <form>
-                <label for= "password">
-                  <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
-                </label>
-              </form>
+              <input class= "login-form" id= "user" type= "text" placeholder= "Username">
+              <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
             </div>
           </div>
         </div>
@@ -50,28 +42,12 @@
           <div class= "login-dropdown">  
             <button class= "login"> Register </button>
             <div class= "login-menu text-white" id= "register">
-              Register:
-              <form>
-                <label for= "first-name">
-                  <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
-                </label>
-              </form>
-              <form>
-                <label for= "last-name">
-                  <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
-                </label>
-              </form>
-              <form>
-                <label for= "desired-user">
-                  <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
-                </label>
-              </form>
-              <form>
-                <label for= "desired-password">
-                  <input action="submit" class= "login-form" type= "text" id= "desired-password" placeholder= "Password">    
-                </label>
-              </form>
-           </div>
+              Register: <br>
+              <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
+              <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
+              <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
+              <input action="submit" class= "login-form" type= "text" id= "desired-password" placeholder= "Password">    
+            </div>
           </div>  
         </div>
       </div>
@@ -90,13 +66,11 @@
               <button class="add-contact-close">&times;</button>
             </div>
             <div class="add-contact-body">
-              <form action="submit">
                 <input type="text" action="submit" id="add-contact-first-name" placeholder="John">
                 <input type="text" action="submit" id="add-contact-last-name" placeholder="Smith">
                 <input type="text" action="submit" id="add-contact-phone-number" placeholder="9999999999">
                 <input type="text" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com">
                 <button type="submit" id="add-contact-submit">Submit</button>
-              </form>
             </div>
             <div id="overlay"></div>
           </div>
