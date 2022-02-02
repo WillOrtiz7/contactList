@@ -31,7 +31,7 @@ else
 	# This will only return user info if $result found corresponding user data in the database
 	if( $row = $result->fetch_assoc()  )
 	{
-		returnWithInfo( $row['firstName'], $row['lastName'], $row['phoneNumber'], $row['emailAddress'], $row['id'] );
+		returnWithInfo( $row['firstName'], $row['lastName'], $row['phoneNumber'], $row['emailAddress'], $inputData['id'] );
 	}
 	else
 	{
