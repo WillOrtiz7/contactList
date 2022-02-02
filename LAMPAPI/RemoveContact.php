@@ -16,8 +16,8 @@ if( $connection->connect_error )
 }
 else
 {
-	$statement = $connection->prepare("DELETE FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=? AND PhoneNumber=? AND EmailAddress=?");
-	$statement->bind_param("sssss", $inputData['userId'], $inputData['firstName'], $inputData['lastName'], $inputData['phoneNumber'], $inputData['emailAddress']);
+	$statement = $connection->prepare("DELETE FROM Contacts WHERE id=?");
+	$statement->bind_param("s", $inputData['id']);
     $statement->execute();
 
     if ($statement->affected_rows > 0)
