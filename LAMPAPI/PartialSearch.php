@@ -3,10 +3,9 @@
 # Retrieves json input from user login request
 $inputData = getInputData();
 
-$userId = $inputData['userId'];
-$userInput = '%' . $inputData['userInput'] . '%';
 $firstNames = array();
 $lastNames = array();
+$ids = array();
 
 # MySql Connection Parameters
 $host = "167.99.228.82";
@@ -21,17 +20,18 @@ if( $connection->connect_error )
 }
 else
 {
-	$statement = $connection->prepare("SELECT firstName,lastName FROM Contacts WHERE UserID=? AND CONCAT(Contacts.FirstName, ' ', Contacts.LastName) LIKE CONCAT('%', ?, '%')");
+	$statement = $connection->prepare("SELECT id,firstName,lastName FROM Contacts WHERE UserID=? AND CONCAT(Contacts.FirstName, ' ', Contacts.LastName) LIKE CONCAT('%', ?, '%')");
 	$statement->bind_param("ss", $inputData['userId'], $inputData['userInput']);
 	$statement->execute();
 	$result = $statement->get_result();
 
 	if($result->num_rows > 0){
         while($row = $result->fetch_assoc()) {
+			array_push($ids, $row['id']);
             array_push($firstNames, $row['firstName']);
             array_push($lastNames, $row['lastName']);
         }
-        returnWithInfo($firstNames, $lastNames);
+        returnWithInfo($ids, $firstNames, $lastNames);
     }
     else {
         returnWithError("No Matches Found");
@@ -57,7 +57,8 @@ function sendResultInfoAsJson( $obj )
 # Creates and returns formatted string with empty user data and an error passed to this function
 function returnWithError( $error )
 {
-	$retValue = '{"firstNames":"",
+	$retValue = '{"ids":"",
+		"firstNames":"",
 	    "lastNames":"",
         "error":"' . $error . '"
 	}';
@@ -66,9 +67,10 @@ function returnWithError( $error )
 
 # Creates and returns formatted string with specified user data from the database and an empty error field
 # Front-End will display firstName, lastName, phoneNumber, and emailAddress to User but keep ID for use in EditContact or RemoveContact
-function returnWithInfo( $firstNames, $lastNames )
+function returnWithInfo( $ids, $firstNames, $lastNames )
 {
-	$retValue = '{"firstNames":' . json_encode($firstNames) . ',
+	$retValue = '{"ids":' . json_encode($ids) . ',
+		"firstNames":' . json_encode($firstNames) . ',
 	    "lastNames":' . json_encode($lastNames) . ',
 		"error":""
 	}';
