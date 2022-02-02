@@ -118,11 +118,11 @@ function executeAddContact() {
   let userID = 69;
 
   let addContactObj = {
-    acFirstName: addContactFirstName,
-    acLastName: addContactLastName,
-    acPhoneNumber: addContactPhoneNumber,
-    acEmail: addContactEmail,
-    acUserID: userID,
+    firstName: addContactFirstName,
+    lastName: addContactLastName,
+    phoneNumber: addContactPhoneNumber,
+    emailAddress: addContactEmail,
+    userID: userID,
   };
   let addContactJSON = JSON.stringify(addContactObj);
 
@@ -141,6 +141,7 @@ function executeAddContact() {
       }
     }
   };
+  console.log(addContactJSON);
   link.send(addContactJSON);
   console.log(addContactJSON);
 }
