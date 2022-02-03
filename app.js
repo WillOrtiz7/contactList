@@ -24,7 +24,7 @@ document.addEventListener("click", (event) => {
     deleteContact()
   }
 
-  const isButton = event.target.matches(".login");
+  const isButton = event.target.matches(".dropdown-button");
 
   if (!isButton && event.target.closest(".login-dropdown") != null) return;
 
@@ -222,13 +222,13 @@ function executeSearchContact() {
           // Checks all contacts for potential matching letters from user input
           for (let i = 0; i < response.firstNames.length; i++) {
             if (userInput.length > 0) {
-              console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
+              console.log(response.firstNames[i] + " " + response.lastNames[i]);
               const li = document.createElement("li");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               li.appendChild(textNode);
               li.setAttribute("id", "search-result-list");
               li.setAttribute("class", "text-white");
-              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
+              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, li));
               const searchResults = document.getElementById("search-results");
               searchResults.appendChild(li);
             }
@@ -252,11 +252,18 @@ function deleteContact(){
   }
 
 
-function executeRetrieveContact(contactID) {
+function executeRetrieveContact(li) {
+  console.log(li.innerHTML);
+  // Grabbing the first and last name and splitting them
+  let arrayName = li.innerHTML.split(" ");
+  firstName = arrayName[0];
+  lastName = arrayName[1];
 
   // Creating object with necessary info for api
   let retrieveContactObj = {
-    id: contactID,
+    userId: userID,
+    firstName: firstName,
+    lastName: lastName,
   };
 
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
