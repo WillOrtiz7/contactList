@@ -140,3 +140,8 @@ body {
 .dropdown-button{
   pointer-events:auto;
 }
+
+.search-result-list{
+  list-style:none;
+  padding-left: 10px;
+}

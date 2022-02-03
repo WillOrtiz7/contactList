@@ -58,8 +58,9 @@
           <h1 class= "text-white text-center">
             Contact List
           </h1>
-          <div class= "col border search">
-            <div class="row justify-content-center unlogged-search hidden" id= "unlogged-search">
+          <!--Search bar-->
+          <div class= "col border search" id= "search-bar">
+            <div class="row justify-content-center unlogged-search" id= "unlogged-search">
               <div class="col">
                   <div class="card-body row no-gutters align-items-center">
                       <!--end of col-->
@@ -77,7 +78,7 @@
               </div>
               <!--end of col-->
             </div>
-            <div class="row justify-content-center logged-in-search" id= "logged-search">
+            <div class="row justify-content-center logged-in-search hidden " id= "logged-search">
               <div class="col">
                   <div class="card-body row no-gutters align-items-center">
                       <div class="col-auto">
@@ -102,45 +103,23 @@
             </div>
         
           <!-- ADD CONTACT START -->
-          <div class="add-contact border" id="add-contact">
-            <div class="add-contact-header">
-              <div class="add-contact-title"></div>
-              <button class="add-contact-close">&times;</button>
-            </div>
-            <div class="add-contact-body">
-                <input type="text" action="submit" id="add-contact-first-name" placeholder="John">
-                <input type="text" action="submit" id="add-contact-last-name" placeholder="Smith">
-                <input type="text" action="submit" id="add-contact-phone-number" placeholder="9999999999">
-                <input type="text" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com">
-                <button type="button" id="add-contact-submit">Submit</button>
-            </div>
-            <div id="overlay"></div>
           </div>
-          <!-- ADD CONTACT END -->
-          </div>
-          <div class= "login-dropdown text-black border" id= "add-contact-dropdown">
+          <div class= "login-dropdown logged-in-ui text-black border" id= "add-contact-dropdown">
             <div class= "login-menu text-white" id= "add-contact-menu">
               Add a contact: <br>
               <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John">
               <input class= "login-form" type="text" action="submit" id="add-contact-last-name" placeholder="Smith">
               <input class= "login-form"type="text" action="submit" id="add-contact-phone-number" placeholder="9999999999">
               <input class= "login-form" type="text" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com">
+              <br>
               <button class= "login" type="button" id="add-contact-submit">Submit</button>
             </div>
           </div>
+          <!-- ADD CONTACT END -->
         </div>
       </div>
     </div>
-    <!-- SEARCH CONTACT START -->
-    <div class="container-fluid justify-content-center border">
-      <div class="row justify-content-center align-items-center border" style="height: 500px;">
-        <div class="col-6 align-items-center border">
-          <input type="text" id="search-contact" placeholder="Search for contact">
-          <span id="search-results"></span>
-        </div>
-      </div>
-    </div>
-    <!-- SEARCH CONTACT END -->
+    <!-- ADD CONTACT END -->
 
     <script src="./app.js"></script>
     <script src="./suggestions.js"></script>
