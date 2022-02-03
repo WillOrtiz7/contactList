@@ -1,11 +1,14 @@
 // Selectors
 addContactSubmitButton = document.getElementById("add-contact-submit");
 searchContactInput = document.getElementById("search-contact");
+
+// Variables
 const urlBase = "http://cop4331-27.com/LAMPAPI";
 const ext = ".php";
 let user = "Test";
 let isLoggedIn = false;
 let userID = 0;
+
 // Event Listeners
 addContactSubmitButton.addEventListener("click", executeAddContact);
 searchContactInput.addEventListener("keyup", executeSearchContact);
@@ -178,10 +181,18 @@ function executeAddContact() {
 }
 
 function executeSearchContact() {
+  // Check to see if user is logged in or not
   if (isLoggedIn == false) {
     console.log("Log in to search for a contact");
   } else {
+    // Here we will clear the ul containing the list of contacts being displayed
+    while (document.getElementById("search-result-list")){
+      let searchResultList = document.getElementById("search-result-list");
+      searchResultList.remove();
+    }
+
     let userInput = document.getElementById("search-contact").value;
+    console.log("USER INPUT: " + userInput);
 
     let searchContactObj = {
       userId: userID,
@@ -205,8 +216,16 @@ function executeSearchContact() {
           console.log("Successfully searched for contact");
           // Checks all contacts for potential matching letters from user input
           for (let i = 0; i < response.firstNames.length; i++) {
-            if (response.firstNames[i].includes(userInput) && userInput.length > 0) {
-              console.log(response.firstNames[i]);
+            if (userInput.length > 0) {
+              console.log(response.firstNames[i] + " " + response.lastNames[i]);
+              const li = document.createElement("li");
+              const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
+              li.appendChild(textNode);
+              li.setAttribute("id", "search-result-list");
+              li.setAttribute("class", "text-white");
+              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, li));
+              const searchResults = document.getElementById("search-results");
+              searchResults.appendChild(li);
             }
           }
         }
@@ -216,6 +235,44 @@ function executeSearchContact() {
     link.send(searchContactJSON);
     console.log(searchContactJSON);
   }
+}
+
+function executeRetrieveContact(li) {
+  console.log(li.innerHTML);
+  // Grabbing the first and last name and splitting them
+  let arrayName = li.innerHTML.split(" ");
+  firstName = arrayName[0];
+  lastName = arrayName[1];
+
+  // Creating object with necessary info for api
+  let retrieveContactObj = {
+    userId: userID,
+    firstName: firstName,
+    lastName: lastName,
+  };
+
+  let retrieveContactJSON = JSON.stringify(retrieveContactObj);
+
+  console.log(retrieveContactJSON);
+
+  let link = new XMLHttpRequest();
+    let requestUrl = urlBase + "/RetrieveContact.php";
+    link.open("POST", requestUrl, true);
+    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+    link.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        let response = JSON.parse(link.responseText);
+        if (response.error.length != 0) {
+          console.log(response.error);
+        } else {
+          console.log("Successfully retrieved contact");
+          console.log(response);
+        }
+      }
+    };
+
+    link.send(retrieveContactJSON);
 }
 
 function logOut() {
