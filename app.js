@@ -157,7 +157,8 @@ function executeAddContact() {
       "add-contact-phone-number"
     ).value;
     let addContactEmail = document.getElementById("add-contact-email").value;
-
+    
+    // Create object with necessary info for api call
     let addContactObj = {
       firstName: addContactFirstName,
       lastName: addContactLastName,
@@ -184,7 +185,6 @@ function executeAddContact() {
     };
     console.log(addContactJSON);
     link.send(addContactJSON);
-    console.log(addContactJSON);
   }
 }
 
@@ -193,13 +193,16 @@ function executeSearchContact() {
   if (isLoggedIn == false) {
     console.log("Log in to search for a contact");
   } else {
-    // Here we will clear the ul containing the list of contacts being displayed
+    // Everytime the user presses key we want to refresh their list of potential contacts
+    // This is why we must clear the old list on every call of executeSearchContact()
     while (document.getElementById("search-result-list")){
       let searchResultList = document.getElementById("search-result-list");
       searchResultList.remove();
     }
 
     let userInput = document.getElementById("search-contact").value;
+
+    // Create object with necessary info for api call
     let searchContactObj = {
       userId: userID,
       userInput: userInput,
@@ -219,16 +222,19 @@ function executeSearchContact() {
           console.log(response.error);
         } else {
           console.log("Successfully searched for contact");
-          // Checks all contacts for potential matching letters from user input
+          // Loop through the list of contacts returned from the api and show them on screen
           for (let i = 0; i < response.firstNames.length; i++) {
             if (userInput.length > 0) {
               console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
+              // Creating the element that will show the contacts first and last name on screen
               const li = document.createElement("li");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               li.appendChild(textNode);
               li.setAttribute("id", "search-result-list");
               li.setAttribute("class", "text-white");
+              // Using the id for the contact returned by the api to retrieve the contacts full info
               li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
+              // Adding the element containing the contact first and last name to the span in the HTML
               const searchResults = document.getElementById("search-results");
               searchResults.appendChild(li);
             }
