@@ -193,13 +193,10 @@ function executeSearchContact() {
   if (isLoggedIn == false) {
     console.log("Log in to search for a contact");
   } else {
-    // Everytime the user presses key we want to refresh their list of potential contacts
-    // This is why we must clear the old list on every call of executeSearchContact()
-    while (document.getElementById("search-result-list")){
-      console.log("List item being removed");
-      let searchResultList = document.getElementById("search-result-list");
+    // Here we will clear the ul containing the list of contacts being displayed
+    document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
       searchResultList.remove();
-    }
+    });
 
     let userInput = document.getElementById("search-contact").value;
 
@@ -223,21 +220,25 @@ function executeSearchContact() {
           console.log(response.error);
         } else {
           console.log("Successfully searched for contact");
-          // Loop through the list of contacts returned from the api and show them on screen
+          // Checks all contacts for potential matching letters from user input
           for (let i = 0; i < response.firstNames.length; i++) {
+            
+            if(document.getElementById("contact-" + response.ids[i]) != null){
+              continue;
+            }
+            
             if (userInput.length > 0) {
               console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
               // Creating the element that will show the contacts first and last name on screen
               const li = document.createElement("li");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               li.appendChild(textNode);
-              li.setAttribute("id", "search-result-list");
-              li.setAttribute("class", "text-white");
-              // Using the id for the contact returned by the api to retrieve the contacts full info
+              li.setAttribute("id", "contact-" + response.ids[i]);
+              li.setAttribute("class", "text-white search-result-list");
               li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
-              // Adding the element containing the contact first and last name to the span in the HTML
               const searchResults = document.getElementById("search-results");
               searchResults.appendChild(li);
+
             }
           }
         }
@@ -260,6 +261,9 @@ function deleteContact(){
 
 
 function executeRetrieveContact(id) {
+  document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
+      searchResultList.remove();
+    });
   // Creating object with necessary info for api
   let retrieveContactObj = {
     id: id,
@@ -282,6 +286,23 @@ function executeRetrieveContact(id) {
         } else {
           console.log("Successfully retrieved contact");
           console.log(response);
+          firstName = response.firstName;
+          lastName = response.lastName;
+          email = response.emailAddress;
+          phoneNumber = response.phoneNumber;
+          let contactInfoArray = [firstName, lastName, email, phoneNumber];
+          const table = document.createElement("table");
+          const tr = document.createElement("tr");
+          for (let i = 0; i < 4; i++){
+            const td = document.createElement("td");
+            const textNode = document.createTextNode(contactInfoArray[i]);
+            td.appendChild(textNode);
+            td.setAttribute("class", "text-white");
+            tr.appendChild(td);
+          }
+          const openContact = document.getElementById("open-contact");
+          table.appendChild(tr);
+          openContact.appendChild(table);
         }
       }
     };
