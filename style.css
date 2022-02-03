@@ -16,42 +16,26 @@ body {
   z-index: 10;
 }
 
-.search-bar {
-  position: relative;
-  background: #25272d;
-  width: 100%;
+.search{
+  width:100%;
+  background:white;
   border-radius: 5px;
   box-shadow: 0px 1px 5px 3px black;
 }
 
-.search-bar input {
-  height: 55px;
-  width: 100%;
-  outline: none;
-  border: none;
+ .col .search-input{
+  border:none;
+  width:100%;
+  height:100%;
   border-radius: 5px;
-  padding: 0 60px 0 20px;
-  font-size: 20px;
-  box-shadow: 0px 1px 5px black;
+  position: relative;
+
 }
 
-.search-bar .search-bar-icons {
-  height: 55px;
-  width: 55px;
-  line-height: 55px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  text-align: center;
+.search .icon{
+  position:relative;
+  float:right;
   font-size: 25px;
-  color: #1db954;
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
-
-.search-bar-icons:hover {
-  background: #1db954;
-  color: white;
 }
 
 .login-dropdown.active > .login,
@@ -81,7 +65,9 @@ body {
 }
 
 .login-form {
-  width: 100%;
+  position:relative;
+  width:100%;
+  max-width: 250px;
   border-radius: 5px;
   background-color: white;
   font-size: 16pt;
@@ -103,21 +89,48 @@ body {
   border-bottom: 1px solid black;
 }
 
-.login-dropdown.hidden {
-  opacity: 0;
-  pointer-events: none;
+.login-dropdown.hidden{
+  opacity:0;
+  pointer-events:none;
 }
 
-.logged-in-ui {
-  float: right;
+.logged-in-ui{
+  float:right;
   background-color: inherit;
   font-size: 20pt;
   z-index: 20;
 }
 
-.logged-in-ui.hidden {
-  display: none;
+.logged-in-ui.hidden{
+  display:none;
   opacity: 0;
   pointer-events: none;
-  z-index: -12;
+}
+
+.logged-in-search.hidden{
+  display:none;
+}
+
+.search-bar .icon {
+  position:relative;
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  text-align: center;
+  font-size: 25px;
+  color: #1db954;
+  transition: all 0.4s ease;
+}
+
+.unlogged-search.hidden{
+  display:none;
+}
+
+.unlogged-search{
+  pointer-events:none;
+}
+
+.unlogged-text{
+  color:lightslategrey;
+  font-size: 1.5rem;
 }

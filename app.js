@@ -20,6 +20,10 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  if (event.target.id == "delete"){
+    deleteContact()
+  }
+
   const isButton = event.target.matches(".login");
 
   if (!isButton && event.target.closest(".login-dropdown") != null) return;
@@ -27,12 +31,14 @@ document.addEventListener("click", (event) => {
   let currButton;
 
   if (isButton) {
-    currButton = event.target.closest(".login-dropdown");
-    currButton.classList.toggle("active");
+    currButton = event.target.id;
+    currAction = currButton + "-dropdown"
+    console.log(currButton)
+    document.getElementById(currButton + "-dropdown").classList.toggle("active");
   }
 
   document.querySelectorAll(".login-dropdown.active").forEach((button) => {
-    if (button === currButton) return;
+    if (button.id === currAction) return;
     button.classList.remove("active");
   });
 });
@@ -43,11 +49,11 @@ document.onkeydown = (event) => {
 
     console.log(currAction);
 
-    if (currAction == document.getElementById("register")) {
+    if (currAction == document.getElementById("register-menu")) {
       executeRegister();
     }
 
-    if (currAction == document.getElementById("login")) {
+    if (currAction == document.getElementById("login-menu")) {
       executeLogin();
     }
 
@@ -125,6 +131,9 @@ function executeLogin() {
         document.querySelectorAll(".logged-in-ui").forEach((button) => {
           button.classList.toggle("hidden");
         });
+
+        document.getElementById("unlogged-search").classList.toggle("hidden");
+        document.getElementById("logged-search").classList.toggle("hidden");
       }
     }
   };
@@ -156,7 +165,6 @@ function executeAddContact() {
       emailAddress: addContactEmail,
       userId: userID,
     };
-
     let addContactJSON = JSON.stringify(addContactObj);
 
     let link = new XMLHttpRequest();
@@ -192,15 +200,12 @@ function executeSearchContact() {
     }
 
     let userInput = document.getElementById("search-contact").value;
-    console.log("USER INPUT: " + userInput);
-
     let searchContactObj = {
       userId: userID,
       userInput: userInput,
-    };
-
+    }
     let searchContactJSON = JSON.stringify(searchContactObj);
-
+    console.log("USER INPUT: " + userInput);
     let link = new XMLHttpRequest();
     let requestUrl = urlBase + "/PartialSearch.php";
     link.open("POST", requestUrl, true);
@@ -236,6 +241,16 @@ function executeSearchContact() {
     console.log(searchContactJSON);
   }
 }
+function deleteContact(){
+  let firstName = document.getElementById("delete-first").value;
+  let lastName = document.getElementById("delete-last").value;
+  let phone = document.getElementById("delete-phone").value;
+  let email = document.getElementById("delete-email").value;
+
+  let contactObj = {userId:userID, firstName:firstName, lastName:lastName, 
+                    phoneNumber:phone, emailAddress:email}
+  }
+
 
 function executeRetrieveContact(li) {
   console.log(li.innerHTML);
@@ -287,5 +302,9 @@ function logOut() {
     button.classList.toggle("hidden");
   });
 
+  document.getElementById("unlogged-search").classList.toggle("hidden");
+  document.getElementById("logged-search").classList.toggle("hidden");
+
   isLoggedIn = false;
 }
+
