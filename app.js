@@ -194,10 +194,9 @@ function executeSearchContact() {
     console.log("Log in to search for a contact");
   } else {
     // Here we will clear the ul containing the list of contacts being displayed
-    while (document.getElementById("search-result-list")){
-      let searchResultList = document.getElementById("search-result-list");
+    document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
       searchResultList.remove();
-    }
+    });
 
     let userInput = document.getElementById("search-contact").value;
     let searchContactObj = {
@@ -220,17 +219,25 @@ function executeSearchContact() {
         } else {
           console.log("Successfully searched for contact");
           // Checks all contacts for potential matching letters from user input
+
+
           for (let i = 0; i < response.firstNames.length; i++) {
+            
+            if(document.getElementById("contact-" + response.ids[i]) != null){
+              continue;
+            }
+            
             if (userInput.length > 0) {
               console.log(response.firstNames[i] + " " + response.lastNames[i]);
               const li = document.createElement("li");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               li.appendChild(textNode);
-              li.setAttribute("id", "search-result-list");
-              li.setAttribute("class", "text-white");
+              li.setAttribute("id", "contact-" + response.ids[i]);
+              li.setAttribute("class", "text-white search-result-list");
               li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, li));
               const searchResults = document.getElementById("search-results");
               searchResults.appendChild(li);
+
             }
           }
         }
