@@ -14,23 +14,33 @@ addContactSubmitButton.addEventListener("click", executeAddContact);
 searchContactInput.addEventListener("keyup", executeSearchContact);
 
 document.addEventListener("click", (event) => {
+
   if (event.target.id == "log-out") {
     console.log("Testing");
     logOut();
     return;
   }
 
-  if (event.target.id == "delete"){
-    deleteContact()
+  if (event.target.matches(".delete-button")){
+    console.log("This is working. id of the contact is " + event.target.id);
+    deleteContact(event.target.id);
   }
 
-  const isButton = event.target.matches(".dropdown-button");
 
-  if (!isButton && event.target.closest(".login-dropdown") != null) return;
+
+  const isDropdown = event.target.matches(".dropdown-button");
+
+  if (!isDropdown && event.target.closest(".login-dropdown") != null) return;
 
   let currButton;
 
-  if (isButton) {
+  if (event.target.id == "add-contact"){
+    document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
+      contactInfoTable.remove()
+    });
+  }
+
+  if (isDropdown) {
     currButton = event.target.id;
     currAction = currButton + "-dropdown"
     console.log(currButton)
@@ -202,6 +212,11 @@ function executeSearchContact() {
       contactInfoTable.remove()
     });
 
+    if (document.getElementById("add-contact-dropdown").classList.contains("active")){
+      console.log("Testing");
+      document.getElementById("add-contact-dropdown").classList.toggle("active");
+    }
+
     let userInput = document.getElementById("real-search-bar").value;
     let searchContactObj = {
       userId: userID,
@@ -233,11 +248,23 @@ function executeSearchContact() {
               console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
               // Creating the element that will show the contacts first and last name on screen
               const li = document.createElement("li");
+              const viewContact = document.createElement("span");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
-              li.appendChild(textNode);
+              const deleteButton = document.createElement("button");
+              const icon = document.createElement("i");
+              icon.setAttribute("class" , " fas fa-trash-alt delete-button");
+              icon.setAttribute("id", response.ids[i]);
+
+              deleteButton.appendChild(icon);
+              deleteButton.setAttribute("class" , "delete-button");
+              deleteButton.setAttribute("id", response.ids[i]);
+              
+              viewContact.appendChild(textNode);
+              li.appendChild(viewContact);
+              li.appendChild(deleteButton);
               li.setAttribute("id", "contact-" + response.ids[i]);
               li.setAttribute("class", "search-result-list");
-              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
+              viewContact.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
               const searchResults = document.getElementById("search-bar");
               searchResults.appendChild(li);
 
@@ -251,16 +278,31 @@ function executeSearchContact() {
     console.log(searchContactJSON);
   }
 }
-function deleteContact(){
-  let firstName = document.getElementById("delete-first").value;
-  let lastName = document.getElementById("delete-last").value;
-  let phone = document.getElementById("delete-phone").value;
-  let email = document.getElementById("delete-email").value;
+function deleteContact(id){
 
-  let contactObj = {userId:userID, firstName:firstName, lastName:lastName, 
-                    phoneNumber:phone, emailAddress:email}
+    deleteJSON = {id:id};
+    deleteJSON = JSON.stringify(deleteJSON);
+    console.log(id + " " + deleteJSON);
+
+    let link = new XMLHttpRequest();
+    let requestUrl = urlBase + "/RemoveContact.php";
+    link.open("POST", requestUrl, true);
+    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+    link.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("Testing deletion");
+        let response = JSON.parse(link.responseText);
+        if (response.error.length != 0) {
+          console.log(response.error);
+        }
+        else{
+          console.log("Deleted contact successfully");
+        }
+      }
   }
-
+  link.send(deleteJSON);
+}
 
 function executeRetrieveContact(id) {
   document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
@@ -271,45 +313,49 @@ function executeRetrieveContact(id) {
     id: id,
   };
 
+  if (document.getElementById("open-contact").classList.contains("hidden")){
+    document.getElementById("open-contact").classList.toggle("hidden");
+  }  
+
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
 
   console.log(retrieveContactJSON);
 
   let link = new XMLHttpRequest();
-    let requestUrl = urlBase + "/RetrieveContact.php";
-    link.open("POST", requestUrl, true);
-    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
-    link.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        let response = JSON.parse(link.responseText);
-        if (response.error.length != 0) {
-          console.log(response.error);
-        } else {
-          console.log("Successfully retrieved contact");
-          console.log(response);
-          firstName = response.firstName;
-          lastName = response.lastName;
-          email = response.emailAddress;
-          phoneNumber = response.phoneNumber;
-          let contactInfoArray = [firstName, lastName, email, phoneNumber];
-          const table = document.createElement("table");
-          const tr = document.createElement("tr");
-          for (let i = 0; i < 4; i++){
-            const td = document.createElement("td");
-            const textNode = document.createTextNode(contactInfoArray[i]);
-            td.appendChild(textNode);
-            tr.appendChild(td);
-          }
-          const openContact = document.getElementById("open-contact");
-          table.appendChild(tr);
-          table.setAttribute("class", "contact-info-table");
-          openContact.appendChild(table);
+  let requestUrl = urlBase + "/RetrieveContact.php";
+  link.open("POST", requestUrl, true);
+  link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+  link.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let response = JSON.parse(link.responseText);
+      if (response.error.length != 0) {
+        console.log(response.error);
+      } else {
+        console.log("Successfully retrieved contact");
+        console.log(response);
+        firstName = response.firstName;
+        lastName = response.lastName;
+        email = response.emailAddress;
+        phoneNumber = response.phoneNumber;
+        let contactInfoArray = [firstName, lastName, email, phoneNumber];
+        const table = document.createElement("table");
+        const tr = document.createElement("tr");
+        for (let i = 0; i < 4; i++){
+          const td = document.createElement("td");
+          const textNode = document.createTextNode(contactInfoArray[i]);
+          td.appendChild(textNode);
+          tr.appendChild(td);
         }
+        const openContact = document.getElementById("open-contact");
+        table.appendChild(tr);
+        table.setAttribute("class", "contact-info-table");
+        openContact.appendChild(table);
       }
-    };
+    }
+  };
 
-    link.send(retrieveContactJSON);
+  link.send(retrieveContactJSON);
 }
 
 function logOut() {
@@ -329,4 +375,3 @@ function logOut() {
 
   isLoggedIn = false;
 }
-

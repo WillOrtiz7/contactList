@@ -144,4 +144,22 @@ body {
 .search-result-list{
   list-style:none;
   padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.delete-button{
+  float:right;
+  height:100%;
+  background:inherit;
+  border:none;
+  color:inherit;
+}
+
+.delete-button:hover{
+  background: #1db954;
+  transition: all 0.4s ease;
+}
+
+.contact-table.hidden{
+  display:none;
 }
