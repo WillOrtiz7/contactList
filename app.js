@@ -251,20 +251,39 @@ function executeSearchContact() {
               const viewContact = document.createElement("span");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               const deleteButton = document.createElement("button");
+              const editButton = document.createElement("button");
+              const viewButton = document.createElement("button");
               const icon = document.createElement("i");
+              const editIcon = document.createElement("i");
+              const viewIcon = document.createElement("i");
               icon.setAttribute("class" , " fas fa-trash-alt delete-button");
               icon.setAttribute("id", response.ids[i]);
+              editIcon.setAttribute("class", "fas fa-edit edit-button");
+              editIcon.setAttribute("id", "edit-icon-" + response.ids[i]);
+              viewIcon.setAttribute("class", "fas fa-eye view-button");
+              viewIcon.setAttribute("id", "view-icon-" + response.ids[i]);
 
+              // Creating buttons for each contact
               deleteButton.appendChild(icon);
               deleteButton.setAttribute("class" , "delete-button");
               deleteButton.setAttribute("id", response.ids[i]);
+              editButton.appendChild(editIcon);
+              editButton.setAttribute("class" , "edit-button");
+              editButton.setAttribute("id", "edit-button-" + response.ids[i]);
+              viewButton.appendChild(viewIcon);
+              viewButton.setAttribute("class" , "view-button");
+              viewButton.setAttribute("id", "view-button-" + response.ids[i]);
               
+              // Adding the completed buttons to the list of contacts
               viewContact.appendChild(textNode);
               li.appendChild(viewContact);
               li.appendChild(deleteButton);
+              li.appendChild(editButton);
+              li.appendChild(viewButton);
               li.setAttribute("id", "contact-" + response.ids[i]);
               li.setAttribute("class", "search-result-list");
-              viewContact.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
+              viewButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "view"));
+              editButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "edit"));
               const searchResults = document.getElementById("search-bar");
               searchResults.appendChild(li);
 
@@ -278,6 +297,25 @@ function executeSearchContact() {
     console.log(searchContactJSON);
   }
 }
+
+function executeEditContact(firstName, lastName, email, phoneNumber, id){
+  const editContactDropdownFrame = document.getElementById("add-contact-dropdown");
+  const firstNameInput = document.createElement("input");
+  const lastNameInput = document.createElement("input");
+  const phoneNumberInput = document.createElement("input");
+  const emailInput = document.createElement("input");
+
+  firstNameInput.setAttribute("value", firstName);
+  lastNameInput.setAttribute("value", lastName);
+  phoneNumberInput.setAttribute("value", phoneNumber);
+  emailInput.setAttribute("value", email);
+
+  editContactDropdownFrame.appendChild(firstNameInput);
+  editContactDropdownFrame.appendChild(lastNameInput);
+  editContactDropdownFrame.appendChild(phoneNumberInput);
+  editContactDropdownFrame.appendChild(emailInput);
+}
+
 function deleteContact(id){
 
     deleteJSON = {id:id};
@@ -304,7 +342,7 @@ function deleteContact(id){
   link.send(deleteJSON);
 }
 
-function executeRetrieveContact(id) {
+function executeRetrieveContact(id, type) {
   document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
       searchResultList.remove();
     });
@@ -338,6 +376,9 @@ function executeRetrieveContact(id) {
         lastName = response.lastName;
         email = response.emailAddress;
         phoneNumber = response.phoneNumber;
+        if (type === "edit"){
+          executeEditContact(firstName, lastName, email, phoneNumber, id);
+        }else{
         let contactInfoArray = [firstName, lastName, email, phoneNumber];
         const table = document.createElement("table");
         const tr = document.createElement("tr");
@@ -351,6 +392,7 @@ function executeRetrieveContact(id) {
         table.appendChild(tr);
         table.setAttribute("class", "contact-info-table");
         openContact.appendChild(table);
+        } 
       }
     }
   };

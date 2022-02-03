@@ -160,6 +160,32 @@ body {
   transition: all 0.4s ease;
 }
 
+.edit-button{
+  float:right;
+  height:100%;
+  background:inherit;
+  border:none;
+  color:inherit;
+}
+
+.edit-button:hover{
+  background: #1db954;
+  transition: all 0.4s ease;
+}
+
+.view-button{
+  float:right;
+  height:100%;
+  background:inherit;
+  border:none;
+  color:inherit;
+}
+
+.view-button:hover{
+  background: #1db954;
+  transition: all 0.4s ease;
+}
+
 .contact-table.hidden{
   display:none;
 }
