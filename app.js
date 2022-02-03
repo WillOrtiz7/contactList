@@ -222,13 +222,13 @@ function executeSearchContact() {
           // Checks all contacts for potential matching letters from user input
           for (let i = 0; i < response.firstNames.length; i++) {
             if (userInput.length > 0) {
-              console.log(response.firstNames[i] + " " + response.lastNames[i]);
+              console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
               const li = document.createElement("li");
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               li.appendChild(textNode);
               li.setAttribute("id", "search-result-list");
               li.setAttribute("class", "text-white");
-              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, li));
+              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
               const searchResults = document.getElementById("search-results");
               searchResults.appendChild(li);
             }
@@ -252,18 +252,11 @@ function deleteContact(){
   }
 
 
-function executeRetrieveContact(li) {
-  console.log(li.innerHTML);
-  // Grabbing the first and last name and splitting them
-  let arrayName = li.innerHTML.split(" ");
-  firstName = arrayName[0];
-  lastName = arrayName[1];
+function executeRetrieveContact(contactID) {
 
   // Creating object with necessary info for api
   let retrieveContactObj = {
-    userId: userID,
-    firstName: firstName,
-    lastName: lastName,
+    id: contactID,
   };
 
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
