@@ -198,6 +198,10 @@ function executeSearchContact() {
       searchResultList.remove();
     });
 
+    document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
+      contactInfoTable.remove()
+    });
+
     let userInput = document.getElementById("real-search-bar").value;
     let searchContactObj = {
       userId: userID,
@@ -233,7 +237,7 @@ function executeSearchContact() {
               li.appendChild(textNode);
               li.setAttribute("id", "contact-" + response.ids[i]);
               li.setAttribute("class", "search-result-list");
-              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, id));
+              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
               const searchResults = document.getElementById("search-bar");
               searchResults.appendChild(li);
 
@@ -295,11 +299,11 @@ function executeRetrieveContact(id) {
             const td = document.createElement("td");
             const textNode = document.createTextNode(contactInfoArray[i]);
             td.appendChild(textNode);
-            td.setAttribute("class", "text-white");
             tr.appendChild(td);
           }
           const openContact = document.getElementById("open-contact");
           table.appendChild(tr);
+          table.setAttribute("class", "contact-info-table");
           openContact.appendChild(table);
         }
       }
