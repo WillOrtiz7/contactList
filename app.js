@@ -1,6 +1,5 @@
 // Selectors
 addContactSubmitButton = document.getElementById("add-contact-submit");
-searchContactInput = document.getElementById("search-contact");
 const urlBase = "http://cop4331-27.com/LAMPAPI";
 const ext = ".php";
 let user = "Test";
@@ -8,13 +7,16 @@ let isLoggedIn = false;
 let userID = 0;
 // Event Listeners
 addContactSubmitButton.addEventListener("click", executeAddContact);
-searchContactInput.addEventListener("keyup", executeSearchContact);
 
 document.addEventListener("click", (event) => {
   if (event.target.id == "log-out") {
     console.log("Testing");
     logOut();
     return;
+  }
+
+  if (event.target.id == "delete"){
+    deleteContact()
   }
 
   const isButton = event.target.matches(".login");
@@ -24,12 +26,14 @@ document.addEventListener("click", (event) => {
   let currButton;
 
   if (isButton) {
-    currButton = event.target.closest(".login-dropdown");
-    currButton.classList.toggle("active");
+    currButton = event.target.id;
+    currAction = currButton + "-dropdown"
+    console.log(currButton)
+    document.getElementById(currButton + "-dropdown").classList.toggle("active");
   }
 
   document.querySelectorAll(".login-dropdown.active").forEach((button) => {
-    if (button === currButton) return;
+    if (button.id === currAction) return;
     button.classList.remove("active");
   });
 });
@@ -40,11 +44,11 @@ document.onkeydown = (event) => {
 
     console.log(currAction);
 
-    if (currAction == document.getElementById("register")) {
+    if (currAction == document.getElementById("register-menu")) {
       executeRegister();
     }
 
-    if (currAction == document.getElementById("login")) {
+    if (currAction == document.getElementById("login-menu")) {
       executeLogin();
     }
 
@@ -122,6 +126,9 @@ function executeLogin() {
         document.querySelectorAll(".logged-in-ui").forEach((button) => {
           button.classList.toggle("hidden");
         });
+
+        document.getElementById("unlogged-search").classList.toggle("hidden");
+        document.getElementById("logged-search").classList.toggle("hidden");
       }
     }
   };
@@ -153,7 +160,6 @@ function executeAddContact() {
       emailAddress: addContactEmail,
       userId: userID,
     };
-
     let addContactJSON = JSON.stringify(addContactObj);
 
     let link = new XMLHttpRequest();
@@ -177,45 +183,15 @@ function executeAddContact() {
   }
 }
 
-function executeSearchContact() {
-  if (isLoggedIn == false) {
-    console.log("Log in to search for a contact");
-  } else {
-    let userInput = document.getElementById("search-contact").value;
+function deleteContact(){
+  let firstName = document.getElementById("delete-first").value;
+  let lastName = document.getElementById("delete-last").value;
+  let phone = document.getElementById("delete-phone").value;
+  let email = document.getElementById("delete-email").value;
 
-    let searchContactObj = {
-      userId: userID,
-      userInput: userInput,
-    };
+  let contactObj = {userId:userID, firstName:firstName, lastName:lastName, 
+                    phoneNumber:phone, emailAddress:email}
 
-    let searchContactJSON = JSON.stringify(searchContactObj);
-
-    let link = new XMLHttpRequest();
-    let requestUrl = urlBase + "/PartialSearch.php";
-    link.open("POST", requestUrl, true);
-    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
-    link.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log(link.responseText);
-        let response = JSON.parse(link.responseText);
-        if (response.error.length != 0) {
-          console.log(response.error);
-        } else {
-          console.log("Successfully searched for contact");
-          // Checks all contacts for potential matching letters from user input
-          for (let i = 0; i < response.firstNames.length; i++) {
-            if (response.firstNames[i].includes(userInput) && userInput.length > 0) {
-              console.log(response.firstNames[i]);
-            }
-          }
-        }
-      }
-    };
-
-    link.send(searchContactJSON);
-    console.log(searchContactJSON);
-  }
 }
 
 function logOut() {
@@ -229,6 +205,9 @@ function logOut() {
   document.querySelectorAll(".logged-in-ui").forEach((button) => {
     button.classList.toggle("hidden");
   });
+
+  document.getElementById("unlogged-search").classList.toggle("hidden");
+  document.getElementById("logged-search").classList.toggle("hidden");
 
   isLoggedIn = false;
 }

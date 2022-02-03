@@ -27,10 +27,9 @@
     <div class="container-end text-start justify-content-end">
       <div class= "row justify-content-end">
         <div class= "col-3 align-self-start text-center border align-items-top">
-          <span class= "logged-in-ui hidden text-white border" id= "logged-in">Testing</span>
-          <div class= "login-dropdown border">
-            <button class= "login"> Log in </button>
-            <div class= "login-menu text-white" id= "login">
+          <div class= "login-dropdown border" id= "login-dropdown">
+            <button class= "login" id= "login"> Log in </button>
+            <div class= "login-menu text-white" id= "login-menu">
               Log in: <br>
               <input class= "login-form" id= "user" type= "text" placeholder= "Username">
               <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
@@ -39,9 +38,9 @@
         </div>
         <div class= "col-3 align-self-start text-center border">
           <button class= "logged-in-ui hidden login " id= "log-out"> Log out </button>
-          <div class= "login-dropdown">  
-            <button class= "login"> Register </button>
-            <div class= "login-menu text-white" id= "register">
+          <div class= "login-dropdown" id= "register-dropdown">  
+            <button class= "login" id= "register"> Register </button>
+            <div class= "login-menu text-white" id= "register-menu">
               Register: <br>
               <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
               <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
@@ -53,13 +52,55 @@
       </div>
     </div>
     <div class="container-fluid justify-content-center border">
-      <div class="row justify-content-center align-items-center border" style="height: 500px;">
-        <div class="col-6 align-items-center border">
+      <div class= "row justify-content-center align-items-center border" style = "height: 500px;">
+        <div class= "col-6 align-items-center border ">
           <h1 class= "text-white text-center">
             Contact List
           </h1>
+          <div class= "col border search">
+            <div class="row justify-content-center unlogged-search hidden" id= "unlogged-search">
+              <div class="col">
+                  <div class="card-body row no-gutters align-items-center">
+                      <!--end of col-->
+                      <div class="col">
+                         <span class= "unlogged-text"> Log in to view contacts </span>
+                      </div>
+                       <!--end of col-->
+                       <div class="col-auto">
+                        <div class="icon">
+                           <i class="fas fa-lock"></i>
+                          </div>
+                        </div>
+                          <!--end of col-->
+                  </div>
+              </div>
+              <!--end of col-->
+          </div>
+            <div class="row justify-content-center logged-in-search" id= "logged-search">
+              <div class="col">
+                  <div class="card-body row no-gutters align-items-center">
+                      <div class="col-auto">
+                         <i class="fas fa-search"></i>
+                      </div>
+                      <!--end of col-->
+                      <div class="col">
+                         <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search your contacts...">
+                      </div>
+                       <!--end of col-->
+                       <div class="col-auto">
+                        <div class="icon">
+                          <button class= "login text-black" id= "add-contact">
+                           <i class="fas fa-plus"></i>
+                          </button>
+                          </div>
+                        </div>
+                          <!--end of col-->
+                  </div>
+              </div>
+              <!--end of col-->
+          </div>
+          </div>
           <!-- ADD CONTACT START -->
-          <button>Add Contact</button>
           <div class="add-contact border" id="add-contact">
             <div class="add-contact-header">
               <div class="add-contact-title"></div>
@@ -75,16 +116,7 @@
             <div id="overlay"></div>
           </div>
           <!-- ADD CONTACT END -->
-
       </div>
-      </div>
-    </div>
-
-    <div class="container-fluid justify-content-center border">
-      <div class="row justify-content-center align-items-center border" style="height: 500px;">
-        <div class="col-6 align-items-center border">
-          <input type="text" id="search-contact" placeholder="Search for contact">
-        </div>
       </div>
     </div>
 
@@ -92,7 +124,7 @@
     <script src="./suggestions.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
-            crossorigin="anonymous"/>
+            crossorigin="anonymous">
 
     </script>
   </body>
