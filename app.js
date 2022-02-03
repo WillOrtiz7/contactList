@@ -1,6 +1,6 @@
 // Selectors
 addContactSubmitButton = document.getElementById("add-contact-submit");
-searchContactInput = document.getElementById("search-contact");
+searchContactInput = document.getElementById("real-search-bar");
 
 // Variables
 const urlBase = "http://cop4331-27.com/LAMPAPI";
@@ -198,9 +198,7 @@ function executeSearchContact() {
       searchResultList.remove();
     });
 
-    let userInput = document.getElementById("search-contact").value;
-
-    // Create object with necessary info for api call
+    let userInput = document.getElementById("real-search-bar").value;
     let searchContactObj = {
       userId: userID,
       userInput: userInput,
@@ -234,9 +232,9 @@ function executeSearchContact() {
               const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
               li.appendChild(textNode);
               li.setAttribute("id", "contact-" + response.ids[i]);
-              li.setAttribute("class", "text-white search-result-list");
-              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i]));
-              const searchResults = document.getElementById("search-results");
+              li.setAttribute("class", "search-result-list");
+              li.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, id));
+              const searchResults = document.getElementById("search-bar");
               searchResults.appendChild(li);
 
             }
