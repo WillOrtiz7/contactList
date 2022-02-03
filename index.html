@@ -29,7 +29,7 @@
         <div class= "col-3 align-self-start text-center border align-items-top">
           <span class="logged-in-ui hidden text-white" id="logged-in"></span>
           <div class= "login-dropdown border" id= "login-dropdown">
-            <button class= "login" id= "login"> Log in </button>
+            <button class= "login dropdown-button" id= "login"> Log in </button>
             <div class= "login-menu text-white" id= "login-menu">
               Log in: <br>
               <input class= "login-form" id= "user" type= "text" placeholder= "Username">
@@ -40,7 +40,7 @@
         <div class= "col-3 align-self-start text-center border">
           <button class= "logged-in-ui hidden login " id= "log-out"> Log out </button>
           <div class= "login-dropdown" id= "register-dropdown">  
-            <button class= "login" id= "register"> Register </button>
+            <button class= "login dropdown-button" id= "register"> Register </button>
             <div class= "login-menu text-white" id= "register-menu">
               Register: <br>
               <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
@@ -59,7 +59,7 @@
             Contact List
           </h1>
           <div class= "col border search">
-            <div class="row justify-content-center unlogged-search" id= "unlogged-search">
+            <div class="row justify-content-center unlogged-search hidden" id= "unlogged-search">
               <div class="col">
                   <div class="card-body row no-gutters align-items-center">
                       <!--end of col-->
@@ -67,17 +67,17 @@
                          <span class= "unlogged-text"> Log in to view contacts </span>
                       </div>
                        <!--end of col-->
-                       <div class="col-auto">
-                        <div class="icon">
-                           <i class="fas fa-lock"></i>
+                        <div class="col-auto">
+                          <div class="icon">
+                            <i class="fas fa-lock"></i>
                           </div>
                         </div>
                           <!--end of col-->
                   </div>
               </div>
               <!--end of col-->
-          </div>
-            <div class="row justify-content-center logged-in-search hidden" id= "logged-search">
+            </div>
+            <div class="row justify-content-center logged-in-search" id= "logged-search">
               <div class="col">
                   <div class="card-body row no-gutters align-items-center">
                       <div class="col-auto">
@@ -90,8 +90,8 @@
                        <!--end of col-->
                        <div class="col-auto">
                         <div class="icon">
-                          <button class= "login text-black" id= "add-contact">
-                           <i class="fas fa-plus"></i>
+                          <button class= "login text-black dropdown-button" id= "add-contact">
+                            <i class= "fas fa-plus dropdown-button" id= "add-contact"></i>
                           </button>
                           </div>
                         </div>
@@ -99,11 +99,9 @@
                   </div>
               </div>
               <!--end of col-->
-          </div>
-          </div>
+            </div>
+        
           <!-- ADD CONTACT START -->
-          <button>Add Contact</button>
-          <p>AAAAA</p>
           <div class="add-contact border" id="add-contact">
             <div class="add-contact-header">
               <div class="add-contact-title"></div>
@@ -119,6 +117,18 @@
             <div id="overlay"></div>
           </div>
           <!-- ADD CONTACT END -->
+          </div>
+          <div class= "login-dropdown text-black border" id= "add-contact-dropdown">
+            <div class= "login-menu text-white" id= "add-contact-menu">
+              Add a contact: <br>
+              <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John">
+              <input class= "login-form" type="text" action="submit" id="add-contact-last-name" placeholder="Smith">
+              <input class= "login-form"type="text" action="submit" id="add-contact-phone-number" placeholder="9999999999">
+              <input class= "login-form" type="text" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com">
+              <button class= "login" type="button" id="add-contact-submit">Submit</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- SEARCH CONTACT START -->

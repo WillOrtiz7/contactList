@@ -7,6 +7,7 @@ body {
 .login {
   color: white;
   width: 100%;
+  max-width: 200px;
   height: max-content;
   border: none;
   font-family: inherit;
@@ -59,7 +60,7 @@ body {
   font-size: 16pt;
 }
 
-.login-dropdown.active > .login + .login-menu {
+.login-dropdown.active >  .login-menu {
   opacity: 1;
   pointer-events: auto;
 }
@@ -74,6 +75,7 @@ body {
 }
 
 .add-contact {
+  display: none;
   position: relative;
   border: 1px solid black;
   border-radius: 10px;
@@ -133,4 +135,8 @@ body {
 .unlogged-text{
   color:lightslategrey;
   font-size: 1.5rem;
+}
+
+.dropdown-button{
+  pointer-events:auto;
 }

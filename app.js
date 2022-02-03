@@ -24,7 +24,7 @@ document.addEventListener("click", (event) => {
     deleteContact()
   }
 
-  const isButton = event.target.matches(".login");
+  const isButton = event.target.matches(".dropdown-button");
 
   if (!isButton && event.target.closest(".login-dropdown") != null) return;
 
@@ -196,6 +196,7 @@ function executeSearchContact() {
     // Everytime the user presses key we want to refresh their list of potential contacts
     // This is why we must clear the old list on every call of executeSearchContact()
     while (document.getElementById("search-result-list")){
+      console.log("List item being removed");
       let searchResultList = document.getElementById("search-result-list");
       searchResultList.remove();
     }
@@ -258,11 +259,10 @@ function deleteContact(){
   }
 
 
-function executeRetrieveContact(contactID) {
-
+function executeRetrieveContact(id) {
   // Creating object with necessary info for api
   let retrieveContactObj = {
-    id: contactID,
+    id: id,
   };
 
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
