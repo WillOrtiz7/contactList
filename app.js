@@ -14,19 +14,16 @@ addContactSubmitButton.addEventListener("click", executeAddContact);
 searchContactInput.addEventListener("keyup", executeSearchContact);
 
 document.addEventListener("click", (event) => {
-
   if (event.target.id == "log-out") {
     console.log("Testing");
     logOut();
     return;
   }
 
-  if (event.target.matches(".delete-button")){
+  if (event.target.matches(".delete-button")) {
     console.log("This is working. id of the contact is " + event.target.id);
     deleteContact(event.target.id);
   }
-
-
 
   const isDropdown = event.target.matches(".dropdown-button");
 
@@ -34,23 +31,26 @@ document.addEventListener("click", (event) => {
 
   let currButton;
 
-  if (event.target.id == "add-contact"){
-    document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
-      contactInfoTable.remove()
-    });
-  }
+  // if (event.target.id == "add-contact"){
+  //   document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
+  //     contactInfoTable.remove()
+  //   });
+  // }
 
   if (isDropdown) {
     currButton = event.target.id;
-    currAction = currButton + "-dropdown"
-    console.log(currButton)
-    document.getElementById(currButton + "-dropdown").classList.toggle("active");
+    currAction = currButton + "-dropdown";
+    console.log(currButton);
+    document
+      .getElementById(currButton + "-dropdown")
+      .classList.toggle("active");
+    removePopups(currAction);
   }
 
-  document.querySelectorAll(".login-dropdown.active").forEach((button) => {
-    if (button.id === currAction) return;
-    button.classList.remove("active");
-  });
+  //   document.querySelectorAll(".login-dropdown.active").forEach((button) => {
+  //     if (button.id === currAction) return;
+  //     button.classList.remove("active");
+  //   });
 });
 
 document.onkeydown = (event) => {
@@ -167,7 +167,7 @@ function executeAddContact() {
       "add-contact-phone-number"
     ).value;
     let addContactEmail = document.getElementById("add-contact-email").value;
-    
+
     // Create object with necessary info for api call
     let addContactObj = {
       firstName: addContactFirstName,
@@ -204,24 +204,34 @@ function executeSearchContact() {
     console.log("Log in to search for a contact");
   } else {
     // Here we will clear the ul containing the list of contacts being displayed
-    document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
-      searchResultList.remove();
-    });
+    document
+      .querySelectorAll(".search-result-list")
+      .forEach((searchResultList) => {
+        searchResultList.remove();
+      });
 
-    document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
-      contactInfoTable.remove()
-    });
+    document
+      .querySelectorAll(".contact-info-table")
+      .forEach((contactInfoTable) => {
+        contactInfoTable.remove();
+      });
 
-    if (document.getElementById("add-contact-dropdown").classList.contains("active")){
+    if (
+      document
+        .getElementById("add-contact-dropdown")
+        .classList.contains("active")
+    ) {
       console.log("Testing");
-      document.getElementById("add-contact-dropdown").classList.toggle("active");
+      document
+        .getElementById("add-contact-dropdown")
+        .classList.toggle("active");
     }
 
     let userInput = document.getElementById("real-search-bar").value;
     let searchContactObj = {
       userId: userID,
       userInput: userInput,
-    }
+    };
     let searchContactJSON = JSON.stringify(searchContactObj);
     console.log("USER INPUT: " + userInput);
     let link = new XMLHttpRequest();
@@ -239,24 +249,31 @@ function executeSearchContact() {
           console.log("Successfully searched for contact");
           // Checks all contacts for potential matching letters from user input
           for (let i = 0; i < response.firstNames.length; i++) {
-            
-            if(document.getElementById("contact-" + response.ids[i]) != null){
+            if (document.getElementById("contact-" + response.ids[i]) != null) {
               continue;
             }
-            
+
             if (userInput.length > 0) {
-              console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
+              console.log(
+                response.firstNames[i] +
+                  " " +
+                  response.lastNames[i] +
+                  " " +
+                  response.ids[i]
+              );
               // Creating the element that will show the contacts first and last name on screen
               const li = document.createElement("li");
               const viewContact = document.createElement("span");
-              const textNode = document.createTextNode(response.firstNames[i] + " " + response.lastNames[i]);
+              const textNode = document.createTextNode(
+                response.firstNames[i] + " " + response.lastNames[i]
+              );
               const deleteButton = document.createElement("button");
               const editButton = document.createElement("button");
               const viewButton = document.createElement("button");
               const icon = document.createElement("i");
               const editIcon = document.createElement("i");
               const viewIcon = document.createElement("i");
-              icon.setAttribute("class" , " fas fa-trash-alt delete-button");
+              icon.setAttribute("class", " fas fa-trash-alt delete-button");
               icon.setAttribute("id", response.ids[i]);
               editIcon.setAttribute("class", "fas fa-edit edit-button");
               editIcon.setAttribute("id", "edit-icon-" + response.ids[i]);
@@ -265,15 +282,15 @@ function executeSearchContact() {
 
               // Creating buttons for each contact
               deleteButton.appendChild(icon);
-              deleteButton.setAttribute("class" , "delete-button");
+              deleteButton.setAttribute("class", "delete-button");
               deleteButton.setAttribute("id", response.ids[i]);
               editButton.appendChild(editIcon);
-              editButton.setAttribute("class" , "edit-button");
+              editButton.setAttribute("class", "edit-button");
               editButton.setAttribute("id", "edit-button-" + response.ids[i]);
               viewButton.appendChild(viewIcon);
-              viewButton.setAttribute("class" , "view-button");
+              viewButton.setAttribute("class", "view-button");
               viewButton.setAttribute("id", "view-button-" + response.ids[i]);
-              
+
               // Adding the completed buttons to the list of contacts
               viewContact.appendChild(textNode);
               li.appendChild(viewContact);
@@ -282,11 +299,31 @@ function executeSearchContact() {
               li.appendChild(viewButton);
               li.setAttribute("id", "contact-" + response.ids[i]);
               li.setAttribute("class", "search-result-list");
-              viewButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "view"));
-              editButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "edit"));
-              const searchResults = document.getElementById("search-bar");
-              searchResults.appendChild(li);
+              viewButton.addEventListener(
+                "click",
+                executeRetrieveContact.bind(
+                  executeRetrieveContact,
+                  response.ids[i],
+                  "view"
+                )
+              );
+              editButton.addEventListener(
+                "click",
+                executeRetrieveContact.bind(
+                  executeRetrieveContact,
+                  response.ids[i],
+                  "edit"
+                )
+              );
 
+              // Creating search results div
+              const searchResults = document.createElement("div");
+              searchResults.setAttribute("class", "list popup search-results");
+              searchResults.setAttribute("id", "search-list");
+              const searchBar = document.getElementById("search-bar");
+              searchBar.appendChild(searchResults);
+              removePopups(searchResults.id);
+              searchResults.appendChild(li);
             }
           }
         }
@@ -298,7 +335,7 @@ function executeSearchContact() {
   }
 }
 
-function executeEditContact(firstName, lastName, email, phoneNumber, id){
+function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   const editContactDropdownFrame = document.createElement("div");
   editContactDropdownFrame.setAttribute("id", "edit-contact");
   editContactDropdownFrame.setAttribute("class", "popup list");
@@ -308,30 +345,37 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id){
   const emailInput = document.createElement("input");
   const editContactSubmitButton = document.createElement("button");
 
+  // Creating the edit contact dropdown
   firstNameInput.setAttribute("value", firstName);
   lastNameInput.setAttribute("value", lastName);
   phoneNumberInput.setAttribute("value", phoneNumber);
   emailInput.setAttribute("value", email);
   editContactSubmitButton.setAttribute("type", "button");
+  let addContactDropdown = document.getElementById("add-contact-dropdown");
+  addContactDropdown.appendChild(editContactDropdownFrame);
   editContactDropdownFrame.appendChild(firstNameInput);
   editContactDropdownFrame.appendChild(lastNameInput);
   editContactDropdownFrame.appendChild(phoneNumberInput);
   editContactDropdownFrame.appendChild(emailInput);
   editContactDropdownFrame.appendChild(editContactSubmitButton);
+  removePopups(editContactDropdownFrame.id);
 
-  editContactSubmitButton.addEventListener("click", submitEditContact.bind(submitEditContact, id));
+  editContactSubmitButton.addEventListener(
+    "click",
+    submitEditContact.bind(submitEditContact, id)
+  );
 
-  function submitEditContact(id){
+  function submitEditContact(id) {
     let editContactObj = {
-    firstName: firstNameInput.value,
-    lastName: lastNameInput.value,
-    phoneNumber: phoneNumberInput.value,
-    emailAddress: emailInput.value,
-    id: id,
-  }
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      phoneNumber: phoneNumberInput.value,
+      emailAddress: emailInput.value,
+      id: id,
+    };
 
-  let editContactJSON = JSON.stringify(editContactObj);
-  let link = new XMLHttpRequest();
+    let editContactJSON = JSON.stringify(editContactObj);
+    let link = new XMLHttpRequest();
     let requestUrl = urlBase + "/EditContact.php";
     link.open("POST", requestUrl, true);
     link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -348,14 +392,13 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id){
     };
     console.log(editContactJSON);
     link.send(editContactJSON);
-
   }
 }
 
-function deleteContact(id){
-    // Give user an alert message to confirm if they want to delete the contact
-    if (confirm("Are you sure you want to delete this contact?")){
-    deleteJSON = {id:id};
+function deleteContact(id) {
+  // Give user an alert message to confirm if they want to delete the contact
+  if (confirm("Are you sure you want to delete this contact?")) {
+    deleteJSON = { id: id };
     deleteJSON = JSON.stringify(deleteJSON);
     console.log(id + " " + deleteJSON);
 
@@ -370,31 +413,24 @@ function deleteContact(id){
         let response = JSON.parse(link.responseText);
         if (response.error.length != 0) {
           console.log(response.error);
-        }
-        else{
+        } else {
           console.log("Deleted contact successfully");
         }
       }
+    };
+    link.send(deleteJSON);
   }
-  link.send(deleteJSON);
-}
 }
 
 function executeRetrieveContact(id, type) {
-  if (document.getElementById("open-contact").classList.contains("hidden")){
-    document.getElementById("open-contact").classList.toggle("hidden");
-  }
-  document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
-      searchResultList.remove();
-    });
   // Creating object with necessary info for api
   let retrieveContactObj = {
     id: id,
   };
 
-  if (document.getElementById("open-contact").classList.contains("hidden")){
+  if (document.getElementById("open-contact").classList.contains("hidden")) {
     document.getElementById("open-contact").classList.toggle("hidden");
-  }  
+  }
 
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
 
@@ -417,23 +453,25 @@ function executeRetrieveContact(id, type) {
         lastName = response.lastName;
         email = response.emailAddress;
         phoneNumber = response.phoneNumber;
-        if (type === "edit"){
+        if (type === "edit") {
           executeEditContact(firstName, lastName, email, phoneNumber, id);
-        }else{
-        let contactInfoArray = [firstName, lastName, email, phoneNumber];
-        const table = document.createElement("table");
-        const tr = document.createElement("tr");
-        for (let i = 0; i < 4; i++){
-          const td = document.createElement("td");
-          const textNode = document.createTextNode(contactInfoArray[i]);
-          td.appendChild(textNode);
-          tr.appendChild(td);
+        } else {
+          let contactInfoArray = [firstName, lastName, email, phoneNumber];
+          const table = document.createElement("table");
+          const tr = document.createElement("tr");
+          for (let i = 0; i < 4; i++) {
+            const td = document.createElement("td");
+            const textNode = document.createTextNode(contactInfoArray[i]);
+            td.appendChild(textNode);
+            tr.appendChild(td);
+          }
+          const openContact = document.getElementById("open-contact");
+          table.appendChild(tr);
+          table.setAttribute("class", "contact-info-table list popup");
+          table.setAttribute("id", "contact-table");
+          removePopups(table.id);
+          openContact.appendChild(table);
         }
-        const openContact = document.getElementById("open-contact");
-        table.appendChild(tr);
-        table.setAttribute("class", "contact-info-table");
-        openContact.appendChild(table);
-        } 
       }
     }
   };
@@ -458,4 +496,21 @@ function logOut() {
   document.getElementById("add-contact-dropdown").classList.remove("active");
 
   isLoggedIn = false;
+}
+
+function removePopups(id) {
+  document.querySelectorAll(".popup").forEach((popup) => {
+    if (popup.id == id) {
+      console.log("Conditional is working");
+      return;
+    } else {
+      if (popup.classList.contains("login-dropdown")) {
+        console.log("Drop down " + popup.id);
+        popup.classList.remove("active");
+      } else if (popup.classList.contains("list")) {
+        console.log("List " + popup.id);
+        popup.remove();
+      }
+    }
+  });
 }
