@@ -37,10 +37,9 @@ document.addEventListener("click", (event) => {
     console.log(currButton);
     document.getElementById(currAction).classList.toggle("active");
     document.getElementById(currButton + "-menu").classList.remove("hidden");
-    
+
     removePopups(currAction);
   }
-
 });
 
 document.onkeydown = (event) => {
@@ -244,13 +243,7 @@ function executeSearchContact() {
             }
 
             if (userInput.length > 0) {
-              console.log(
-                response.firstNames[i] +
-                  " " +
-                  response.lastNames[i] +
-                  " " +
-                  response.ids[i]
-              );
+              console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
               // Creating the element that will show the contacts first and last name on screen
               const li = document.createElement("li");
               const viewContact = document.createElement("span");
@@ -314,6 +307,9 @@ function executeSearchContact() {
               searchBar.appendChild(searchResults);
               removePopups(searchResults.id);
               searchResults.appendChild(li);
+            }
+            if (userInput.length == 0){
+              removePopups(0);
             }
           }
         }
@@ -499,6 +495,7 @@ function removePopups(id) {
       if (popup.classList.contains("login-dropdown")) {
         console.log("Drop down " + popup.id);
         popup.classList.remove("active");
+        console.log("REMOVE POPUPS INPUT VALUE: " + document.getElementById("real-search-bar").value);
       } else if (popup.classList.contains("list")) {
         console.log("List " + popup.id);
         popup.remove();
