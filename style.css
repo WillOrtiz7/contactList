@@ -189,8 +189,3 @@ body {
 .contact-table.hidden{
   display:none;
 }
-
-.contact-table.active{
-  max-height: 100px;
-  overflow: auto;
-}

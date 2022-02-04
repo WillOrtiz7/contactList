@@ -377,7 +377,7 @@ function deleteContact(id){
       }
   }
   link.send(deleteJSON);
-  }
+}
 }
 
 function executeRetrieveContact(id, type) {
@@ -391,6 +391,10 @@ function executeRetrieveContact(id, type) {
   let retrieveContactObj = {
     id: id,
   };
+
+  if (document.getElementById("open-contact").classList.contains("hidden")){
+    document.getElementById("open-contact").classList.toggle("hidden");
+  }  
 
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
 
