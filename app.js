@@ -304,16 +304,51 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id){
   const lastNameInput = document.createElement("input");
   const phoneNumberInput = document.createElement("input");
   const emailInput = document.createElement("input");
+  const editContactSubmitButton = document.createElement("button");
 
   firstNameInput.setAttribute("value", firstName);
   lastNameInput.setAttribute("value", lastName);
   phoneNumberInput.setAttribute("value", phoneNumber);
   emailInput.setAttribute("value", email);
+  editContactSubmitButton.setAttribute("type", "button");
 
   editContactDropdownFrame.appendChild(firstNameInput);
   editContactDropdownFrame.appendChild(lastNameInput);
   editContactDropdownFrame.appendChild(phoneNumberInput);
   editContactDropdownFrame.appendChild(emailInput);
+  editContactDropdownFrame.appendChild(editContactSubmitButton);
+
+  editContactSubmitButton.addEventListener("click", submitEditContact.bind(submitEditContact, id));
+
+  function submitEditContact(id){
+    let editContactObj = {
+    firstName: firstNameInput.value,
+    lastName: lastNameInput.value,
+    phoneNumber: phoneNumberInput.value,
+    emailAddress: emailInput.value,
+    id: id,
+  }
+
+  let editContactJSON = JSON.stringify(editContactObj);
+  let link = new XMLHttpRequest();
+    let requestUrl = urlBase + "/EditContact.php";
+    link.open("POST", requestUrl, true);
+    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+    link.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        let response = JSON.parse(link.responseText);
+        if (response.error.length != 0) {
+          console.log(response.error);
+        } else {
+          console.log("Successfully edited contact");
+        }
+      }
+    };
+    console.log(editContactJSON);
+    link.send(editContactJSON);
+
+  }
 }
 
 function deleteContact(id){
