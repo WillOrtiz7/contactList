@@ -299,7 +299,7 @@ function executeSearchContact() {
 }
 
 function executeEditContact(firstName, lastName, email, phoneNumber, id){
-  const editContactDropdownFrame = document.getElementById("add-contact-dropdown");
+  const editContactDropdownFrame = document.getElementById("edit-contact");
   const firstNameInput = document.createElement("input");
   const lastNameInput = document.createElement("input");
   const phoneNumberInput = document.createElement("input");
@@ -414,6 +414,7 @@ function logOut() {
 
   document.getElementById("unlogged-search").classList.toggle("hidden");
   document.getElementById("logged-search").classList.toggle("hidden");
+  document.getElementById("add-contact-dropdown").classList.remove("active");
 
   isLoggedIn = false;
 }
