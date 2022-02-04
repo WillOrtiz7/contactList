@@ -28,7 +28,7 @@
       <div class= "row justify-content-end">
         <div class= "col-3 align-self-start text-center border align-items-top">
           <span class="logged-in-ui hidden text-white" id="logged-in"></span>
-          <div class= "login-dropdown border" id= "login-dropdown">
+          <div class= "login-dropdown popup border" id= "login-dropdown">
             <button class= "login dropdown-button" id= "login"> Log in </button>
             <div class= "login-menu text-white" id= "login-menu">
               Log in: <br>
@@ -39,7 +39,7 @@
         </div>
         <div class= "col-3 align-self-start text-center border">
           <button class= "logged-in-ui hidden login " id= "log-out"> Log out </button>
-          <div class= "login-dropdown" id= "register-dropdown">  
+          <div class= "login-dropdown popup" id= "register-dropdown">  
             <button class= "login dropdown-button" id= "register"> Register </button>
             <div class= "login-menu text-white" id= "register-menu">
               Register: <br>
@@ -101,11 +101,10 @@
               </div>
               <!--end of col-->
             </div>
-            <!-- <div id="open-contact" class= "contact-table hidden border"></div> -->
+            <div id="open-contact" class= "contact-table hidden border"></div>
           </div>
           <!-- ADD CONTACT START -->
-          <div class= "login-dropdown logged-in-ui text-black border" id= "add-contact-dropdown">
-            <div id="edit-contact"></div>
+          <div class= "login-dropdown popup logged-in-ui text-black border" id= "add-contact-dropdown">
             <div class= "login-menu text-white" id= "add-contact-menu">
               Add a contact: <br>
               <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John">
