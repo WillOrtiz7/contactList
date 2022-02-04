@@ -22,6 +22,7 @@ document.addEventListener("click", (event) => {
   }
 
   if (event.target.matches(".delete-button")){
+    console.log("This is working. id of the contact is " + event.target.id);
     deleteContact(event.target.id);
   }
 
@@ -33,15 +34,23 @@ document.addEventListener("click", (event) => {
 
   let currButton;
 
+  if (event.target.id == "add-contact"){
+    document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
+      contactInfoTable.remove()
+    });
+  }
 
   if (isDropdown) {
     currButton = event.target.id;
     currAction = currButton + "-dropdown"
     console.log(currButton)
     document.getElementById(currButton + "-dropdown").classList.toggle("active");
-    removePopups(currAction);
   }
 
+  document.querySelectorAll(".login-dropdown.active").forEach((button) => {
+    if (button.id === currAction) return;
+    button.classList.remove("active");
+  });
 });
 
 document.onkeydown = (event) => {
@@ -204,6 +213,7 @@ function executeSearchContact() {
     });
 
     if (document.getElementById("add-contact-dropdown").classList.contains("active")){
+      console.log("Testing");
       document.getElementById("add-contact-dropdown").classList.toggle("active");
     }
 
@@ -274,11 +284,7 @@ function executeSearchContact() {
               li.setAttribute("class", "search-result-list");
               viewButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "view"));
               editButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "edit"));
-              const searchResults = document.createElement("div");
-              searchResults.setAttribute("class", "list popup search-results");
-              searchResults.setAttribute("id", "search-list");
-              document.getElementById("search-bar").appendChild(searchResults);
-              removePopups("search-list");
+              const searchResults = document.getElementById("search-bar");
               searchResults.appendChild(li);
 
             }
@@ -295,26 +301,59 @@ function executeSearchContact() {
 function executeEditContact(firstName, lastName, email, phoneNumber, id){
   const editContactDropdownFrame = document.createElement("div");
   editContactDropdownFrame.setAttribute("id", "edit-contact");
-  editContactDropdownFrame.setAttribute("class", "list popup");
+  editContactDropdownFrame.setAttribute("class", "popup list");
   const firstNameInput = document.createElement("input");
   const lastNameInput = document.createElement("input");
   const phoneNumberInput = document.createElement("input");
   const emailInput = document.createElement("input");
+  const editContactSubmitButton = document.createElement("button");
 
   firstNameInput.setAttribute("value", firstName);
   lastNameInput.setAttribute("value", lastName);
   phoneNumberInput.setAttribute("value", phoneNumber);
   emailInput.setAttribute("value", email);
-
-  document.getElementById("add-contact-dropdown").appendChild(editContactDropdownFrame);
+  editContactSubmitButton.setAttribute("type", "button");
   editContactDropdownFrame.appendChild(firstNameInput);
   editContactDropdownFrame.appendChild(lastNameInput);
   editContactDropdownFrame.appendChild(phoneNumberInput);
   editContactDropdownFrame.appendChild(emailInput);
-  removePopups(editContactDropdownFrame.id);
+  editContactDropdownFrame.appendChild(editContactSubmitButton);
+
+  editContactSubmitButton.addEventListener("click", submitEditContact.bind(submitEditContact, id));
+
+  function submitEditContact(id){
+    let editContactObj = {
+    firstName: firstNameInput.value,
+    lastName: lastNameInput.value,
+    phoneNumber: phoneNumberInput.value,
+    emailAddress: emailInput.value,
+    id: id,
+  }
+
+  let editContactJSON = JSON.stringify(editContactObj);
+  let link = new XMLHttpRequest();
+    let requestUrl = urlBase + "/EditContact.php";
+    link.open("POST", requestUrl, true);
+    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+    link.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        let response = JSON.parse(link.responseText);
+        if (response.error.length != 0) {
+          console.log(response.error);
+        } else {
+          console.log("Successfully edited contact");
+        }
+      }
+    };
+    console.log(editContactJSON);
+    link.send(editContactJSON);
+
+  }
 }
 
 function deleteContact(id){
+    // Give user an alert message to confirm if they want to delete the contact
     if (confirm("Are you sure you want to delete this contact?")){
     deleteJSON = {id:id};
     deleteJSON = JSON.stringify(deleteJSON);
@@ -342,6 +381,12 @@ function deleteContact(id){
 }
 
 function executeRetrieveContact(id, type) {
+  if (document.getElementById("open-contact").classList.contains("hidden")){
+    document.getElementById("open-contact").classList.toggle("hidden");
+  }
+  document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
+      searchResultList.remove();
+    });
   // Creating object with necessary info for api
   let retrieveContactObj = {
     id: id,
@@ -382,9 +427,7 @@ function executeRetrieveContact(id, type) {
         }
         const openContact = document.getElementById("open-contact");
         table.appendChild(tr);
-        table.setAttribute("class", "contact-info-table list popup");
-        table.setAttribute("id", "contact-table");
-        removePopups("contact-table");
+        table.setAttribute("class", "contact-info-table");
         openContact.appendChild(table);
         } 
       }
@@ -411,25 +454,4 @@ function logOut() {
   document.getElementById("add-contact-dropdown").classList.remove("active");
 
   isLoggedIn = false;
-}
-
-function removePopups(id){
-  document.querySelectorAll(".popup").forEach((popup) => {
-    if (popup.id == id){
-      console.log("Conditional is working");
-      return;
-    }
-
-    else{
-      if (popup.classList.contains("login-dropdown")){
-        console.log("Drop down " + popup.id);
-        popup.classList.remove("active");
-      }
-
-      else if (popup.classList.contains("list")){
-        console.log("List " + popup.id);
-        popup.remove();
-      }
-    }
-  });
 }
