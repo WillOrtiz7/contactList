@@ -315,7 +315,7 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id){
 }
 
 function deleteContact(id){
-    if (confirm("Are you sure you want to delete this contact?")){
+
     deleteJSON = {id:id};
     deleteJSON = JSON.stringify(deleteJSON);
     console.log(id + " " + deleteJSON);
@@ -338,7 +338,6 @@ function deleteContact(id){
       }
   }
   link.send(deleteJSON);
-  }
 }
 
 function executeRetrieveContact(id, type) {
@@ -346,6 +345,10 @@ function executeRetrieveContact(id, type) {
   let retrieveContactObj = {
     id: id,
   };
+
+  if (document.getElementById("open-contact").classList.contains("hidden")){
+    document.getElementById("open-contact").classList.toggle("hidden");
+  }  
 
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
 
