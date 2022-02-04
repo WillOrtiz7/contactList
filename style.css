@@ -189,3 +189,7 @@ body {
 .contact-table.hidden{
   display:none;
 }
+
+.login-menu.hidden{
+  display:none;
+}

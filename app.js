@@ -31,26 +31,16 @@ document.addEventListener("click", (event) => {
 
   let currButton;
 
-  // if (event.target.id == "add-contact"){
-  //   document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
-  //     contactInfoTable.remove()
-  //   });
-  // }
-
   if (isDropdown) {
     currButton = event.target.id;
     currAction = currButton + "-dropdown";
     console.log(currButton);
-    document
-      .getElementById(currButton + "-dropdown")
-      .classList.toggle("active");
+    document.getElementById(currAction).classList.toggle("active");
+    document.getElementById(currButton + "-menu").classList.remove("hidden");
+    
     removePopups(currAction);
   }
 
-  //   document.querySelectorAll(".login-dropdown.active").forEach((button) => {
-  //     if (button.id === currAction) return;
-  //     button.classList.remove("active");
-  //   });
 });
 
 document.onkeydown = (event) => {
@@ -336,6 +326,8 @@ function executeSearchContact() {
 }
 
 function executeEditContact(firstName, lastName, email, phoneNumber, id) {
+  const contactMenu = document.getElementById("add-contact-menu");
+  contactMenu.classList.add("hidden");
   const editContactDropdownFrame = document.createElement("div");
   editContactDropdownFrame.setAttribute("id", "edit-contact");
   editContactDropdownFrame.setAttribute("class", "popup list");
