@@ -216,3 +216,8 @@ body {
   max-width:700px;
   display:flex;
 }
+
+#add-contact-menu, #open-contact, #register-menu, #login-menu, #edit-contact{
+  background: #1F1F1F;
+ 
+}
