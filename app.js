@@ -161,7 +161,7 @@ function executeLogin() {
         });
 
         let loginText = document.getElementById("logged-in");
-        loginText.innerHTML = "Welcome " + user;
+        loginText.innerHTML = "Welcome, " + user;
 
         document.querySelectorAll(".logged-in-ui").forEach((button) => {
           button.classList.toggle("hidden");
@@ -215,6 +215,18 @@ function executeAddContact() {
           console.log(response.error);
         } else {
           console.log("Successfully added contact");
+          document.getElementById("add-contact-first-name").value = "";
+          document.getElementById("add-contact-last-name").value = "";
+          document.getElementById("add-contact-email").value = "";
+          document.getElementById("add-contact-phone-number").value = "";
+          document.getElementById("add-contact-dropdown").classList.remove("active");
+          document.getElementById("add-contact-menu").classList.toggle("hidden");
+
+          const confirmMessage = document.createElement("h3");
+          confirmMessage.setAttribute("class", "text-white text-center popup list");
+          confirmMessage.setAttribute("id", "confirmMessage");
+          document.getElementById("main-content").appendChild(confirmMessage);
+          confirmMessage.innerHTML = "Successfully added " + addContactObj.firstName + " " + addContactObj.lastName;
         }
       }
     };
@@ -383,16 +395,22 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   const lineBreak = document.createElement("br");
   const editContactSubmitButton = document.createElement("button");
 
-  firstNameInput.setAttribute("class", "login-form");
-  lastNameInput.setAttribute("class", "login-form");
-  phoneNumberInput.setAttribute("class", "login-form");
-  emailInput.setAttribute("class", "login-form");
+  firstNameInput.setAttribute("class", "login-form edit");
+  lastNameInput.setAttribute("class", "login-form edit");
+  phoneNumberInput.setAttribute("class", "login-form edit");
+  emailInput.setAttribute("class", "login-form edit");
 
   // Creating the edit contact dropdown
   firstNameInput.setAttribute("value", firstName);
   lastNameInput.setAttribute("value", lastName);
   phoneNumberInput.setAttribute("value", phoneNumber);
   emailInput.setAttribute("value", email);
+
+  firstNameInput.setAttribute("type", "text");
+  lastNameInput.setAttribute("type", "text");
+  phoneNumberInput.setAttribute("type", "text");
+  emailInput.setAttribute("type", "text");
+  
   editContactSubmitButton.setAttribute("type", "button");
   editContactSubmitButton.setAttribute("class", "login text-white");
   editContactSubmitButton.innerHTML = "Confirm";
@@ -417,6 +435,7 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   );
 
   function submitEditContact(id) {
+
     let editContactObj = {
       firstName: firstNameInput.value,
       lastName: lastNameInput.value,
@@ -424,6 +443,8 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
       emailAddress: emailInput.value,
       id: id,
     };
+
+    document.getElementById("edit-contact").remove();
 
     let editContactJSON = JSON.stringify(editContactObj);
     let link = new XMLHttpRequest();
@@ -438,6 +459,13 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
           console.log(response.error);
         } else {
           console.log("Successfully edited contact");
+
+          const confirmMessage = document.createElement("h3");
+          confirmMessage.setAttribute("class", "text-white text-center popup list");
+          confirmMessage.setAttribute("id", "confirmMessage");
+          document.getElementById("main-content").appendChild(confirmMessage);
+          confirmMessage.innerHTML = "Successfully updated " + editContactObj.firstName + " " + editContactObj.lastName;
+
         }
       }
     };
@@ -505,7 +533,9 @@ function executeRetrieveContact(id, type) {
         phoneNumber = response.phoneNumber;
         if (type === "edit") {
           executeEditContact(firstName, lastName, email, phoneNumber, id);
-        } else {
+        } 
+        
+        else {
           
           const openContact = document.createElement("div");
           openContact.setAttribute("id", "open-contact");
@@ -614,6 +644,10 @@ function removePopups(id) {
       if (popup.classList.contains("login-dropdown")) {
         // Clears all inputs that are within a form upon their respective dropdown being closed
         document.querySelectorAll(".login-form").forEach((input) => {
+          if(input.classList.contains("edit")){
+            return;
+          }
+
           input.value = "";
         });
         console.log("Drop down " + popup.id);
