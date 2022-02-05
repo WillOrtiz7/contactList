@@ -38,6 +38,7 @@ document.addEventListener("click", (event) => {
 
     // Add contact keeps its animation when toggling between hidden and not hidden
     if (currButton == "add-contact"){
+      searchContactInput.value = "";
       document.getElementById("add-contact-menu").classList.toggle("hidden");
       setTimeout(function(){
         document.getElementById(currAction).classList.toggle("active");
@@ -340,16 +341,24 @@ function executeSearchContact() {
 }
 
 function executeEditContact(firstName, lastName, email, phoneNumber, id) {
-  const contactMenu = document.getElementById("add-contact-menu");
-  contactMenu.classList.add("hidden");
+
   const editContactDropdownFrame = document.createElement("div");
   editContactDropdownFrame.setAttribute("id", "edit-contact");
-  editContactDropdownFrame.setAttribute("class", "popup list");
+  editContactDropdownFrame.setAttribute("class", "popup list text-white");
+  editContactDropdownFrame.setAttribute("style", "font-size: 16pt");
+
+
   const firstNameInput = document.createElement("input");
   const lastNameInput = document.createElement("input");
   const phoneNumberInput = document.createElement("input");
   const emailInput = document.createElement("input");
+  const lineBreak = document.createElement("br");
   const editContactSubmitButton = document.createElement("button");
+
+  firstNameInput.setAttribute("class", "login-form");
+  lastNameInput.setAttribute("class", "login-form");
+  phoneNumberInput.setAttribute("class", "login-form");
+  emailInput.setAttribute("class", "login-form");
 
   // Creating the edit contact dropdown
   firstNameInput.setAttribute("value", firstName);
@@ -357,13 +366,21 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   phoneNumberInput.setAttribute("value", phoneNumber);
   emailInput.setAttribute("value", email);
   editContactSubmitButton.setAttribute("type", "button");
+  editContactSubmitButton.setAttribute("class", "login text-white");
+  editContactSubmitButton.innerHTML = "Confirm";
+
   let addContactDropdown = document.getElementById("add-contact-dropdown");
   addContactDropdown.appendChild(editContactDropdownFrame);
+
+  editContactDropdownFrame.innerHTML = "Editing " + firstName + " " + lastName;
+  editContactDropdownFrame.appendChild(document.createElement("br"));
   editContactDropdownFrame.appendChild(firstNameInput);
   editContactDropdownFrame.appendChild(lastNameInput);
   editContactDropdownFrame.appendChild(phoneNumberInput);
   editContactDropdownFrame.appendChild(emailInput);
+  editContactDropdownFrame.appendChild(lineBreak);
   editContactDropdownFrame.appendChild(editContactSubmitButton);
+
   removePopups(editContactDropdownFrame.id);
 
   editContactSubmitButton.addEventListener(
@@ -441,10 +458,6 @@ function executeRetrieveContact(id, type) {
     id: id,
   };
 
-  if (document.getElementById("open-contact").classList.contains("hidden")) {
-    document.getElementById("open-contact").classList.toggle("hidden");
-  }
-
   let retrieveContactJSON = JSON.stringify(retrieveContactObj);
 
   console.log(retrieveContactJSON);
@@ -469,21 +482,71 @@ function executeRetrieveContact(id, type) {
         if (type === "edit") {
           executeEditContact(firstName, lastName, email, phoneNumber, id);
         } else {
-          let contactInfoArray = [firstName, lastName, email, phoneNumber];
-          const table = document.createElement("table");
-          const tr = document.createElement("tr");
-          for (let i = 0; i < 4; i++) {
-            const td = document.createElement("td");
-            const textNode = document.createTextNode(contactInfoArray[i]);
-            td.appendChild(textNode);
-            tr.appendChild(td);
-          }
-          const openContact = document.getElementById("open-contact");
-          table.appendChild(tr);
-          table.setAttribute("class", "contact-info-table list popup");
-          table.setAttribute("id", "contact-table");
-          removePopups(table.id);
-          openContact.appendChild(table);
+          
+          const editContactDropdownFrame = document.createElement("div");
+          editContactDropdownFrame.setAttribute("id", "edit-contact");
+          editContactDropdownFrame.setAttribute("class", "popup list text-white");
+          editContactDropdownFrame.setAttribute("style", "font-size: 16pt");
+
+
+          const firstName = document.createElement("input");
+          const lastName = document.createElement("input");
+          const phoneNumber = document.createElement("input");
+          const email = document.createElement("input");
+
+
+          firstName.setAttribute("class", "login-form");
+          lastName.setAttribute("class", "login-form");
+          phoneNumber.setAttribute("class", "login-form");
+          email.setAttribute("class", "login-form");
+
+          firstName.innerHTML = "TESTING";
+          lastName.innerHTML = "TESTING"
+          phoneNumber.innerHTML = "TESTING"
+          email.innerHTML = "TESTING";
+
+          let addContactDropdown = document.getElementById("search-bar");
+          addContactDropdown.appendChild(editContactDropdownFrame);
+
+          editContactDropdownFrame.appendChild(document.createElement("br"));
+          editContactDropdownFrame.appendChild(firstName);
+          editContactDropdownFrame.appendChild(lastName);
+          editContactDropdownFrame.appendChild(phoneNumber);
+          editContactDropdownFrame.appendChild(email);
+          editContactDropdownFrame.appendChild(lineBreak);
+          editContactDropdownFrame.appendChild(editContactSubmitButton);
+
+          // const openContact = document.createElement("div");
+          // openContact.setAttribute("id", "open-contact");
+          // openContact.setAttribute("class", "popup list text-white container border");
+          // openContact.setAttribute("style", "font-size: 16pt");
+        
+        
+          // const firstName = document.createElement("div");
+          // const lastName = document.createElement("div");
+          // const phoneNumber = document.createElement("div");
+          // const email = document.createElement("div");
+
+          // firstName.setAttribute("class", "contact-info login-form col-6");
+          // lastName.setAttribute("class", "contact-info login-form col-6");
+          // phoneNumber.setAttribute("class", "contact-info login-form col-6");
+          // email.setAttribute("class", "contact-info login-form col-6");
+
+          // firstName.innerHTML = "TESTING";
+          // lastName.innerHTML = "TESTING"
+          // phoneNumber.innerHTML = "TESTING"
+          // email.innerHTML = "TESTING"
+
+          // let dropdown = document.getElementById("add-contact-dropdown");
+
+          // dropdown.appendChild(openContact);
+
+          // openContact.appendChild(firstName);
+          // openContact.appendChild(lastName);
+          // openContact.appendChild(phoneNumber);
+          // openContact.appendChild(email);
+
+          // removePopups(openContact.id);
         }
       }
     }
