@@ -423,10 +423,6 @@ function deleteContact(id) {
   const deletedContact = document.getElementById("contact-" + id);
   if (confirm("Are you sure you want to delete this contact?")) {
     // Animation for a contact being deleted
-    setTimeout(function(){
-      deletedContact.classList.add("color-change");
-      deletedContact.classList.add("fall-animation");
-    }, 5000);
     deletedContact.remove();
     deleteJSON = { id: id };
     deleteJSON = JSON.stringify(deleteJSON);
