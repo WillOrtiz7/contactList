@@ -35,11 +35,19 @@ document.addEventListener("click", (event) => {
     currButton = event.target.id;
     currAction = currButton + "-dropdown";
     console.log(currButton);
-    document.getElementById(currAction).classList.toggle("active");
     
+    // Add contact keeps its animation when toggling between hidden and not hidden
+    if (currButton == "add-contact"){
+      document.getElementById("add-contact-menu").classList.toggle("hidden");
+      setTimeout(function(){
+        document.getElementById(currAction).classList.toggle("active");
+      }, 100);
+      removePopups(currAction);
+      return;
+    }
+    document.getElementById(currAction).classList.toggle("active");
     removePopups(currAction);
   }
-
 });
 
 document.onkeydown = (event) => {
@@ -243,13 +251,7 @@ function executeSearchContact() {
             }
 
             if (userInput.length > 0) {
-              console.log(
-                response.firstNames[i] +
-                  " " +
-                  response.lastNames[i] +
-                  " " +
-                  response.ids[i]
-              );
+              console.log(response.firstNames[i] + " " + response.lastNames[i] + " " + response.ids[i]);
               // Creating the element that will show the contacts first and last name on screen
               const li = document.createElement("li");
               const viewContact = document.createElement("span");
@@ -313,6 +315,9 @@ function executeSearchContact() {
               searchBar.appendChild(searchResults);
               removePopups(searchResults.id);
               searchResults.appendChild(li);
+            }
+            if (userInput.length == 0){
+              removePopups(0);
             }
           }
         }
@@ -490,6 +495,10 @@ function logOut() {
 }
 
 function removePopups(id) {
+  const addContactMenu = document.getElementById("add-contact-menu");
+  if (!addContactMenu.classList.contains("hidden") && id != "add-contact-dropdown"){
+    addContactMenu.classList.add("hidden");
+  }
   document.querySelectorAll(".popup").forEach((popup) => {
     if (popup.id == id) {
       console.log("Conditional is working");
@@ -498,6 +507,7 @@ function removePopups(id) {
       if (popup.classList.contains("login-dropdown")) {
         console.log("Drop down " + popup.id);
         popup.classList.remove("active");
+        console.log("REMOVE POPUPS INPUT VALUE: " + document.getElementById("real-search-bar").value);
       } else if (popup.classList.contains("list")) {
         console.log("List " + popup.id);
         popup.remove();
