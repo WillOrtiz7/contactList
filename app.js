@@ -36,7 +36,6 @@ document.addEventListener("click", (event) => {
     currAction = currButton + "-dropdown";
     console.log(currButton);
     document.getElementById(currAction).classList.toggle("active");
-    document.getElementById(currButton + "-menu").classList.remove("hidden");
     
     removePopups(currAction);
   }
