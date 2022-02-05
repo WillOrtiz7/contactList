@@ -26,23 +26,23 @@
   <body>
     <div class="container-end text-start justify-content-end">
       <div class= "row justify-content-end">
-        <div class= "col-3 align-self-start text-center border align-items-top">
+        <div class= "col-6 col-sm-3 align-self-start text-center border align-items-top">
           <span class="logged-in-ui hidden text-white" id="logged-in"></span>
           <div class= "login-dropdown popup border" id= "login-dropdown">
             <button class= "login dropdown-button" id= "login"> Log in </button>
             <div class= "login-menu text-white" id= "login-menu">
-              Log in: <br>
+              Log in: <br> <span id= "login-error"></span>
               <input class= "login-form" id= "user" type= "text" placeholder= "Username">
               <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
             </div>
           </div>
         </div>
-        <div class= "col-3 align-self-start text-center border">
+        <div class= "col-6 col-sm-3 align-self-start text-center border">
           <button class= "logged-in-ui hidden login " id= "log-out"> Log out </button>
           <div class= "login-dropdown popup" id= "register-dropdown">  
             <button class= "login dropdown-button" id= "register"> Register </button>
             <div class= "login-menu text-white" id= "register-menu">
-              Register: <br>
+              Register: <br> <span id= "register-error"></span>
               <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
               <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
               <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
@@ -53,8 +53,8 @@
       </div>
     </div>
     <div class="container-fluid justify-content-center border">
-      <div class= "row justify-content-center align-items-center border" style = "height: 500px;">
-        <div class= "col-6 align-items-center border" style=" max-width:700px">
+      <div class= "row justify-content-center align-items-center border" style = "height:500px">
+        <div class= "col-12 align-items-center border" id= "main-content" style=" max-width:700px">
           <h1 class= "text-white text-center">
             Contact List
           </h1>

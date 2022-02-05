@@ -94,6 +94,10 @@ function executeRegister() {
     if (this.readyState == 4 && this.status == 200) {
       let response = JSON.parse(link.responseText);
       if (response.error.length != 0) {
+        let errorMessage = document.createElement("p");
+        errorMessage.setAttribute("class", "popup list");
+        document.getElementById("register-error").appendChild(errorMessage);
+        errorMessage.innerHTML = response.error;
         console.log(response.error);
       } else {
         console.log("Successfully registered");
@@ -120,6 +124,10 @@ function executeLogin() {
     if (this.readyState == 4 && this.status == 200) {
       let info = JSON.parse(link.responseText);
       if (info.error.length != 0) {
+        let errorMessage = document.createElement("p");
+        errorMessage.setAttribute("class", "popup list");
+        document.getElementById("login-error").appendChild(errorMessage);
+        errorMessage.innerHTML = "Invalid username or password";
         console.log(info.error);
       } else {
         console.log("Successfully logged in as ", info.firstName);
@@ -249,6 +257,7 @@ function executeSearchContact() {
         let response = JSON.parse(link.responseText);
         if (response.error.length != 0) {
           console.log(response.error);
+          removePopups(0);
         } else {
           console.log("Successfully searched for contact");
           const searchResultsContainer = document.createElement("div");
@@ -479,70 +488,70 @@ function executeRetrieveContact(id, type) {
           executeEditContact(firstName, lastName, email, phoneNumber, id);
         } else {
           
-          const editContactDropdownFrame = document.createElement("div");
-          editContactDropdownFrame.setAttribute("id", "edit-contact");
-          editContactDropdownFrame.setAttribute("class", "popup list text-white");
-          editContactDropdownFrame.setAttribute("style", "font-size: 16pt");
+          const openContact = document.createElement("div");
+          openContact.setAttribute("id", "open-contact");
+          openContact.setAttribute("class", "popup list text-white text-center border");
+          openContact.setAttribute("style", "font-size: 16pt");
 
 
-          const firstName = document.createElement("input");
-          const lastName = document.createElement("input");
-          const phoneNumber = document.createElement("input");
-          const email = document.createElement("input");
+          const firstName = document.createElement("div");
+          const lastName = document.createElement("div");
+          const phoneNumber = document.createElement("div");
+          const email = document.createElement("div");
+
+          const name = document.createElement("div");
+          name.setAttribute("class", "row");
+          name.setAttribute("style", "height:100px");
+
+          const info = document.createElement("div");
+          info.setAttribute("class", "row");
+          info.setAttribute("style", "height:100px");
+
+          info.appendChild(phoneNumber);
+          info.appendChild(email);
+
+          name.appendChild(firstName);
+          name.appendChild(lastName);
+
+          firstNameLine = document.createElement("u");
+          lastNameLine = document.createElement("u");
+          phoneNumberLine = document.createElement("u");
+          emailLine = document.createElement("u");
+
+          firstNameLine.innerHTML = "First Name";
+          lastNameLine.innerHTML = "Last Name";
+          phoneNumberLine.innerHTML = "Phone Number";
+          emailLine.innerHTML = "Email Address";
+
+          firstName.setAttribute("class", " contact-info border col-6");
+          lastName.setAttribute("class", "contact-info border col-6");
+          phoneNumber.setAttribute("class", "contact-info border col-6");
+          email.setAttribute("class", "contact-info border col-6");
+
+          firstName.appendChild(firstNameLine);
+          lastName.appendChild(lastNameLine);
+          phoneNumber.appendChild(phoneNumberLine);
+          email.appendChild(emailLine);
+
+          firstName.appendChild(document.createElement("br"));
+          lastName.appendChild(document.createElement("br"));
+          phoneNumber.appendChild(document.createElement("br"));
+          email.appendChild(document.createElement("br"));
+
+          firstName.appendChild(document.createTextNode(response.firstName)); 
+          lastName.appendChild(document.createTextNode(response.lastName));
+          phoneNumber.appendChild(document.createTextNode(response.phoneNumber));
+          email.appendChild(document.createTextNode(response.emailAddress));
 
 
-          firstName.setAttribute("class", "login-form");
-          lastName.setAttribute("class", "login-form");
-          phoneNumber.setAttribute("class", "login-form");
-          email.setAttribute("class", "login-form");
 
-          firstName.innerHTML = "TESTING";
-          lastName.innerHTML = "TESTING"
-          phoneNumber.innerHTML = "TESTING"
-          email.innerHTML = "TESTING";
+          let addContactDropdown = document.getElementById("main-content");
+          addContactDropdown.appendChild(openContact);
 
-          let addContactDropdown = document.getElementById("search-bar");
-          addContactDropdown.appendChild(editContactDropdownFrame);
+          openContact.appendChild(name);
+          openContact.appendChild(info);
 
-          editContactDropdownFrame.appendChild(document.createElement("br"));
-          editContactDropdownFrame.appendChild(firstName);
-          editContactDropdownFrame.appendChild(lastName);
-          editContactDropdownFrame.appendChild(phoneNumber);
-          editContactDropdownFrame.appendChild(email);
-          editContactDropdownFrame.appendChild(lineBreak);
-          editContactDropdownFrame.appendChild(editContactSubmitButton);
-
-          // const openContact = document.createElement("div");
-          // openContact.setAttribute("id", "open-contact");
-          // openContact.setAttribute("class", "popup list text-white container border");
-          // openContact.setAttribute("style", "font-size: 16pt");
-        
-        
-          // const firstName = document.createElement("div");
-          // const lastName = document.createElement("div");
-          // const phoneNumber = document.createElement("div");
-          // const email = document.createElement("div");
-
-          // firstName.setAttribute("class", "contact-info login-form col-6");
-          // lastName.setAttribute("class", "contact-info login-form col-6");
-          // phoneNumber.setAttribute("class", "contact-info login-form col-6");
-          // email.setAttribute("class", "contact-info login-form col-6");
-
-          // firstName.innerHTML = "TESTING";
-          // lastName.innerHTML = "TESTING"
-          // phoneNumber.innerHTML = "TESTING"
-          // email.innerHTML = "TESTING"
-
-          // let dropdown = document.getElementById("add-contact-dropdown");
-
-          // dropdown.appendChild(openContact);
-
-          // openContact.appendChild(firstName);
-          // openContact.appendChild(lastName);
-          // openContact.appendChild(phoneNumber);
-          // openContact.appendChild(email);
-
-          // removePopups(openContact.id);
+           removePopups(openContact.id);
         }
       }
     }
@@ -552,6 +561,9 @@ function executeRetrieveContact(id, type) {
 }
 
 function logOut() {
+
+  removePopups(0);
+
   document.querySelectorAll(".login-dropdown").forEach((button) => {
     button.classList.toggle("hidden");
   });

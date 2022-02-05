@@ -205,9 +205,10 @@ body {
 
 .contact-info{
   width:100%;
-  max-width:700px;
+  max-width:300px;
   position: relative;
   float:right;
+  text-align:center;
 }
 
 .contact-list{
