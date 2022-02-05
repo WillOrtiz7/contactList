@@ -612,6 +612,10 @@ function removePopups(id) {
       return;
     } else {
       if (popup.classList.contains("login-dropdown")) {
+        // Clears all inputs that are within a form upon their respective dropdown being closed
+        document.querySelectorAll(".login-form").forEach((input) => {
+          input.value = "";
+        });
         console.log("Drop down " + popup.id);
         popup.classList.remove("active");
         console.log("REMOVE POPUPS INPUT VALUE: " + document.getElementById("real-search-bar").value);
