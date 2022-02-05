@@ -97,6 +97,7 @@ body {
 }
 
 .logged-in-ui{
+  float:right;
   background-color: inherit;
   font-size: 20pt;
   z-index: 20;
@@ -195,4 +196,17 @@ body {
 
 .login-menu.hidden{
   display: none;
+}
+
+.contact-info{
+  width:100%;
+  max-width:700px;
+  position: relative;
+  float:right;
+}
+
+.contact-list{
+  width:100%;
+  max-width:700px;
+  display:flex;
 }
