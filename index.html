@@ -32,8 +32,10 @@
             <button class= "login dropdown-button" id= "login"> Log in </button>
             <div class= "login-menu text-white" id= "login-menu">
               Log in: <br>
-              <input class= "login-form" id= "user" type= "text" placeholder= "Username">
-              <input class= "login-form" id= "pass" type= "text" placeholder= "Password">
+              <input class= "login-form" id= "user" type= "text" required="true" placeholder= "Username">
+              <input class= "login-form" id= "pass" type= "text" required="true" placeholder= "Password">
+              <br>
+              <span id= "login-error"></span>
             </div>
           </div>
         </div>
@@ -42,11 +44,13 @@
           <div class= "login-dropdown popup" id= "register-dropdown">  
             <button class= "login dropdown-button" id= "register"> Register </button>
             <div class= "login-menu text-white" id= "register-menu">
-              Register: <br> <span id= "register-error"></span>
-              <input action="submit" class= "login-form" type= "text" id= "first-name" placeholder= "First name ">   
-              <input action="submit" class= "login-form" type= "text" id= "last-name" placeholder= "Last name ">   
-              <input action="submit" class= "login-form" type= "text" id= "desired-user" placeholder= "Username">    
-              <input action="submit" class= "login-form" type= "text" id= "desired-password" placeholder= "Password">    
+              Register: <br>
+              <input action="submit" class= "login-form" type= "text" required="true" id= "first-name" placeholder= "First name ">   
+              <input action="submit" class= "login-form" type= "text" required="true" id= "last-name" placeholder= "Last name ">   
+              <input action="submit" class= "login-form" type= "text" required="true" id= "desired-user" placeholder= "Username">    
+              <input action="submit" class= "login-form" type= "text" required="true" id= "desired-password" placeholder= "Password">
+              <br>
+              <span id= "register-error"></span>    
             </div>
           </div>  
         </div>

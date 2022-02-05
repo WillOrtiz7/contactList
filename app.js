@@ -77,6 +77,19 @@ function executeRegister() {
   let user = document.getElementById("desired-user").value;
   let pass = document.getElementById("desired-password").value;
 
+  // Checks if user submitted any empty fields when registering
+  if (!firstName || !lastName || !user || !pass){
+    if (document.getElementById("register-error-text")){
+      document.getElementById("register-error-text").remove();
+    }
+    let errorMessage = document.createElement("p");
+    errorMessage.setAttribute("class", "popup list");
+    errorMessage.setAttribute("id", "register-error-text");
+    errorMessage.innerHTML = "INVALID REGISTER INFORMATION";
+    document.getElementById("register-error").appendChild(errorMessage);
+    return;
+  }
+
   let obj = {
     login: user,
     password: pass,
@@ -123,11 +136,17 @@ function executeLogin() {
   link.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       let info = JSON.parse(link.responseText);
+      
+      // If the user is attempting to log in with invalid info send error message
       if (info.error.length != 0) {
+        if (document.getElementById("error-message-text")){
+          document.getElementById("error-message-text").remove();
+        }
         let errorMessage = document.createElement("p");
         errorMessage.setAttribute("class", "popup list");
+        errorMessage.setAttribute("id", "error-message-text");
         document.getElementById("login-error").appendChild(errorMessage);
-        errorMessage.innerHTML = "Invalid username or password";
+        errorMessage.innerHTML = "INVALID USERNAME OR PASSWORD";
         console.log(info.error);
       } else {
         console.log("Successfully logged in as ", info.firstName);
