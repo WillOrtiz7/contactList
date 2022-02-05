@@ -35,7 +35,7 @@ document.addEventListener("click", (event) => {
     currButton = event.target.id;
     currAction = currButton + "-dropdown";
     console.log(currButton);
-    
+
     // Add contact keeps its animation when toggling between hidden and not hidden
     if (currButton == "add-contact"){
       document.getElementById("add-contact-menu").classList.toggle("hidden");
@@ -213,6 +213,12 @@ function executeSearchContact() {
         contactInfoTable.remove();
       });
 
+    document
+      .querySelectorAll(".search-results-container")
+      .forEach((searchResultsContainer) => {
+        searchResultsContainer.remove();
+      });
+
     if (
       document
         .getElementById("add-contact-dropdown")
@@ -244,6 +250,9 @@ function executeSearchContact() {
           console.log(response.error);
         } else {
           console.log("Successfully searched for contact");
+          const searchResultsContainer = document.createElement("div");
+          searchResultsContainer.setAttribute("class", "search-results-container popup");
+          searchResultsContainer.setAttribute("id", "search-results-container");
           // Checks all contacts for potential matching letters from user input
           for (let i = 0; i < response.firstNames.length; i++) {
             if (document.getElementById("contact-" + response.ids[i]) != null) {
@@ -312,7 +321,8 @@ function executeSearchContact() {
               searchResults.setAttribute("class", "list popup search-results");
               searchResults.setAttribute("id", "search-list");
               const searchBar = document.getElementById("search-bar");
-              searchBar.appendChild(searchResults);
+              searchResultsContainer.appendChild(searchResults);
+              searchBar.appendChild(searchResultsContainer);
               removePopups(searchResults.id);
               searchResults.appendChild(li);
             }
@@ -393,7 +403,14 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
 
 function deleteContact(id) {
   // Give user an alert message to confirm if they want to delete the contact
+  const deletedContact = document.getElementById("contact-" + id);
   if (confirm("Are you sure you want to delete this contact?")) {
+    // Animation for a contact being deleted
+    setTimeout(function(){
+      deletedContact.classList.add("color-change");
+      deletedContact.classList.add("fall-animation");
+    }, 5000);
+    deletedContact.remove();
     deleteJSON = { id: id };
     deleteJSON = JSON.stringify(deleteJSON);
     console.log(id + " " + deleteJSON);

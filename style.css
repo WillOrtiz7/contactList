@@ -197,3 +197,16 @@ body {
 .login-menu.hidden{
   display: none;
 }
+
+.fall-animation{
+  transition: all 0.5s ease;
+}
+
+.color-change{
+  background: red;
+}
+
+.search-results-container{
+  max-height: 150px;
+  overflow-y: auto;
+}
