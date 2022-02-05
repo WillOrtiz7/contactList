@@ -35,9 +35,17 @@ document.addEventListener("click", (event) => {
     currButton = event.target.id;
     currAction = currButton + "-dropdown";
     console.log(currButton);
+    
+    // Add contact keeps its animation when toggling between hidden and not hidden
+    if (currButton == "add-contact"){
+      document.getElementById("add-contact-menu").classList.toggle("hidden");
+      setTimeout(function(){
+        document.getElementById(currAction).classList.toggle("active");
+      }, 100);
+      removePopups(currAction);
+      return;
+    }
     document.getElementById(currAction).classList.toggle("active");
-    document.getElementById(currButton + "-menu").classList.remove("hidden");
-
     removePopups(currAction);
   }
 });
@@ -487,6 +495,10 @@ function logOut() {
 }
 
 function removePopups(id) {
+  const addContactMenu = document.getElementById("add-contact-menu");
+  if (!addContactMenu.classList.contains("hidden") && id != "add-contact-dropdown"){
+    addContactMenu.classList.add("hidden");
+  }
   document.querySelectorAll(".popup").forEach((popup) => {
     if (popup.id == id) {
       console.log("Conditional is working");
