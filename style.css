@@ -97,7 +97,6 @@ body {
 }
 
 .logged-in-ui{
-  float:right;
   background-color: inherit;
   font-size: 20pt;
   z-index: 20;

@@ -38,6 +38,7 @@ document.addEventListener("click", (event) => {
     
     // Add contact keeps its animation when toggling between hidden and not hidden
     if (currButton == "add-contact"){
+      searchContactInput.value = "";
       document.getElementById("add-contact-menu").classList.toggle("hidden");
       setTimeout(function(){
         document.getElementById(currAction).classList.toggle("active");
@@ -330,16 +331,27 @@ function executeSearchContact() {
 }
 
 function executeEditContact(firstName, lastName, email, phoneNumber, id) {
+
   const contactMenu = document.getElementById("add-contact-menu");
   contactMenu.classList.add("hidden");
+
   const editContactDropdownFrame = document.createElement("div");
   editContactDropdownFrame.setAttribute("id", "edit-contact");
-  editContactDropdownFrame.setAttribute("class", "popup list");
+  editContactDropdownFrame.setAttribute("class", "popup list text-white");
+  editContactDropdownFrame.setAttribute("style", "font-size: 16pt");
+
+
   const firstNameInput = document.createElement("input");
   const lastNameInput = document.createElement("input");
   const phoneNumberInput = document.createElement("input");
   const emailInput = document.createElement("input");
+  const lineBreak = document.createElement("br");
   const editContactSubmitButton = document.createElement("button");
+
+  firstNameInput.setAttribute("class", "login-form");
+  lastNameInput.setAttribute("class", "login-form");
+  phoneNumberInput.setAttribute("class", "login-form");
+  emailInput.setAttribute("class", "login-form");
 
   // Creating the edit contact dropdown
   firstNameInput.setAttribute("value", firstName);
@@ -347,13 +359,21 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   phoneNumberInput.setAttribute("value", phoneNumber);
   emailInput.setAttribute("value", email);
   editContactSubmitButton.setAttribute("type", "button");
+  editContactSubmitButton.setAttribute("class", "login text-white");
+  editContactSubmitButton.innerHTML = "Confirm";
+
   let addContactDropdown = document.getElementById("add-contact-dropdown");
   addContactDropdown.appendChild(editContactDropdownFrame);
+
+  editContactDropdownFrame.innerHTML = "Editing " + firstName + " " + lastName;
+  editContactDropdownFrame.appendChild(lineBreak);
   editContactDropdownFrame.appendChild(firstNameInput);
   editContactDropdownFrame.appendChild(lastNameInput);
   editContactDropdownFrame.appendChild(phoneNumberInput);
   editContactDropdownFrame.appendChild(emailInput);
+  editContactDropdownFrame.appendChild(lineBreak);
   editContactDropdownFrame.appendChild(editContactSubmitButton);
+
   removePopups(editContactDropdownFrame.id);
 
   editContactSubmitButton.addEventListener(
