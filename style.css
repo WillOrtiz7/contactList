@@ -67,11 +67,12 @@ body {
 
 .login-form {
   position:relative;
-  width:100%;
+  width: 80%;
   max-width: 250px;
   border-radius: 5px;
   background-color: white;
   font-size: 16pt;
+  margin: 5px 5px 5px 5px;
 }
 
 .add-contact {

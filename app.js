@@ -43,6 +43,7 @@ document.addEventListener("click", (event) => {
       setTimeout(function(){
         document.getElementById(currAction).classList.toggle("active");
       }, 100);
+      removeErrorMessages();
       removePopups(currAction);
       return;
     }
@@ -180,17 +181,45 @@ function executeAddContact() {
   // Check to see if user is logged in or not
   if (isLoggedIn == false) {
     console.log("Log in to add a contact");
-  } else {
+  } 
+  // Check for input errors in add contact
+  else if (!document.getElementById("add-contact-first-name").validity.valid){
+    removeErrorMessages();
+    const firstNameErrorMessage = document.createElement("div");
+    firstNameErrorMessage.setAttribute("class", "error-message");
+    firstNameErrorMessage.innerHTML = "Failed to add contact, invalid first name";
+    const firstNameMessageFrame = document.getElementById("add-contact-menu");
+    firstNameMessageFrame.appendChild(firstNameErrorMessage);
+  }
+  else if (!document.getElementById("add-contact-last-name").validity.valid){
+    removeErrorMessages();
+    const lastNameErrorMessage = document.createElement("div");
+    lastNameErrorMessage.setAttribute("class", "error-message");
+    lastNameErrorMessage.innerHTML = "Failed to add contact, invalid last name";
+    const lastNameMessageFrame = document.getElementById("add-contact-menu");
+    lastNameMessageFrame.appendChild(lastNameErrorMessage);
+  }
+  else if (!document.getElementById("add-contact-phone-number").validity.valid){
+    removeErrorMessages();
+    const phoneNumberErrorMessage = document.createElement("div");
+    phoneNumberErrorMessage.setAttribute("class", "error-message");
+    phoneNumberErrorMessage.innerHTML = "Failed to add contact, invalid phone number";
+    const phoneNumberMessageFrame = document.getElementById("add-contact-menu");
+    phoneNumberMessageFrame.appendChild(phoneNumberErrorMessage);
+  }
+  else if (!document.getElementById("add-contact-email").validity.valid){
+    removeErrorMessages();
+    const emailErrorMessage = document.createElement("div");
+    emailErrorMessage.setAttribute("class", "error-message");
+    emailErrorMessage.innerHTML = "Failed to add contact, invalid email address";
+    const errorMessageFrame = document.getElementById("add-contact-menu");
+    errorMessageFrame.appendChild(emailErrorMessage);
+  }
+   else {
     console.log("Contact is being added");
-    let addContactFirstName = document.getElementById(
-      "add-contact-first-name"
-    ).value;
-    let addContactLastName = document.getElementById(
-      "add-contact-last-name"
-    ).value;
-    let addContactPhoneNumber = document.getElementById(
-      "add-contact-phone-number"
-    ).value;
+    let addContactFirstName = document.getElementById("add-contact-first-name").value;
+    let addContactLastName = document.getElementById("add-contact-last-name").value;
+    let addContactPhoneNumber = document.getElementById("add-contact-phone-number").value;
     let addContactEmail = document.getElementById("add-contact-email").value;
 
     // Create object with necessary info for api call
@@ -241,33 +270,21 @@ function executeSearchContact() {
     console.log("Log in to search for a contact");
   } else {
     // Here we will clear the ul containing the list of contacts being displayed
-    document
-      .querySelectorAll(".search-result-list")
-      .forEach((searchResultList) => {
+    document.querySelectorAll(".search-result-list").forEach((searchResultList) => {
         searchResultList.remove();
       });
 
-    document
-      .querySelectorAll(".contact-info-table")
-      .forEach((contactInfoTable) => {
+    document.querySelectorAll(".contact-info-table").forEach((contactInfoTable) => {
         contactInfoTable.remove();
       });
 
-    document
-      .querySelectorAll(".search-results-container")
-      .forEach((searchResultsContainer) => {
+    document.querySelectorAll(".search-results-container").forEach((searchResultsContainer) => {
         searchResultsContainer.remove();
       });
 
-    if (
-      document
-        .getElementById("add-contact-dropdown")
-        .classList.contains("active")
-    ) {
+    if (document.getElementById("add-contact-dropdown").classList.contains("active")) {
       console.log("Testing");
-      document
-        .getElementById("add-contact-dropdown")
-        .classList.toggle("active");
+      document.getElementById("add-contact-dropdown").classList.toggle("active");
     }
 
     let userInput = document.getElementById("real-search-bar").value;
@@ -340,22 +357,8 @@ function executeSearchContact() {
               li.appendChild(viewButton);
               li.setAttribute("id", "contact-" + response.ids[i]);
               li.setAttribute("class", "search-result-list");
-              viewButton.addEventListener(
-                "click",
-                executeRetrieveContact.bind(
-                  executeRetrieveContact,
-                  response.ids[i],
-                  "view"
-                )
-              );
-              editButton.addEventListener(
-                "click",
-                executeRetrieveContact.bind(
-                  executeRetrieveContact,
-                  response.ids[i],
-                  "edit"
-                )
-              );
+              viewButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "view"));
+              editButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "edit"));
 
               // Creating search results div
               const searchResults = document.createElement("div");
@@ -429,10 +432,7 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
 
   removePopups(editContactDropdownFrame.id);
 
-  editContactSubmitButton.addEventListener(
-    "click",
-    submitEditContact.bind(submitEditContact, id)
-  );
+  editContactSubmitButton.addEventListener("click", submitEditContact.bind(submitEditContact, id));
 
   function submitEditContact(id) {
 
@@ -634,6 +634,7 @@ function logOut() {
 function removePopups(id) {
   const addContactMenu = document.getElementById("add-contact-menu");
   if (!addContactMenu.classList.contains("hidden") && id != "add-contact-dropdown"){
+    removeErrorMessages();
     addContactMenu.classList.add("hidden");
   }
   document.querySelectorAll(".popup").forEach((popup) => {
@@ -658,5 +659,13 @@ function removePopups(id) {
         popup.remove();
       }
     }
+  });
+}
+
+function removeErrorMessages(){
+  // Clearing error message from screen so we only get the most recent error message
+  document.querySelectorAll(".error-message").forEach((errorMessage) => {
+  console.log("REMOVING ERROR MESSAGES IN EXECUTE ADD CONTACT");
+  errorMessage.remove();
   });
 }
