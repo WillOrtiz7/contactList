@@ -63,50 +63,50 @@
             Contact List
           </h1>
           <!--Search bar-->
-          <div class= "col border search" id= "search-bar">
-            <div class="row justify-content-center unlogged-search" id= "unlogged-search">
-              <div class="col">
-                  <div class="card-body row no-gutters align-items-center">
-                      <!--end of col-->
-                      <div class="col">
-                         <span class= "unlogged-text"> Log in to view contacts </span>
-                      </div>
-                       <!--end of col-->
+          <div style= "position:relative">
+            <div class= "col border search" id= "search-bar" style = "position:absolute">
+              <div class="row justify-content-center unlogged-search" id= "unlogged-search">
+                <div class="col">
+                    <div class="card-body row no-gutters align-items-center">
+                        <!--end of col-->
+                        <div class="col">
+                          <span class= "unlogged-text"> Log in to view contacts </span>
+                        </div>
+                        <!--end of col-->
+                          <div class="col-auto">
+                            <div class="icon">
+                              <i class="fas fa-lock"></i>
+                            </div>
+                          </div>
+                            <!--end of col-->
+                    </div>
+                </div>
+                <!--end of col-->
+              </div>
+              <div class="row justify-content-center logged-in-search hidden " id= "logged-search">
+                <div class="col">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <i class="fas fa-search"></i>
+                        </div>
+                        <!--end of col-->
+                        <div class="col">
+                          <input class="form-control form-control-lg form-control-borderless" id ="real-search-bar" type="search" placeholder="Search your contacts...">
+                        </div>
+                        <!--end of col-->
                         <div class="col-auto">
                           <div class="icon">
-                            <i class="fas fa-lock"></i>
+                            <button class= "login text-black dropdown-button" id= "add-contact">
+                              <i class= "fas fa-plus dropdown-button" id= "add-contact"></i>
+                            </button>
+                            </div>
                           </div>
-                        </div>
-                          <!--end of col-->
-                  </div>
+                            <!--end of col-->
+                    </div>
+                </div>
+                <!--end of col-->
               </div>
-              <!--end of col-->
-            </div>
-            <div class="row justify-content-center logged-in-search hidden " id= "logged-search">
-              <div class="col">
-                  <div class="card-body row no-gutters align-items-center">
-                      <div class="col-auto">
-                         <i class="fas fa-search"></i>
-                      </div>
-                      <!--end of col-->
-                      <div class="col">
-                         <input class="form-control form-control-lg form-control-borderless" id ="real-search-bar" type="search" placeholder="Search your contacts...">
-                      </div>
-                       <!--end of col-->
-                       <div class="col-auto">
-                        <div class="icon">
-                          <button class= "login text-black dropdown-button" id= "add-contact">
-                            <i class= "fas fa-plus dropdown-button" id= "add-contact"></i>
-                          </button>
-                          </div>
-                        </div>
-                          <!--end of col-->
-                  </div>
-              </div>
-              <!--end of col-->
-            </div>
-          </div>
-          <!-- ADD CONTACT START -->
+                           <!-- ADD CONTACT START -->
           <div class= "login-dropdown popup logged-in-ui text-black border" id= "add-contact-dropdown">
             <div class= "login-menu text-white hidden" id= "add-contact-menu">
               Add a contact: <br>
@@ -120,6 +120,8 @@
           </div>
         </div>
           <!-- ADD CONTACT END -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
