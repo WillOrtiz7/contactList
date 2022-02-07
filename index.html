@@ -24,39 +24,23 @@
           crossorigin="anonymous"/>
 
   <body>
-    <div class="container-end text-start justify-content-end">
-      <div class= "row justify-content-end">
-        <div class= "col-6 col-sm-3 align-self-start text-center border align-items-top">
-          <span class="logged-in-ui hidden text-white" id="logged-in"></span>
-          <div class= "login-dropdown popup border" id= "login-dropdown">
-            <button class= "login dropdown-button" id= "login"> Log in </button>
-            <div class= "login-menu text-white" id= "login-menu">
-              Log in: <br>
-              <input class= "login-form" id= "user" type= "text" required="true" placeholder= "Username">
-              <input class= "login-form" id= "pass" type= "text" required="true" placeholder= "Password">
+    <div class="container-fluid justify-content-center border login-overlay" style="height:100%"> 
+      <div class = "row border justify-content-center text-white text-center border align-self-center" style="height:100%">
+       <div class = "col-sm-6 align-self-center text-center border" style="max-width: 500px">
+          <div class="login-for">
+            <div class="row border" style="margin-bottom:20px">
+              <button class="login col" >Login</button>
+              <button class="login col" >Register</button>
               <br>
-              <span id= "login-error"></span>
             </div>
+            <input class="login-form" placeholder = "Username">
+            <input class="login-form" placeholder = "Password"><br>
+            <button id = "submit" class="login">Log in</button>
           </div>
-        </div>
-        <div class= "col-6 col-sm-3 align-self-start text-center border">
-          <button class= "logged-in-ui hidden login " id= "log-out"> Log out </button>
-          <div class= "login-dropdown popup" id= "register-dropdown">  
-            <button class= "login dropdown-button" id= "register"> Register </button>
-            <div class= "login-menu text-white" id= "register-menu">
-              Register: <br>
-              <input action="submit" class= "login-form" type= "text" required="true" id= "first-name" placeholder= "First name ">   
-              <input action="submit" class= "login-form" type= "text" required="true" id= "last-name" placeholder= "Last name ">   
-              <input action="submit" class= "login-form" type= "text" required="true" id= "desired-user" placeholder= "Username">    
-              <input action="submit" class= "login-form" type= "text" required="true" id= "desired-password" placeholder= "Password">
-              <br>
-              <span id= "register-error"></span>    
-            </div>
-          </div>  
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center border">
+    <div class="container-fluid justify-content-center border blur-test">
       <div class= "row justify-content-center align-items-center border" style = "height:500px">
         <div class= "col-12 align-items-center border" id= "main-content" style=" max-width:700px">
           <h1 class= "text-white text-center">
@@ -65,25 +49,7 @@
           <!--Search bar-->
           <div style= "position:relative">
             <div class= "col border search" id= "search-bar" style = "position:absolute">
-              <div class="row justify-content-center unlogged-search" id= "unlogged-search">
-                <div class="col">
-                    <div class="card-body row no-gutters align-items-center">
-                        <!--end of col-->
-                        <div class="col">
-                          <span class= "unlogged-text"> Log in to view contacts </span>
-                        </div>
-                        <!--end of col-->
-                          <div class="col-auto">
-                            <div class="icon">
-                              <i class="fas fa-lock"></i>
-                            </div>
-                          </div>
-                            <!--end of col-->
-                    </div>
-                </div>
-                <!--end of col-->
-              </div>
-              <div class="row justify-content-center logged-in-search hidden " id= "logged-search">
+              <div class="row justify-content-center logged-in-search " id= "logged-search">
                 <div class="col">
                     <div class="card-body row no-gutters align-items-center">
                         <div class="col-auto">
@@ -106,7 +72,6 @@
                 </div>
                 <!--end of col-->
               </div>
-                           <!-- ADD CONTACT START -->
           <div class= "login-dropdown popup logged-in-ui text-black border" id= "add-contact-dropdown">
             <div class= "login-menu text-white hidden" id= "add-contact-menu">
               Add a contact: <br>

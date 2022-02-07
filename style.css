@@ -4,17 +4,22 @@ body {
   font-family: "Cairo", sans-serif;
 }
 
+#submit{
+  background:#1db954;
+  margin-top: 20px;
+  width:60%;
+}
+
 .login {
   color: white;
-  width: 100%;
-  max-width: 200px;
-  height: max-content;
+  width: 30%;
   border: none;
   font-family: inherit;
   font-size: 20pt;
   background: inherit;
   align-content: center;
   z-index: 10;
+  border-radius:13px;
 }
 
 .search{
@@ -66,10 +71,12 @@ body {
 }
 
 .login-form {
+  height:45px;
+  border:none;
   position:relative;
-  width: 80%;
-  max-width: 250px;
-  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
   background-color: white;
   font-size: 16pt;
   margin: 5px 5px 5px 5px;
@@ -221,4 +228,19 @@ body {
 #add-contact-menu, #open-contact, #register-menu, #login-menu, #edit-contact{
   background: #1F1F1F;
  
+}
+
+.blur-test{
+  filter:blur(15px);
+  pointer-events: none;
+  opacity:0.3;
+  transition: opacity 1s;
+}
+
+.login-overlay{
+  position:absolute;
+}
+
+.login-for{
+  height:40%;
 }
