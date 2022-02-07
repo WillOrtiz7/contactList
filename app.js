@@ -435,6 +435,9 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   editContactSubmitButton.addEventListener("click", submitEditContact.bind(submitEditContact, id));
 
   function submitEditContact(id) {
+    if (!editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInput, emailInput, editContactDropdownFrame)){
+      return;
+    }
 
     let editContactObj = {
       firstName: firstNameInput.value,
@@ -668,4 +671,48 @@ function removeErrorMessages(){
   console.log("REMOVING ERROR MESSAGES IN EXECUTE ADD CONTACT");
   errorMessage.remove();
   });
+}
+
+function editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInput, emailInput, editContactDropdownFrame){
+    firstNameInput.required = true;
+    lastNameInput.required = true;
+    phoneNumberInput.required = true;
+    emailInput.required = true;
+    emailInput.setAttribute("type", "email");
+    phoneNumberInput.setAttribute("type", "tel");
+    phoneNumberInput.setAttribute("pattern", "[0-9]{3}[0-9]{3}[0-9]{4}");
+
+      if (!firstNameInput.validity.valid){
+      removeErrorMessages();
+      const firstNameErrorMessage = document.createElement("div");
+      firstNameErrorMessage.setAttribute("class", "error-message");
+      firstNameErrorMessage.innerHTML = "Failed to edit contact, invalid first name";
+      editContactDropdownFrame.appendChild(firstNameErrorMessage);
+      return false;
+    }
+    else if (!lastNameInput.validity.valid){
+      removeErrorMessages();
+      const lastNameErrorMessage = document.createElement("div");
+      lastNameErrorMessage.setAttribute("class", "error-message");
+      lastNameErrorMessage.innerHTML = "Failed to edit contact, invalid last name";
+      editContactDropdownFrame.appendChild(lastNameErrorMessage);
+      return false;
+    }
+    else if (!phoneNumberInput.validity.valid){
+      removeErrorMessages();
+      const phoneNumberErrorMessage = document.createElement("div");
+      phoneNumberErrorMessage.setAttribute("class", "error-message");
+      phoneNumberErrorMessage.innerHTML = "Failed to edit contact, invalid phone number";
+      editContactDropdownFrame.appendChild(phoneNumberErrorMessage);
+      return false;
+    }
+    else if (!emailInput.validity.valid){
+      removeErrorMessages();
+      const emailErrorMessage = document.createElement("div");
+      emailErrorMessage.setAttribute("class", "error-message");
+      emailErrorMessage.innerHTML = "Failed to edit contact, invalid email";
+      editContactDropdownFrame.appendChild(emailErrorMessage);
+      return false;
+    }
+    return true;
 }
