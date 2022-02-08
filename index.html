@@ -24,23 +24,26 @@
           crossorigin="anonymous"/>
 
   <body>
-    <div class="container-fluid justify-content-center border login-overlay" style="height:100%"> 
+    <div class="container-fluid justify-content-center border login-overlay" id= "login-overlay" style="height:100%"> 
       <div class = "row border justify-content-center text-white text-center border align-self-center" style="height:100%">
        <div class = "col-sm-6 align-self-center text-center border" style="max-width: 500px">
           <div class="login-for">
             <div class="row border" style="margin-bottom:20px">
-              <button class="login col" >Login</button>
-              <button class="login col" >Register</button>
+              <button id="switch-log-button"  class="login col" >Login</button>
+              <button id = "switch-reg-button" class="login col" style="border-bottom-color:white" >Register</button>
               <br>
             </div>
-            <input class="login-form" placeholder = "Username">
-            <input class="login-form" placeholder = "Password"><br>
-            <button id = "submit" class="login">Log in</button>
+            <div id="login-area">
+              <input class="login-form" placeholder = "Username" id = "user">
+              <input class="login-form" placeholder = "Password" id="pass"><br>
+            </div>
+            <div id= "login-error"></div>
+            <button id = "submit-button" class="login">Log in</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center border blur-test">
+    <div class="container-fluid justify-content-center border blur-test active-0 text-white" id = "logged-in">
       <div class= "row justify-content-center align-items-center border" style = "height:500px">
         <div class= "col-12 align-items-center border" id= "main-content" style=" max-width:700px">
           <h1 class= "text-white text-center">
@@ -49,7 +52,7 @@
           <!--Search bar-->
           <div style= "position:relative">
             <div class= "col border search" id= "search-bar" style = "position:absolute">
-              <div class="row justify-content-center logged-in-search " id= "logged-search">
+              <div class="row justify-content-center logged-in-search text-black " id= "logged-search">
                 <div class="col">
                     <div class="card-body row no-gutters align-items-center">
                         <div class="col-auto">
@@ -60,12 +63,10 @@
                           <input class="form-control form-control-lg form-control-borderless" id ="real-search-bar" type="search" placeholder="Search your contacts...">
                         </div>
                         <!--end of col-->
-                        <div class="col-auto">
-                          <div class="icon">
-                            <button class= "login text-black dropdown-button" id= "add-contact">
-                              <i class= "fas fa-plus dropdown-button" id= "add-contact"></i>
+                        <div class="col-auto login">
+                            <button class= "text-black" id= "add-contact">
+                              <i class= "fas fa-plus text-black" id= "add-contact"></i>
                             </button>
-                            </div>
                           </div>
                             <!--end of col-->
                     </div>

@@ -1,6 +1,9 @@
 // Selectors
 addContactSubmitButton = document.getElementById("add-contact-submit");
 searchContactInput = document.getElementById("real-search-bar");
+registerButton = document.getElementById("switch-reg-button");
+loginButton = document.getElementById("switch-log-button");
+addContactButton = document.getElementById("add-contact");
 
 // Variables
 const urlBase = "http://cop4331-27.com/LAMPAPI";
@@ -12,71 +15,34 @@ let userID = 0;
 // Event Listeners
 addContactSubmitButton.addEventListener("click", executeAddContact);
 searchContactInput.addEventListener("keyup", executeSearchContact);
+registerButton.addEventListener("click", switchRegister);
+loginButton.addEventListener("click", switchLogin) ;
+addContactButton.addEventListener("click", executeAddContact);
 
-document.addEventListener("click", (event) => {
-  if (event.target.id == "log-out") {
-    console.log("Testing");
-    logOut();
-    return;
-  }
+document.addEventListener("click", (event) =>{
 
-  if (event.target.matches(".delete-button")) {
-    console.log("This is working. id of the contact is " + event.target.id);
-    deleteContact(event.target.id);
-  }
+  if(event.target.id == "submit-button"){
+    let button = document.getElementById("submit-button");
 
-  const isDropdown = event.target.matches(".dropdown-button");
-
-  if (!isDropdown && event.target.closest(".login-dropdown") != null) return;
-
-  let currButton;
-
-  if (isDropdown) {
-    currButton = event.target.id;
-    currAction = currButton + "-dropdown";
-    console.log(currButton);
-
-    // Add contact keeps its animation when toggling between hidden and not hidden
-    if (currButton == "add-contact"){
-      searchContactInput.value = "";
-      document.getElementById("add-contact-menu").classList.toggle("hidden");
-      setTimeout(function(){
-        document.getElementById(currAction).classList.toggle("active");
-      }, 100);
-      removeErrorMessages();
-      removePopups(currAction);
-      return;
-    }
-    document.getElementById(currAction).classList.toggle("active");
-    removePopups(currAction);
-  }
-});
-
-document.onkeydown = (event) => {
-  if (event.key == "Enter") {
-    let currAction = event.target.closest(".login-menu");
-
-    console.log(currAction);
-
-    if (currAction == document.getElementById("register-menu")) {
+    if(button.innerHTML == "Register"){
       executeRegister();
     }
 
-    if (currAction == document.getElementById("login-menu")) {
+    else if(button.innerHTML == "Log in"){
       executeLogin();
     }
-
-    event.preventDefault();
   }
-};
+
+})
+
 
 // Functions
 
 function executeRegister() {
   let firstName = document.getElementById("first-name").value;
   let lastName = document.getElementById("last-name").value;
-  let user = document.getElementById("desired-user").value;
-  let pass = document.getElementById("desired-password").value;
+  let user = document.getElementById("user").value;
+  let pass = document.getElementById("pass").value;
 
   // Checks if user submitted any empty fields when registering
   if (!firstName || !lastName || !user || !pass){
@@ -120,6 +86,9 @@ function executeRegister() {
   };
   link.send(obj);
   console.log(firstName, lastName, user, pass);
+  document.getElementById("user").value = "";
+  document.getElementById("pass").value = "";
+  switchLogin();
 }
 
 function executeLogin() {
@@ -144,7 +113,7 @@ function executeLogin() {
           document.getElementById("error-message-text").remove();
         }
         let errorMessage = document.createElement("p");
-        errorMessage.setAttribute("class", "popup list");
+        errorMessage.setAttribute("class", "popup list text-white");
         errorMessage.setAttribute("id", "error-message-text");
         document.getElementById("login-error").appendChild(errorMessage);
         errorMessage.innerHTML = "INVALID USERNAME OR PASSWORD";
@@ -156,20 +125,13 @@ function executeLogin() {
         isLoggedIn = true;
       }
 
-      if (isLoggedIn) {
-        document.querySelectorAll(".login-dropdown").forEach((button) => {
-          button.classList.toggle("hidden");
-        });
+       if (isLoggedIn) {
+        
+        undoBlur();
 
         let loginText = document.getElementById("logged-in");
-        loginText.innerHTML = "Welcome, " + user;
+        loginText.prepend(document.createTextNode("Welcome, " + info.firstName));
 
-        document.querySelectorAll(".logged-in-ui").forEach((button) => {
-          button.classList.toggle("hidden");
-        });
-
-        document.getElementById("unlogged-search").classList.toggle("hidden");
-        document.getElementById("logged-search").classList.toggle("hidden");
       }
     }
   };
@@ -356,7 +318,7 @@ function executeSearchContact() {
               li.appendChild(editButton);
               li.appendChild(viewButton);
               li.setAttribute("id", "contact-" + response.ids[i]);
-              li.setAttribute("class", "search-result-list");
+              li.setAttribute("class", "search-result-list text-black");
               viewButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "view"));
               editButton.addEventListener("click", executeRetrieveContact.bind(executeRetrieveContact, response.ids[i], "edit"));
 
@@ -715,4 +677,66 @@ function editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInpu
       return false;
     }
     return true;
+}
+
+function switchRegister(){
+  loginArea = document.getElementById("login-area");
+  firstName = document.createElement("input");
+  lastName = document.createElement("input");
+  firstName.setAttribute("class", "register login-form");
+  lastName.setAttribute("class", "register login-form");
+  firstName.setAttribute("placeholder", "First Name");
+  lastName.setAttribute("placeholder", "Last Username");
+  firstName.setAttribute("id", "first-name");
+  lastName.setAttribute("id", "last-name");
+
+
+  document.getElementById("user").setAttribute("placeholder", "Desired Username");
+  document.getElementById("pass").setAttribute("placeholder", "Desired Password");
+  document.getElementById("submit-button").innerHTML = "Register";
+
+  loginArea.prepend(lastName);
+  loginArea.prepend(firstName);
+}
+
+function switchLogin(){
+  loginArea = document.getElementById("login-area");
+  document.querySelectorAll(".register").forEach((input) => {
+    input.remove();
+  });
+
+  document.getElementById("user").setAttribute("placeholder", "Username");
+  document.getElementById("pass").setAttribute("placeholder", "Password");
+  document.getElementById("submit-button").innerHTML = "Log in";
+}
+
+function doBlur(){
+  const blur = document.getElementById("logged-in");
+  const overlay = document.getElementById("login-overlay");
+    
+  for(i = 2; i >=0; i++){
+    blur.classList.remove("active-" + (i+1));
+    blur.classList.add("active-" + i);
+    }
+  for(i = 2; i >=0 ; i++){
+    overlay.classList.remove("inactive-" + (i-1));
+    overlay.classList.add("inactive-" + i);
+    }
+
+}
+
+function undoBlur(){
+
+  const blur = document.getElementById("logged-in");
+  const overlay = document.getElementById("login-overlay");
+    
+  for(i = 1; i <= 4; i++){
+    blur.classList.remove("active-" + (i-1));
+    blur.classList.add("active-" + i);
+    }
+  for(i = 1; i <= 3 ; i++){
+    overlay.classList.remove("inactive-" + (i-1));
+    overlay.classList.add("inactive-" + i);
+    }
+
 }

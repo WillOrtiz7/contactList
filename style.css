@@ -4,7 +4,7 @@ body {
   font-family: "Cairo", sans-serif;
 }
 
-#submit{
+#submit-button{
   background:#1db954;
   margin-top: 20px;
   width:60%;
@@ -12,8 +12,8 @@ body {
 
 .login {
   color: white;
+  border:none;
   width: 30%;
-  border: none;
   font-family: inherit;
   font-size: 20pt;
   background: inherit;
@@ -97,11 +97,6 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid black;
-}
-
-.login-dropdown.hidden{
-  opacity:0;
-  pointer-events:none;
 }
 
 .logged-in-ui{
@@ -230,11 +225,36 @@ body {
  
 }
 
-.blur-test{
+.blur-test.active-0{
   filter:blur(15px);
-  pointer-events: none;
-  opacity:0.3;
+  opacity:0.2;
   transition: opacity 1s;
+  pointer-events:none;
+}
+
+.blur-test.active-1{
+  opacity:0.4;
+  filter:blur(11px);
+  transition:opacity 1s;
+}
+
+.blur-test.active-2{
+  opacity:0.6;
+  filter:blur(7px);
+  transition:opacity 1s;
+}
+
+.blur-test.active-3{
+  opacity:0.8;
+  filter:blur(3px);
+  transition:opacity 1s;
+}
+
+.blur-test.active-4{
+  opacity:1;
+  filter:blur(0);
+  transition:opacity 1s;
+  pointer-events:auto;
 }
 
 .login-overlay{
@@ -243,4 +263,39 @@ body {
 
 .login-for{
   height:40%;
+}
+
+.hidden{
+  display:none;
+}
+
+.login-overlay.inactive-3{
+  opacity:0;
+  filter:blur(0);
+  transition:opacity .5s;
+  pointer-events:none;
+}
+
+.login-overlay.inactive-2{
+  opacity:0.3;
+  filter:blur(7px);
+  transition:opacity .5s;
+}
+
+.login-overlay.inactive-1{
+  opacity:0.6;
+  filter:blur(3px);
+  transition:opacity .5s;
+}
+
+.login-overlay.inactive-0{
+  opacity:1;
+  filter:blur(0);
+  transition:opacity .5s;
+  pointer-events:auto;
+}
+
+#add-contact{
+  border:none;
+  background:inherit;
 }
