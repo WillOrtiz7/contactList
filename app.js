@@ -3,6 +3,7 @@ addContactSubmitButton = document.getElementById("add-contact-submit");
 searchContactInput = document.getElementById("real-search-bar");
 registerButton = document.getElementById("switch-reg-button");
 loginButton = document.getElementById("switch-log-button");
+logOutButton = document.getElementById("log-out");
 
 // Variables
 const urlBase = "http://cop4331-27.com/LAMPAPI";
@@ -10,12 +11,13 @@ const ext = ".php";
 let user = "Test";
 let isLoggedIn = false;
 let userID = 0;
-
+let onRegister = false;
 // Event Listeners
 addContactSubmitButton.addEventListener("click", executeAddContact);
 searchContactInput.addEventListener("keyup", executeSearchContact);
 registerButton.addEventListener("click", switchRegister);
 loginButton.addEventListener("click", switchLogin) ;
+logOutButton.addEventListener("click", executeLogOut);
 
 document.addEventListener("click", (event) =>{
 
@@ -24,6 +26,10 @@ document.addEventListener("click", (event) =>{
   if(event.target.classList.contains("delete-button"))
   {
     deleteContact(target);
+  }
+
+  if (event.target.classList.contains("login-form")){
+    removeErrorMessages();
   }
 
   if(target == "submit-button"){
@@ -43,6 +49,7 @@ document.addEventListener("click", (event) =>{
   }
 
   if(target == "view-overlay"){
+    removePopups(0)
     document.querySelectorAll(".contact-info").forEach((data) => {
       data.remove();
     });
@@ -133,7 +140,7 @@ function executeLogin() {
           document.getElementById("error-message-text").remove();
         }
         let errorMessage = document.createElement("p");
-        errorMessage.setAttribute("class", "popup list text-white");
+        errorMessage.setAttribute("class", "error-message text-white");
         errorMessage.setAttribute("id", "error-message-text");
         document.getElementById("login-error").appendChild(errorMessage);
         errorMessage.innerHTML = "INVALID USERNAME OR PASSWORD";
@@ -148,9 +155,12 @@ function executeLogin() {
        if (isLoggedIn) {
         
         undoBlur("login-overlay");
-
-        // let loginText = document.getElementById("logged-in");
-        // loginText.prepend(document.createTextNode("Welcome, " + info.firstName));
+        document.getElementById("user").value = "";
+        document.getElementById("pass").value = "";
+        const messageArea = document.getElementById("message-area");
+        const message = document.getElementById("welcome-message");
+        message.innerHTML = "Welcome, " + info.firstName;
+        messageArea.append(message);
 
       }
     }
@@ -411,8 +421,12 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
           const confirmMessage = document.createElement("h3");
           confirmMessage.setAttribute("class", "text-white text-center popup list");
           confirmMessage.setAttribute("id", "confirmMessage");
-          document.getElementById("main-content").appendChild(confirmMessage);
+          document.getElementById("messages").appendChild(confirmMessage);
           confirmMessage.innerHTML = "Successfully updated " + editContactObj.firstName + " " + editContactObj.lastName;
+          removePopups(confirmMessage.id);
+          removeErrorMessages();
+          undoBlur("edit-contact-overlay");
+
 
         }
       }
@@ -487,66 +501,83 @@ function executeRetrieveContact(id, type) {
           
           const openContact = document.createElement("div");
           openContact.setAttribute("id", "open-contact");
-          openContact.setAttribute("class", "popup list text-white text-center border");
-          openContact.setAttribute("style", "font-size: 16pt");
+          openContact.setAttribute("class", "popup list text-white text-center");
+          openContact.setAttribute("style", "font-size: 16pt; max-width:500px");
 
+          firstNameLine = document.createElement("div");
+          lastNameLine = document.createElement("div");
+          phoneNumberLine = document.createElement("div");
+          emailLine = document.createElement("div");
+
+          firstNameLine.setAttribute("class", " poupup listt");
+          lastNameLine.setAttribute("class", " poupup list");
+          phoneNumberLine.setAttribute("class", " poupup list");
+          emailLine.setAttribute("class", " poupup list");
+
+          name1 = document.createElement("u");
+          name2 = document.createElement("u");
+          emailUnder = document.createElement("u");
+          phone = document.createElement("u");
+
+          name1.innerHTML = "First Name"
+          name2.innerHTML = "Last Name"
+          emailUnder.innerHTML = "Email"
+          phone.innerHTML = "Phone"
 
           const firstName = document.createElement("div");
           const lastName = document.createElement("div");
           const phoneNumber = document.createElement("div");
           const email = document.createElement("div");
 
-          const name = document.createElement("div");
-          name.setAttribute("class", "row contact-info");
-          name.setAttribute("style", "height:100px");
+         
 
-          const info = document.createElement("div");
-          info.setAttribute("class", "row contact-info");
-          info.setAttribute("style", "height:100px");
+          firstName.setAttribute("class", " contact-info  text-black view-form col-12");
+          lastName.setAttribute("class", "contact-info  text-black view-form col-12");
+          phoneNumber.setAttribute("class", "contact-info  text-black view-form col-12");
+          email.setAttribute("class", "contact-info  text-black view-form col-12");
 
-          info.appendChild(phoneNumber);
-          info.appendChild(email);
+          firstName.setAttribute("style", "max-width:500px");
+          lastName.setAttribute("style", "max-width:500px");
+          phoneNumber.setAttribute("style", "max-width:500px");
+          email.setAttribute("style", "max-width:500px");
 
-          name.appendChild(firstName);
-          name.appendChild(lastName);
+          firstName.innerHTML = response.firstName;
+          lastName.innerHTML = response.lastName;
+          phoneNumber.innerHTML = response.phoneNumber;
+          email.innerHTML = response.emailAddress;
 
-          firstNameLine = document.createElement("u");
-          lastNameLine = document.createElement("u");
-          phoneNumberLine = document.createElement("u");
-          emailLine = document.createElement("u");
 
-          firstNameLine.innerHTML = "First Name";
-          lastNameLine.innerHTML = "Last Name";
-          phoneNumberLine.innerHTML = "Phone Number";
-          emailLine.innerHTML = "Email Address";
 
-          firstName.setAttribute("class", " contact-info border col-6");
-          lastName.setAttribute("class", "contact-info border col-6");
-          phoneNumber.setAttribute("class", "contact-info border col-6");
-          email.setAttribute("class", "contact-info border col-6");
 
-          firstName.appendChild(firstNameLine);
-          lastName.appendChild(lastNameLine);
-          phoneNumber.appendChild(phoneNumberLine);
-          email.appendChild(emailLine);
-
-          firstName.appendChild(document.createElement("br"));
-          lastName.appendChild(document.createElement("br"));
-          phoneNumber.appendChild(document.createElement("br"));
-          email.appendChild(document.createElement("br"));
-
-          firstName.appendChild(document.createTextNode(response.firstName)); 
-          lastName.appendChild(document.createTextNode(response.lastName));
-          phoneNumber.appendChild(document.createTextNode(response.phoneNumber));
-          email.appendChild(document.createTextNode(response.emailAddress));
+          firstNameLine.appendChild(firstName);
+          lastNameLine.appendChild(lastName);
+          phoneNumberLine.appendChild(phoneNumber);
+          emailLine.appendChild(email);
 
 
 
           let viewOverlay = document.getElementById("view-content");
           viewOverlay.appendChild(openContact);
 
-          openContact.appendChild(name);
-          openContact.appendChild(info);
+          openContact.appendChild(firstNameLine);
+          firstNameLine.appendChild(name1);
+          openContact.appendChild(firstName);
+          firstNameLine.appendChild(document.createElement("br"));
+
+          openContact.appendChild(lastNameLine);
+          lastNameLine.appendChild(name2);
+          openContact.appendChild(lastName);
+          lastNameLine.appendChild(document.createElement("br"));
+
+          openContact.appendChild(phoneNumberLine);
+          phoneNumberLine.appendChild(phone)
+          openContact.appendChild(phoneNumber);
+          phoneNumberLine.appendChild(document.createElement("br"));
+
+          openContact.appendChild(emailLine);
+          emailLine.append(emailUnder);
+          openContact.append(email)
+          emailLine.appendChild(document.createElement("br"));
 
          doBlur("view-overlay");
         }
@@ -557,29 +588,21 @@ function executeRetrieveContact(id, type) {
   link.send(retrieveContactJSON);
 }
 
-function logOut() {
+function executeLogOut() {
 
   removePopups(0);
 
-  document.querySelectorAll(".login-dropdown").forEach((button) => {
-    button.classList.toggle("hidden");
-  });
+  doBlur("login-overlay");
 
-  let loginText = document.getElementById("logged-in");
-  loginText.innerHTML = "";
-
-  document.querySelectorAll(".logged-in-ui").forEach((button) => {
-    button.classList.toggle("hidden");
-  });
-
-  document.getElementById("unlogged-search").classList.toggle("hidden");
-  document.getElementById("logged-search").classList.toggle("hidden");
-  document.getElementById("add-contact-dropdown").classList.remove("active");
+  user = 0;
+ 
 
   isLoggedIn = false;
 }
 
 function removePopups(id) {
+
+  console.log("Removing popups")
  
   document.querySelectorAll(".popup").forEach((popup) => {
     if (popup.id == id) {
@@ -612,6 +635,8 @@ function removeErrorMessages(){
   console.log("REMOVING ERROR MESSAGES IN EXECUTE ADD CONTACT");
   errorMessage.remove();
   });
+
+  console.log("Testing");
 }
 
 function editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInput, emailInput){
@@ -652,13 +677,18 @@ function editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInpu
 }
 
 function switchRegister(){
+
+  if (onRegister){
+    return;
+  }
+
   loginArea = document.getElementById("login-area");
   firstName = document.createElement("input");
   lastName = document.createElement("input");
   firstName.setAttribute("class", "register login-form");
   lastName.setAttribute("class", "register login-form");
   firstName.setAttribute("placeholder", "First Name");
-  lastName.setAttribute("placeholder", "Last Username");
+  lastName.setAttribute("placeholder", "Last Name");
   firstName.setAttribute("id", "first-name");
   lastName.setAttribute("id", "last-name");
 
@@ -672,6 +702,8 @@ function switchRegister(){
 
   loginArea.prepend(lastName);
   loginArea.prepend(firstName);
+  onRegister = true;
+  removeErrorMessages();
 }
 
 function switchLogin(){
@@ -685,6 +717,9 @@ function switchLogin(){
   document.getElementById("submit-button").innerHTML = "Log in";
   document.getElementById("user").value = "";
   document.getElementById("pass").value = "";
+
+  onRegister = false;
+  removeErrorMessages();
 }
 
 function doBlur(element){

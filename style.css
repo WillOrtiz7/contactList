@@ -65,6 +65,8 @@ body {
   background-color: white;
   font-size: 16pt;
   margin: 5px 5px 5px 5px;
+  padding-left:10px;
+  margin-bottom:10px;
 }
 
 .add-contact {
@@ -279,4 +281,19 @@ body {
 
 .contact-overlay{
   position:absolute;
+}
+
+.view-form{
+  height:45px;
+  border:none;
+  position:relative;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 16pt;
+  margin: 5px 5px 5px 5px;
+  padding-left:10px;
+  margin-bottom:10px;
+  
 }

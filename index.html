@@ -24,15 +24,29 @@
           crossorigin="anonymous"/>
 
   <body>
-    <div class="container-fluid justify-content-center border blur-test active-0 "id = "logged-in" style="height:100%; position:absolute">
-      <div class= "row justify-content-center align-items-center border" style = "height:70%">
-        <div class= "col-12 align-items-center border" id= "main-content" style=" max-width:700px">
+    <div class="container-fluid justify-content-center blur-test active-0 "id = "logged-in" style="height:100%; position:absolute">
+      <div class="row text-white align-items-end">
+        <div class="col-auto login">
+          <div class="icon" id= "log-out">
+              <button class="text-white" style=" border:none ; background:none" id="log-out">
+                <i class="fas fa-sign-out-alt text-white"></i>
+              </button>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center align-items-center text-center text-white" id="messages" style="height:20%">
+        <div id = "message-area" style="font:40pt">
+          <h4 id= "welcome-message"></h4>
+        </div>
+      </div>
+      <div class= "row justify-content-center align-items-center " style = "height:25%" >
+        <div class= "col-12 align-items-center " id= "main-content" style=" max-width:700px">
           <h1 class= "text-white text-center">
             Contact List
           </h1>
           <!--Search bar-->
           <div style= "position:relative">
-            <div class= "col border search" id= "search-bar" style = "position:absolute">
+            <div class= "col  search" id= "search-bar" style = "position:absolute">
               <div class="row justify-content-center logged-in-search text-black " id= "logged-search">
                 <div class="col">
                     <div class="card-body row no-gutters align-items-center">
@@ -41,14 +55,14 @@
                         </div>
                         <!--end of col-->
                         <div class="col">
-                          <input class="form-control form-control-lg form-control-borderless" id ="real-search-bar" type="search" placeholder="Search your contacts...">
+                            <input class="form-control form-control-lg form-control-borderless" id ="real-search-bar" type="search" placeholder="Search your contacts...">
                         </div>
                         <!--end of col-->
                         <div class="col-auto login">
                           <div class="icon">
-                            <button class= "login text-black dropdown-button" id="add-contact" style="border:none">
-                              <i class= "fas fa-plus text-black dropdown-button" id="add-contact"></i>
-                            </button>
+                              <button class= "login text-black dropdown-button" id="add-contact" style="border:none">
+                                <i class= "fas fa-plus text-black dropdown-button" id="add-contact"></i>
+                              </button>
                           </div>
                         </div>
                             <!--end of col-->
@@ -61,18 +75,18 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center border login-overlay" id= "login-overlay" style="height:100%"> 
-      <div class = "row border justify-content-center text-white text-center border align-self-center" style="height:100%">
-       <div class = "col-sm-6 align-self-center text-center border menu" style="max-width: 500px">
-          <div class="info-card menu">
-            <div class="row border" style="margin-bottom:20px">
-              <button id="switch-log-button"  class="login col" >Login</button>
-              <button id = "switch-reg-button" class="login col" style="border-bottom-color:white" >Register</button>
+    <div class="container-fluid justify-content-center  login-overlay" id= "login-overlay" style="height:100%"> 
+      <div class = "row  justify-content-center text-white text-center  align-self-center" style="height:100%">
+       <div class = "col-sm-6 align-self-center text-center " style="max-width: 500px">
+          <div class="info-card ">
+            <div class="row " style="margin-bottom:20px">
+                <button id="switch-log-button"  class="login col" >Login</button>
+                <button id = "switch-reg-button" class="login col" style="border-bottom-color:white" >Register</button>
               <br>
             </div>
             <div id="login-area">
               <input class="login-form" placeholder = "Username" id = "user">
-              <input class="login-form" placeholder = "Password" id="pass"><br>
+              <input class="login-form" placeholder = "Password" id="pass" type="password"><br>
             </div>
             <div id= "login-error"></div>
             <button id = "submit-button" class="login">Log in</button>
@@ -80,15 +94,15 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "add-contact-overlay" style="height:100%"> 
-      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" style="height:100%; width:100%">
-       <div class = "col-sm-6 align-self-center text-center border menu" style="max-width: 500px">
+    <div class="container-fluid justify-content-center  contact-overlay inactive-3" id= "add-contact-overlay" style="height:100%"> 
+      <div class = "row contact-overlay  justify-content-center text-white text-center  align-self-center" style="height:100%; width:100%">
+       <div class = "col-sm-6 align-self-center text-center  menu" style="max-width: 500px">
           <div class="info-card menu">
             <div id="add-contact-menu" class="menu">
               <h4>Add a contact</h4>  
               <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John" required>
               <input class= "login-form" type="text" action="submit" id="add-contact-last-name" placeholder="Smith" required>
-              <input class= "login-form"type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" action="submit" id="add-contact-phone-number" placeholder="4072224444" required>
+              <input class= "login-form"type="tel"  action="submit" id="add-contact-phone-number" placeholder="4072224444" required>
               <input class= "login-form" type="email" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com" required>
               <br>
               <button class= "login" type="button" id="add-contact-submit">Submit</button>
@@ -97,8 +111,8 @@
           </div>
         </div>
       </div>
-    <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "edit-contact-overlay" style="height:100%"> 
-      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" style="height:100%;width:100%">
+    <div class="container-fluid justify-content-center  contact-overlay inactive-3" id= "edit-contact-overlay" style="height:100%"> 
+      <div class = "row contact-overlay  justify-content-center text-white text-center  align-self-center" style="height:100%;width:100%">
        <div class = "col-sm-6 align-self-center text-center " style="max-width: 500px">
           <div class="info-card">
             <div id="edit-contact-menu">
@@ -115,11 +129,11 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "view-overlay" style="height:100%"> 
-      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" id="view-overlay" style="height:100%;width:100%">
-       <div class = "col-sm-6 align-self-center text-center border menu" style="max-width: 700px; ">
+    <div class="container-fluid justify-content-center  contact-overlay inactive-3" id= "view-overlay" style="height:100%"> 
+      <div class = "row contact-overlay  justify-content-center text-white text-center  align-self-center" id="view-overlay" style="height:100%;width:100%">
+       <div class = "col-sm-6 align-self-center text-center  menu" style="max-width: 700px; ">
           <div class="info-card menu">
-            <div class="row border" style="margin-bottom:20px" id="view-content">
+            <div class="row justify-content-center" style="margin-bottom:20px" id="view-content">
             </div>
           </div>
         </div>
