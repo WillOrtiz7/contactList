@@ -42,6 +42,12 @@ document.addEventListener("click", (event) =>{
     doBlur("add-contact-overlay");
   }
 
+  if(target == "view-overlay"){
+    document.querySelectorAll(".contact-info").forEach((data) => {
+      data.remove();
+    });
+  }
+
   let overlay = event.target.closest(".container-fluid");
   if(event.target.classList.contains("contact-overlay")){
     undoBlur(overlay.id);
@@ -491,11 +497,11 @@ function executeRetrieveContact(id, type) {
           const email = document.createElement("div");
 
           const name = document.createElement("div");
-          name.setAttribute("class", "row");
+          name.setAttribute("class", "row contact-info");
           name.setAttribute("style", "height:100px");
 
           const info = document.createElement("div");
-          info.setAttribute("class", "row");
+          info.setAttribute("class", "row contact-info");
           info.setAttribute("style", "height:100px");
 
           info.appendChild(phoneNumber);
