@@ -27,7 +27,7 @@
     <div class="container-fluid justify-content-center border login-overlay" id= "login-overlay" style="height:100%"> 
       <div class = "row border justify-content-center text-white text-center border align-self-center" style="height:100%">
        <div class = "col-sm-6 align-self-center text-center border" style="max-width: 500px">
-          <div class="login-for">
+          <div class="info-card">
             <div class="row border" style="margin-bottom:20px">
               <button id="switch-log-button"  class="login col" >Login</button>
               <button id = "switch-reg-button" class="login col" style="border-bottom-color:white" >Register</button>
@@ -39,6 +39,24 @@
             </div>
             <div id= "login-error"></div>
             <button id = "submit-button" class="login">Log in</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "add-contact-overlay" style="height:100%"> 
+      <div class = "row border justify-content-center text-white text-center border align-self-center" style="height:100%">
+       <div class = "col-sm-6 align-self-center text-center border" style="max-width: 500px">
+          <div class="info-card">
+            <div id="add-contact-menu">
+              <h4>Add a contact</h4>
+              <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John" required>
+              <input class= "login-form" type="text" action="submit" id="add-contact-last-name" placeholder="Smith" required>
+              <input class= "login-form"type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" action="submit" id="add-contact-phone-number" placeholder="4072224444" required>
+              <input class= "login-form" type="email" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com" required>
+              <br>
+              <button class= "login" type="button" id="add-contact-submit">Submit</button>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -64,8 +82,8 @@
                         </div>
                         <!--end of col-->
                         <div class="col-auto login">
-                            <button class= "text-black" id= "add-contact">
-                              <i class= "fas fa-plus text-black" id= "add-contact"></i>
+                            <button class= "text-black" id="add-contact" style="border:none">
+                              <i class= "fas fa-plus text-black icon" id="add-contact"></i>
                             </button>
                           </div>
                             <!--end of col-->

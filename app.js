@@ -3,7 +3,6 @@ addContactSubmitButton = document.getElementById("add-contact-submit");
 searchContactInput = document.getElementById("real-search-bar");
 registerButton = document.getElementById("switch-reg-button");
 loginButton = document.getElementById("switch-log-button");
-addContactButton = document.getElementById("add-contact");
 
 // Variables
 const urlBase = "http://cop4331-27.com/LAMPAPI";
@@ -17,11 +16,12 @@ addContactSubmitButton.addEventListener("click", executeAddContact);
 searchContactInput.addEventListener("keyup", executeSearchContact);
 registerButton.addEventListener("click", switchRegister);
 loginButton.addEventListener("click", switchLogin) ;
-addContactButton.addEventListener("click", executeAddContact);
 
 document.addEventListener("click", (event) =>{
 
-  if(event.target.id == "submit-button"){
+  target = event.target.id
+
+  if(target == "submit-button"){
     let button = document.getElementById("submit-button");
 
     if(button.innerHTML == "Register"){
@@ -31,6 +31,17 @@ document.addEventListener("click", (event) =>{
     else if(button.innerHTML == "Log in"){
       executeLogin();
     }
+  }
+
+  if(target == "add-contact"){
+    doBlur("add-contact-overlay");
+  }
+
+  let overlay = event.target.closest(".container-fluid");
+  console.log(overlay.classList);
+  if(event.target.closest(".container-fluid").classList.contains("contact-overlay")){
+    console.log("THis is working");
+    undoBlur(overlay.id);
   }
 
 })
@@ -127,7 +138,7 @@ function executeLogin() {
 
        if (isLoggedIn) {
         
-        undoBlur();
+        undoBlur("login-overlay");
 
         let loginText = document.getElementById("logged-in");
         loginText.prepend(document.createTextNode("Welcome, " + info.firstName));
@@ -148,7 +159,7 @@ function executeAddContact() {
   else if (!document.getElementById("add-contact-first-name").validity.valid){
     removeErrorMessages();
     const firstNameErrorMessage = document.createElement("div");
-    firstNameErrorMessage.setAttribute("class", "error-message");
+    firstNameErrorMessage.setAttribute("class", "error-message popup list");
     firstNameErrorMessage.innerHTML = "Failed to add contact, invalid first name";
     const firstNameMessageFrame = document.getElementById("add-contact-menu");
     firstNameMessageFrame.appendChild(firstNameErrorMessage);
@@ -156,7 +167,7 @@ function executeAddContact() {
   else if (!document.getElementById("add-contact-last-name").validity.valid){
     removeErrorMessages();
     const lastNameErrorMessage = document.createElement("div");
-    lastNameErrorMessage.setAttribute("class", "error-message");
+    lastNameErrorMessage.setAttribute("class", "error-message popup list");
     lastNameErrorMessage.innerHTML = "Failed to add contact, invalid last name";
     const lastNameMessageFrame = document.getElementById("add-contact-menu");
     lastNameMessageFrame.appendChild(lastNameErrorMessage);
@@ -164,7 +175,7 @@ function executeAddContact() {
   else if (!document.getElementById("add-contact-phone-number").validity.valid){
     removeErrorMessages();
     const phoneNumberErrorMessage = document.createElement("div");
-    phoneNumberErrorMessage.setAttribute("class", "error-message");
+    phoneNumberErrorMessage.setAttribute("class", "error-message popup list");
     phoneNumberErrorMessage.innerHTML = "Failed to add contact, invalid phone number";
     const phoneNumberMessageFrame = document.getElementById("add-contact-menu");
     phoneNumberMessageFrame.appendChild(phoneNumberErrorMessage);
@@ -172,7 +183,7 @@ function executeAddContact() {
   else if (!document.getElementById("add-contact-email").validity.valid){
     removeErrorMessages();
     const emailErrorMessage = document.createElement("div");
-    emailErrorMessage.setAttribute("class", "error-message");
+    emailErrorMessage.setAttribute("class", "error-message popup list");
     emailErrorMessage.innerHTML = "Failed to add contact, invalid email address";
     const errorMessageFrame = document.getElementById("add-contact-menu");
     errorMessageFrame.appendChild(emailErrorMessage);
@@ -210,8 +221,6 @@ function executeAddContact() {
           document.getElementById("add-contact-last-name").value = "";
           document.getElementById("add-contact-email").value = "";
           document.getElementById("add-contact-phone-number").value = "";
-          document.getElementById("add-contact-dropdown").classList.remove("active");
-          document.getElementById("add-contact-menu").classList.toggle("hidden");
 
           const confirmMessage = document.createElement("h3");
           confirmMessage.setAttribute("class", "text-white text-center popup list");
@@ -220,6 +229,8 @@ function executeAddContact() {
           confirmMessage.innerHTML = "Successfully added " + addContactObj.firstName + " " + addContactObj.lastName;
         }
       }
+      removeErrorMessages();
+      undoBlur("add-contact-overlay");
     };
     console.log(addContactJSON);
     link.send(addContactJSON);
@@ -597,11 +608,7 @@ function logOut() {
 }
 
 function removePopups(id) {
-  const addContactMenu = document.getElementById("add-contact-menu");
-  if (!addContactMenu.classList.contains("hidden") && id != "add-contact-dropdown"){
-    removeErrorMessages();
-    addContactMenu.classList.add("hidden");
-  }
+ 
   document.querySelectorAll(".popup").forEach((popup) => {
     if (popup.id == id) {
       console.log("Conditional is working");
@@ -710,25 +717,25 @@ function switchLogin(){
   document.getElementById("submit-button").innerHTML = "Log in";
 }
 
-function doBlur(){
+function doBlur(element){
   const blur = document.getElementById("logged-in");
-  const overlay = document.getElementById("login-overlay");
+  const overlay = document.getElementById(element);
     
-  for(i = 2; i >=0; i++){
+  for(i = 4; i >=0; i--){
     blur.classList.remove("active-" + (i+1));
     blur.classList.add("active-" + i);
     }
-  for(i = 2; i >=0 ; i++){
+  for(i = 2; i >=0 ; i--){
     overlay.classList.remove("inactive-" + (i-1));
     overlay.classList.add("inactive-" + i);
     }
 
 }
 
-function undoBlur(){
+function undoBlur(element){
 
   const blur = document.getElementById("logged-in");
-  const overlay = document.getElementById("login-overlay");
+  const overlay = document.getElementById(element);
     
   for(i = 1; i <= 4; i++){
     blur.classList.remove("active-" + (i-1));
