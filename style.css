@@ -47,7 +47,7 @@ body {
 .login-dropdown.active > .login,
 .login:hover {
   background: #1db954;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 
 .login-dropdown {
@@ -244,3 +244,30 @@ body {
 .login-for{
   height:40%;
 }
+
+body {
+    font-family: sans-serif;
+    background-color: #81d4fa;
+    font-weight: bold;
+}
+
+.text-box {
+    margin-left: 44vw;
+   margin-top: 42vh;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #81d4fa;
+    font-weight: bold;
+}
+
+.login-button:hover{
+  color: #1F1F1F;
+  box-shadow: 2px 2px 2px 1px;
+  background:#fff;
+  transition: ease 0.5s;
+}
+
+
+
