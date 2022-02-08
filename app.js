@@ -37,10 +37,8 @@ document.addEventListener("click", (event) =>{
     doBlur("add-contact-overlay");
   }
 
-  let overlay = event.target.closest(".container-fluid");
-  console.log(overlay.classList);
-  if(event.target.closest(".container-fluid").classList.contains("contact-overlay")){
-    console.log("THis is working");
+ 
+  if(event.target.classList.contains("contact-overlay")){
     undoBlur(overlay.id);
   }
 
