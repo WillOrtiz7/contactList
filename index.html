@@ -44,11 +44,11 @@
       </div>
     </div>
     <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "add-contact-overlay" style="height:100%"> 
-      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" style="height:100%">
+      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" style="height:100%; width:100%">
        <div class = "col-sm-6 align-self-center text-center border menu" style="max-width: 500px">
           <div class="info-card menu">
             <div id="add-contact-menu" class="menu">
-              <h4>Add a contact</h4>
+              <h4>Add a contact</h4>  
               <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John" required>
               <input class= "login-form" type="text" action="submit" id="add-contact-last-name" placeholder="Smith" required>
               <input class= "login-form"type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" action="submit" id="add-contact-phone-number" placeholder="4072224444" required>
@@ -61,8 +61,8 @@
         </div>
       </div>
     <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "edit-contact-overlay" style="height:100%"> 
-      <div class = "row border justify-content-center text-white text-center border align-self-center" style="height:100%">
-       <div class = "col-sm-6 align-self-center text-center border" style="max-width: 500px">
+      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" style="height:100%;width:100%">
+       <div class = "col-sm-6 align-self-center text-center " style="max-width: 500px">
           <div class="info-card">
             <div id="edit-contact-menu">
               <h4 id="edit-contact-title">Edit a contact</h4>
@@ -78,8 +78,18 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid justify-content-center border blur-test active-0 text-white" id = "logged-in">
-      <div class= "row justify-content-center align-items-center border contact-overlay" style = "height:500px">
+    <div class="container-fluid justify-content-center border contact-overlay inactive-3" id= "view-overlay" style="height:100%"> 
+      <div class = "row contact-overlay border justify-content-center text-white text-center border align-self-center" style="height:100%;width:100%">
+       <div class = "col-sm-6 align-self-center text-center border menu" style="max-width: 700px; ">
+          <div class="info-card menu">
+            <div class="row border" style="margin-bottom:20px" id="view-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid justify-content-center border blur-test active-0 text-white background" id = "logged-in" style="height:100%">
+      <div class= "row justify-content-center align-items-center border" style = "height:500px">
         <div class= "col-12 align-items-center border" id= "main-content" style=" max-width:700px">
           <h1 class= "text-white text-center">
             Contact List
@@ -110,24 +120,12 @@
                 </div>
                 <!--end of col-->
               </div>
-          <div class= "login-dropdown popup logged-in-ui text-black border" id= "add-contact-dropdown">
-            <div class= "login-menu text-white hidden" id= "add-contact-menu">
-              Add a contact: <br>
-              <input class= "login-form" type="text" action="submit" id="add-contact-first-name" placeholder="John" required>
-              <input class= "login-form" type="text" action="submit" id="add-contact-last-name" placeholder="Smith" required>
-              <input class= "login-form"type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" action="submit" id="add-contact-phone-number" placeholder="4072224444" required>
-              <input class= "login-form" type="email" action="submit" id="add-contact-email" placeholder="jsmith@gmail.com" required>
-              <br>
-              <button class= "login" type="button" id="add-contact-submit">Submit</button>
-            </div>
-          </div>
-        </div>
-          <!-- ADD CONTACT END -->
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
     <!-- ADD CONTACT END -->
 
     <script src="./app.js"></script>

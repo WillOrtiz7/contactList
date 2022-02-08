@@ -1,8 +1,9 @@
 body {
-  background-image: linear-gradient(90deg, #25272d, #2e3038);
+  background-image:url(https://cdn.discordapp.com/attachments/930608718305984566/940435688602607636/fresh-rainfall-on-green-leaves.jpg);
   color: rgb(255, 255, 255);
   font-family: "Cairo", sans-serif;
 }
+
 
 #submit-button{
   background:#1db954;
@@ -18,7 +19,6 @@ body {
   font-size: 20pt;
   background: inherit;
   align-content: center;
-  z-index: 10;
   border-radius:13px;
 }
 
@@ -44,26 +44,11 @@ body {
   font-size: 25px;
 }
 
-.login-dropdown.active > .login,
 .login:hover {
   background: #1db954;
   transition: all 0.4s ease;
 }
 
-.login-dropdown {
-  position: relative;
-  text-align: center;
-}
-
-.login-menu {
-  background-color: inherit;
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 150ms ease-in-out;
-  font-size: 16pt;
-}
 
 .login-dropdown.active >  .login-menu {
   opacity: 1;
@@ -91,30 +76,6 @@ body {
   background-color: black;
 }
 
-.add-contact-header {
-  padding: 10px 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid black;
-}
-
-.logged-in-ui{
-  float:right;
-  background-color: inherit;
-  font-size: 20pt;
-  z-index: 20;
-}
-
-.logged-in-ui.hidden{
-  display:none;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.logged-in-search.hidden{
-  display:none;
-}
 
 .search-bar .icon {
   position:relative;
@@ -127,22 +88,6 @@ body {
   transition: all 0.4s ease;
 }
 
-.unlogged-search.hidden{
-  display:none;
-}
-
-.unlogged-search{
-  pointer-events:none;
-}
-
-.unlogged-text{
-  color:lightslategrey;
-  font-size: 1.5rem;
-}
-
-.dropdown-button{
-  pointer-events:auto;
-}
 
 .search-result-list{
   list-style:none;
@@ -189,17 +134,8 @@ body {
   transition: all 0.4s ease;
 }
 
-.contact-table.hidden{
-  display:none;
-}
 
-.login-menu.hidden{
-  display:none;
-}
 
-.login-menu.hidden{
-  display: none;
-}
 
 .search-results-container{
   max-height: 150px;
@@ -208,7 +144,7 @@ body {
 
 .contact-info{
   width:100%;
-  max-width:300px;
+  max-width:700px;
   position: relative;
   float:right;
   text-align:center;
@@ -220,22 +156,18 @@ body {
   display:flex;
 }
 
-#add-contact-menu, #open-contact, #register-menu, #login-menu, #edit-contact{
-  background: #1F1F1F;
- 
-}
 
 .blur-test.active-0{
   filter:blur(15px);
-  opacity:0.2;
-  transition: opacity 1s;
-  pointer-events:none;
+  opacity:0;
+  transition: opacity .5s;
+  pointer-events: none;
 }
 
 .blur-test.active-1{
   opacity:0.4;
   filter:blur(11px);
-  transition:opacity 1s;
+  transition:opacity .5s;
 }
 
 .blur-test.active-2{

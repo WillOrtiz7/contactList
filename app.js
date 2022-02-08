@@ -21,6 +21,11 @@ document.addEventListener("click", (event) =>{
 
   target = event.target.id
 
+  if(event.target.classList.contains("delete-button"))
+  {
+    deleteContact(target);
+  }
+
   if(target == "submit-button"){
     let button = document.getElementById("submit-button");
 
@@ -37,7 +42,7 @@ document.addEventListener("click", (event) =>{
     doBlur("add-contact-overlay");
   }
 
- 
+  let overlay = event.target.closest(".container-fluid");
   if(event.target.classList.contains("contact-overlay")){
     undoBlur(overlay.id);
   }
@@ -138,8 +143,8 @@ function executeLogin() {
         
         undoBlur("login-overlay");
 
-        let loginText = document.getElementById("logged-in");
-        loginText.prepend(document.createTextNode("Welcome, " + info.firstName));
+        // let loginText = document.getElementById("logged-in");
+        // loginText.prepend(document.createTextNode("Welcome, " + info.firstName));
 
       }
     }
@@ -228,6 +233,7 @@ function executeAddContact() {
         }
       }
       removeErrorMessages();
+      removePopups(0);
       undoBlur("add-contact-overlay");
     };
     console.log(addContactJSON);
@@ -252,11 +258,6 @@ function executeSearchContact() {
     document.querySelectorAll(".search-results-container").forEach((searchResultsContainer) => {
         searchResultsContainer.remove();
       });
-
-    if (document.getElementById("add-contact-dropdown").classList.contains("active")) {
-      console.log("Testing");
-      document.getElementById("add-contact-dropdown").classList.toggle("active");
-    }
 
     let userInput = document.getElementById("real-search-bar").value;
     let searchContactObj = {
@@ -535,13 +536,13 @@ function executeRetrieveContact(id, type) {
 
 
 
-          let addContactDropdown = document.getElementById("main-content");
-          addContactDropdown.appendChild(openContact);
+          let viewOverlay = document.getElementById("view-content");
+          viewOverlay.appendChild(openContact);
 
           openContact.appendChild(name);
           openContact.appendChild(info);
 
-           removePopups(openContact.id);
+         doBlur("view-overlay");
         }
       }
     }
@@ -660,6 +661,9 @@ function switchRegister(){
   document.getElementById("pass").setAttribute("placeholder", "Desired Password");
   document.getElementById("submit-button").innerHTML = "Register";
 
+  document.getElementById("user").value = "";
+  document.getElementById("pass").value = "";
+
   loginArea.prepend(lastName);
   loginArea.prepend(firstName);
 }
@@ -673,6 +677,8 @@ function switchLogin(){
   document.getElementById("user").setAttribute("placeholder", "Username");
   document.getElementById("pass").setAttribute("placeholder", "Password");
   document.getElementById("submit-button").innerHTML = "Log in";
+  document.getElementById("user").value = "";
+  document.getElementById("pass").value = "";
 }
 
 function doBlur(element){
