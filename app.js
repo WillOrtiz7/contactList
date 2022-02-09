@@ -5,6 +5,7 @@ registerButton = document.getElementById("switch-reg-button");
 loginButton = document.getElementById("switch-log-button");
 logOutButton = document.getElementById("log-out");
 
+
 // Variables
 const urlBase = "http://cop4331-27.com/LAMPAPI";
 const ext = ".php";
@@ -112,7 +113,6 @@ function executeRegister() {
     }
   };
   link.send(obj);
-  console.log(firstName, lastName, user, pass);
   document.getElementById("user").value = "";
   document.getElementById("pass").value = "";
   switchLogin();
@@ -389,52 +389,55 @@ function executeEditContact(firstName, lastName, email, phoneNumber, id) {
   emailInput.value = email;
   editContactTitle.innerHTML = "Editing " + firstName + " " + lastName;
 
-  editContactSubmitButton.addEventListener("click", submitEditContact.bind(submitEditContact, id));
+  editContactSubmitButton.onclick = submitEditContact.bind(submitEditContact, firstNameInput, lastNameInput, phoneNumberInput, emailInput, id);
 
-  function submitEditContact(id) {
-    if (!editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInput, emailInput)){
-      return;
-    }
-
-    let editContactObj = {
-      firstName: firstNameInput.value,
-      lastName: lastNameInput.value,
-      phoneNumber: phoneNumberInput.value,
-      emailAddress: emailInput.value,
-      id: id,
-    };
-
-    let editContactJSON = JSON.stringify(editContactObj);
-    let link = new XMLHttpRequest();
-    let requestUrl = urlBase + "/EditContact.php";
-    link.open("POST", requestUrl, true);
-    link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
-    link.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        let response = JSON.parse(link.responseText);
-        if (response.error.length != 0) {
-          console.log(response.error);
-        } else {
-          console.log("Successfully edited contact");
-
-          const confirmMessage = document.createElement("h3");
-          confirmMessage.setAttribute("class", "text-white text-center popup list");
-          confirmMessage.setAttribute("id", "confirmMessage");
-          document.getElementById("messages").appendChild(confirmMessage);
-          confirmMessage.innerHTML = "Successfully updated " + editContactObj.firstName + " " + editContactObj.lastName;
-          removePopups(confirmMessage.id);
-          removeErrorMessages();
-          undoBlur("edit-contact-overlay");
-
-
-        }
-      }
-    };
-    console.log(editContactJSON);
-    link.send(editContactJSON);
-  }
 }
+
+function submitEditContact(firstNameInput, lastNameInput, phoneNumberInput, emailInput, id) {
+  if (!editContactValidityCheck(firstNameInput, lastNameInput, phoneNumberInput, emailInput)){
+    return;
+  }
+
+  let editContactObj = {
+    firstName: firstNameInput.value,
+    lastName: lastNameInput.value,
+    phoneNumber: phoneNumberInput.value,
+    emailAddress: emailInput.value,
+    id: id,
+  };
+
+  let editContactJSON = JSON.stringify(editContactObj);
+  let link = new XMLHttpRequest();
+  let requestUrl = urlBase + "/EditContact.php";
+  link.open("POST", requestUrl, true);
+  link.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  link.setRequestHeader("Access-Control-Allow-Origin", urlBase);
+  link.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      let response = JSON.parse(link.responseText);
+      if (response.error.length != 0) {
+        console.log(response.error);
+      } else {
+        console.log("Successfully edited contact");
+
+        const confirmMessage = document.createElement("h3");
+        confirmMessage.setAttribute("class", "text-white text-center popup list");
+        confirmMessage.setAttribute("id", id);
+        document.getElementById("messages").appendChild(confirmMessage);
+        confirmMessage.innerHTML = "Successfully updated " + editContactObj.firstName + " " + editContactObj.lastName;
+        removePopups(confirmMessage.id);
+        removeErrorMessages();
+        undoBlur("edit-contact-overlay");
+
+
+      }
+    }
+  };
+  console.log(editContactJSON);
+  link.send(editContactJSON);
+}
+
+
 
 function deleteContact(id) {
   // Give user an alert message to confirm if they want to delete the contact
@@ -494,6 +497,7 @@ function executeRetrieveContact(id, type) {
         email = response.emailAddress;
         phoneNumber = response.phoneNumber;
         if (type === "edit") {
+          console.log("Editing contact");
           executeEditContact(firstName, lastName, email, phoneNumber, id);
         } 
         

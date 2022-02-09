@@ -11,6 +11,11 @@ body {
   width:60%;
 }
 
+#submit-button:hover{
+  color:black;
+  box-shadow:2px 2px 1px 1px;
+}
+
 .login {
   color: white;
   border:none;
